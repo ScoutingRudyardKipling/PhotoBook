@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+    <description>The coding standard for PHP_CodeSniffer itself.</description>
+
+    <file>app</file>
+    <file>routes</file>
+    <file>resources</file>
+<!--    <file>database</file>-->
+    <file>tests</file>
+    <!--<exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>-->
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="cache"/>
+    <arg name="parallel" value="75"/>
+    <arg value="np"/>
+
+    <!-- Don't hide tokenizer exceptions -->
+    <rule ref="Internal.Tokenizer.Exception">
+        <type>error</type>
+    </rule>
+
+    <rule ref="PSR12">
+        <type>error</type>
+    </rule>
+    <rule ref="PSR2">
+        <type>error</type>
+    </rule>
+
+    <!-- Include the whole PEAR standard -->
+    <rule ref="PEAR">
+        <exclude name="PEAR.NamingConventions.ValidFunctionName"/>
+        <exclude name="PEAR.NamingConventions.ValidVariableName"/>
+        <exclude name="PEAR.Commenting.ClassComment"/>
+        <exclude name="PEAR.Commenting.FileComment"/>
+        <!-- Does Not match the way we want it and it conflicts with Generic code conventions-->
+        <exclude name="PEAR.WhiteSpace.ScopeIndent"/>
+    </rule>
+
+    <!-- Include some sniffs from other standards that don't conflict with PEAR -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+    <!-- allignment does not match the way we do work -->
+    <!--<rule ref="Squiz.Arrays.ArrayDeclaration" />-->
+    <rule ref="Squiz.Classes"/>
+    <!--we allign with 4 spaces and not with 8, pitty to need to disable this rule-->
+    <!--<rule ref="Squiz.Commenting.BlockComment" />-->
+    <!-- Doc Comments for classes are unnecessary in our case-->
+    <!--<rule ref="Squiz.Commenting.ClassComment" />-->
+    <!-- Are we ancient? our editors do highlight this-->
+    <!--<rule ref="Squiz.Commenting.ClosingDeclarationComment" />-->
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+    <rule ref="Squiz.Commenting.EmptyCatchComment"/>
+    <!-- Bruh if we acualy want a file comment we will do it as class comment-->
+    <!--<rule ref="Squiz.Commenting.FileComment"/>-->
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <!--this because we do not want parameter comments, it is to much overhead for the current usecases-->
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.EmptyThrows"/>
+        <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/>
+        <!-- errors with other standards -->
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+    </rule>
+    <!--<rule ref="Squiz.Commenting.InlineComment" />-->
+    <rule ref="Squiz.Commenting.LongConditionClosingComment">
+        <properties>
+            <property name="lineLimit" value="45"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.Commenting.PostStatementComment"/>
+    <!--<rule ref="Squiz.Commenting.VariableComment" />-->
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.Functions.GlobalFunction"/>
+    <rule ref="Squiz.Formatting.OperatorBracket"/>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
+    <rule ref="Squiz.Operators.ComparisonOperatorUsage">
+        <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
+        <!-- We only want to exclude the T_Boolean_Not rule. We actually should check for the other rules
+        this however does not work...-->
+        <exclude name="Squiz.Operators.ComparisonOperatorUsage.NotAllowed"/>
+    </rule>
+    <rule ref="Squiz.PHP.DisallowInlineIf"/>
+    <!-- we do want spacing between concatenation-->
+    <!--<rule ref="Squiz.Strings.ConcatenationSpacing" />-->
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    <rule ref="Generic.Commenting.DocComment">
+        <!-- to much overhead at this stage, could add later for more clarity-->
+        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
+    </rule>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.Commenting.Fixme"/>
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.NamingConventions.ConstructorName"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+    <rule ref="PEAR.Classes.ClassDeclaration"/>
+    <rule ref="PEAR.Commenting.FunctionComment">
+        <exclude name="PEAR.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="PEAR.Commenting.FunctionComment.Missing"/>
+    </rule>
+    <rule ref="PEAR.ControlStructures.ControlSignature"/>
+    <rule ref="PEAR.Functions.FunctionCallSignature"/>
+    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
+    <rule ref="Zend.Files.ClosingTag"/>
+    <!-- Does Not match the Laravel Namespacing-->
+    <!--<rule ref="Zend.NamingConventions.ValidVariableName"/>-->
+
+    <!-- Check var names, but we don't want leading underscores for private vars -->
+    <!--<rule ref="Squiz.NamingConventions.ValidVariableName" />-->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Use Unix newlines -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <!-- Let LineLimit be 150-->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="150"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+
+</ruleset>
