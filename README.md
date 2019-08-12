@@ -254,6 +254,8 @@ php artisan up
 * [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) - Code Sniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.
 * [Larastan](https://github.com/nunomaduro/larastan) - Discover bugs in your code without running it - phpstan wrapper for Laravel.
 * [PHPMD](https://github.com/phpmd/phpmd) - Takes a given PHP code base and looks for several potential problems within that source.
+* [Spatie Laravel Medialibary](https://docs.spatie.be/laravel-medialibrary/v7/introduction/) - The laravel media libary used
+* [Spatie Laravel Permission](https://docs.spatie.be/laravel-permission/v2/introduction/) - The laravel permission libary
 ### About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
