@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        @empty($albums)
+        @if (count($albums) > 0)
             <h2 class="mt-3">Albums</h2>
             <div class="row">
                 @foreach( $albums as $album)
@@ -10,7 +10,7 @@
                 @endforeach
             </div>
         @endif
-        @empty($contents)
+         @if (count($contents) > 0)
             <h2 class="mt-3">Content</h2>
             <div class="row">
                 @foreach( $contents as $content)

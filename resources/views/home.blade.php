@@ -13,16 +13,22 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        You are logged in!
+                        @auth
+                            You are logged in!
+                        @else
+                            You are not logged in!
+                        @endauth
                     </div>
                 </div>
             </div>
         </div>
-        <h2 class="mt-3">Albums</h2>
-        <div class="row">
-            @foreach( $albums as $album)
-                @include('components.album', ['album' => $album])
-            @endforeach
-        </div>
+        @auth
+            <h2 class="mt-3">Albums</h2>
+            <div class="row">
+                @foreach( $albums as $album)
+                    @include('components.album', ['album' => $album])
+                @endforeach
+            </div>
+        @endauth
     </div>
 @endsection

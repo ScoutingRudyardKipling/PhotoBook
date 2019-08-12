@@ -14,7 +14,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        //
+        return view('content');
     }
 
     /**
@@ -24,62 +24,67 @@ class ContentController extends Controller
      */
     public function create()
     {
-        //
+        return view('content');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        return view('content');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Content  $content
+     * @param \App\Models\Content $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Content $content)
     {
-        //
+        return view('content');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Content  $content
+     * @param \App\Models\Content $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Content $content)
     {
-        //
+        return view('content');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Content  $content
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Content      $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Content $content)
     {
-        //
+        return view('content');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Content  $content
+     * @param \App\Models\Content $content
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Content $content)
     {
-        //
+        return view('content');
     }
 }

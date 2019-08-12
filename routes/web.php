@@ -11,18 +11,16 @@
 |
 */
 
-Route::get(
-    '/',
-    function () {
-        return view('welcome');
-    }
-);
-
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
-Route::resources(
-    [
-        'album' => 'AlbumController',
-    ]
+Route::get('/', 'HomeController@index')->name('home');
+Route::group(
+    ['middleware' => ['auth']],
+    function () {
+        Route::resources(
+            [
+            'album' => 'AlbumController',
+            ]
+        );
+    }
 );

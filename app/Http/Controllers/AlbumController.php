@@ -15,7 +15,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        //
+        return view('album');
     }
 
     /**
@@ -25,7 +25,7 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        //
+        return view('album');
     }
 
     /**
@@ -37,7 +37,7 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('album');
     }
 
     /**
@@ -64,7 +64,7 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
-        //
+        return view('album');
     }
 
     /**
@@ -77,7 +77,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        //
+        return view('album');
     }
 
     /**
@@ -89,6 +89,6 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        //
+        return view('album');
     }
 }

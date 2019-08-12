@@ -15,11 +15,13 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
 
     /**
      * Show the application dashboard.
+     *
+     * @param Request $request
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -27,18 +29,7 @@ class HomeController extends Controller
     {
         $albums   = Album::where('parent_id', null)->get();
         $contents = Content::all();
-//        dd(Album::all());
-//        if ($request->filled('album')) {
-//            $album = $request->get('album');
-//            dd($album);
-//        }
-//        $items = [
-//            '',
-//            '',
-//            '',
-//            '',
-//            '',
-//        ];
+
         return view('home', ['albums' => $albums, 'contents' => $contents]);
     }
 }

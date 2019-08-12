@@ -20,7 +20,7 @@ system.
 What things you need to install the software and how to install them
  * [Composer](https://getcomposer.org/)
  * php 7.2 or higher (preferred latest)
- * A (local) MySQL database
+ * A (local) SQL database (MariaDB 10.2 or higher)
  * [Node.js](https://nodejs.org/en/download/)
  * NPM (installed with Node.js)
  * Common sense :wink:
@@ -39,9 +39,9 @@ Minimal setup is setting up your database connection
 ```dotenv
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=ews
-DB_USERNAME=ews
-DB_PASSWORD=ews
+DB_DATABASE=photobook
+DB_USERNAME=photobook
+DB_PASSWORD=photobook
 ```
 
 Install composer dependencies
