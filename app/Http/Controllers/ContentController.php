@@ -14,7 +14,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        return view('content');
+        return view('pages.content.show');
     }
 
     /**
@@ -24,7 +24,7 @@ class ContentController extends Controller
      */
     public function create()
     {
-        return view('content');
+        return view('pages.content.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        return view('content');
+        return view('pages.content.show');
     }
 
     /**
@@ -48,7 +48,7 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        return view('content');
+        return view('pages.content.show');
     }
 
     /**
@@ -60,7 +60,7 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
-        return view('content');
+        return view('pages.content.show');
     }
 
     /**
@@ -73,7 +73,7 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        return view('content');
+        return view('pages.content.show');
     }
 
     /**
@@ -85,6 +85,6 @@ class ContentController extends Controller
      */
     public function destroy(Content $content)
     {
-        return view('content');
+        return view('pages.content.show');
     }
 }

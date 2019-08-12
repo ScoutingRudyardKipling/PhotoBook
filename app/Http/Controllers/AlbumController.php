@@ -15,7 +15,7 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        return view('album');
+        return view('pages.album.show');
     }
 
     /**
@@ -25,7 +25,7 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        return view('album');
+        return view('pages.album.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        return view('album');
+        return view('pages.album.show');
     }
 
     /**
@@ -52,7 +52,7 @@ class AlbumController extends Controller
         $albums   = $album->childAlbums()->get();
         $contents = $album->contents()->get();
 
-        return view('album', ['albums' => $albums, 'contents' => $contents]);
+        return view('pages.album.show', ['albums' => $albums, 'contents' => $contents]);
     }
 
     /**
@@ -64,7 +64,7 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
-        return view('album');
+        return view('pages.album.show');
     }
 
     /**
@@ -77,7 +77,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        return view('album');
+        return view('pages.album.show');
     }
 
     /**
@@ -89,6 +89,6 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        return view('album');
+        return view('pages.album.show');
     }
 }

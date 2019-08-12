@@ -30,6 +30,6 @@ class HomeController extends Controller
         $albums   = Album::where('parent_id', null)->get();
         $contents = Content::all();
 
-        return view('home', ['albums' => $albums, 'contents' => $contents]);
+        return view('pages.home', ['albums' => $albums, 'contents' => $contents]);
     }
 }

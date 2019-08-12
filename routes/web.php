@@ -19,7 +19,8 @@ Route::group(
     function () {
         Route::resources(
             [
-            'album' => 'AlbumController',
+                'album'   => 'AlbumController',
+                'content' => 'ContentController',
             ]
         );
     }
