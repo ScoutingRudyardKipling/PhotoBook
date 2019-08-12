@@ -13,32 +13,15 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
                         You are logged in!
                     </div>
                 </div>
             </div>
         </div>
+        <h2 class="mt-3">Albums</h2>
         <div class="row">
-            @foreach( $items as $item)
-                <div class="col-6 col-md-4 col-lg-3 mt-3">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ asset('img/350X240.jpg') }}" alt="Card image cap">
-                        <div class="card-header">Groep</div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-        <div class="row">
-            @foreach( $items as $item)
-                <div class="col-6 col-md-4 col-lg-3 mt-3">
-                    <div class="card text-white">
-                        <img class="card-img" src="{{ asset('img/350X240.jpg') }}" alt="Card image">
-                        <div class="card-img-overlay">
-                            <h5 class="card-title">Card title</h5>
-                        </div>
-                    </div>
-                </div>
+            @foreach( $albums as $album)
+                @include('components.album', ['album' => $album])
             @endforeach
         </div>
     </div>

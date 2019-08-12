@@ -19,7 +19,7 @@ system.
 
 What things you need to install the software and how to install them
  * [Composer](https://getcomposer.org/)
- * php 7.1.3 or higher (preferred latest)
+ * php 7.2 or higher (preferred latest)
  * A (local) MySQL database
  * [Node.js](https://nodejs.org/en/download/)
  * NPM (installed with Node.js)

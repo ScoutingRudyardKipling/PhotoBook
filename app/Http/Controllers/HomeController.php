@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
+use App\Models\Content;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,15 +23,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = [
-            '',
-            '',
-            '',
-            '',
-            '',
-        ];
-        return view('home', ['items' => $items]);
+        $albums   = Album::where('parent_id', null)->get();
+        $contents = Content::all();
+//        dd(Album::all());
+//        if ($request->filled('album')) {
+//            $album = $request->get('album');
+//            dd($album);
+//        }
+//        $items = [
+//            '',
+//            '',
+//            '',
+//            '',
+//            '',
+//        ];
+        return view('home', ['albums' => $albums, 'contents' => $contents]);
     }
 }
