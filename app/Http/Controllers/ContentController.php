@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,19 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        return view('pages.content.show');
+        $data = $request->validate(
+            [
+                'content'  => 'required|file',
+                'album_id' => 'nullable|integer',
+            ]
+        );
+        dd($data);
+        $content = Content::create(
+            [
+                'parent_id' => $data->album_id,
+            ]
+        );
+        return redirect()->route('content.show', ['content' => $content->id]);
     }
 
     /**

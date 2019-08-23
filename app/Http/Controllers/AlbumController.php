@@ -37,7 +37,14 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        return view('pages.album.show');
+        $data  = $request->validate(
+            [
+                'name'      => 'required|string|max:190',
+                'parent_id' => 'nullable|integer',
+            ]
+        );
+        $album = Album::create($data);
+        return redirect()->route('album.show', ['album' => $album->id]);
     }
 
     /**
@@ -52,7 +59,14 @@ class AlbumController extends Controller
         $albums   = $album->childAlbums()->get();
         $contents = $album->contents()->get();
 
-        return view('pages.album.show', ['albums' => $albums, 'contents' => $contents]);
+        return view(
+            'pages.album.show',
+            [
+                'album'    => $album,
+                'albums'   => $albums,
+                'contents' => $contents,
+            ]
+        );
     }
 
     /**
