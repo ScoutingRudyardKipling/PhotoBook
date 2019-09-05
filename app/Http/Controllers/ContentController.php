@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Storage;
 
 class ContentController extends Controller
 {
@@ -37,19 +39,35 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate(
+        $data    = $request->validate(
             [
-                'content'  => 'required|file',
+                'content'  => 'required|file|max:20000',
                 'album_id' => 'nullable|integer',
             ]
         );
-        dd($data);
         $content = Content::create(
             [
-                'parent_id' => $data->album_id,
+                'name'      => $request->file('content')->getClientOriginalName(),
+                'parent_id' => $request->get('album_id'),
             ]
         );
-        return redirect()->route('content.show', ['content' => $content->id]);
+        Storage::disk('temp')
+            ->put(
+                $request->file('content')->getClientOriginalName(),
+                File::get($request->file('content'))
+            );
+        $content->addMedia(
+            Storage::disk('temp')->path(
+                $request->file('content')->getClientOriginalName()
+            )
+        )->toMediaCollection();
+
+        return redirect()->route(
+            'album.show',
+            [
+                'album' => $request->get('album_id'),
+            ]
+        );
     }
 
     /**

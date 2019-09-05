@@ -8,7 +8,7 @@
                     <form method="POST" action="{{ route('album.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="albumName">Album naam</label>
+                            <label for="albumName">Album name</label>
                             <input type="text" class="form-control" id="albumName" name="name" placeholder="Zomerkamp">
                         </div>
                         <div class="form-group">

@@ -1,5 +1,8 @@
 <div class="col-6 col-md-4 col-lg-3 mt-4">
     <div class="card text-white">
-        <img class="card-img" src="{{ asset('img/350X240.jpg') }}" alt="{{$content->name}}">
+        @foreach($content->getMedia() as $media)
+            <img class="card-img" src="{{ $media->getUrl() }}" alt="{{$content->name}}">
+        @endforeach
+        <div class="card-header">{{$content->name}}</div>
     </div>
 </div>
