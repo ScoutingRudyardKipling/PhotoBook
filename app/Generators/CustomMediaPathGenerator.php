@@ -22,5 +22,4 @@ class CustomMediaPathGenerator implements PathGenerator
     {
         return 'responsive-images' . DIRECTORY_SEPARATOR . $this->getPath($media);
     }
-
 }
