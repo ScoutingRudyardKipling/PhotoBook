@@ -58,6 +58,10 @@ return [
             'driver' => 'local',
             'root'   => storage_path('app/media'),
         ],
+        'old'  => [
+            'driver' => 'local',
+            'root'   => storage_path('old'),
+        ],
         'temp'   => [
             'driver' => 'local',
             'root'   => storage_path('tmp'),

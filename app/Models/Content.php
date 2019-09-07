@@ -45,7 +45,7 @@ class Content extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
-            ->height(500);
+            ->width(300);
     }
 
     /**
