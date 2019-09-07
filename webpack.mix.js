@@ -12,6 +12,10 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
-    .copyDirectory('resources/assets/img', 'public/img')
-    .copyDirectory('resources/assets/fonts', 'public/fonts');
+  .sass('resources/assets/sass/app.scss', 'public/css')
+  .copyDirectory('resources/assets/img', 'public/img')
+  .copyDirectory('resources/assets/fonts', 'public/fonts')
+  .copy('node_modules/magnific-popup/dist/magnific-popup.css', 'public/css/packages')
+  .copy('node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.css', 'public/css/packages')
+  .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'public/css/packages')
+;

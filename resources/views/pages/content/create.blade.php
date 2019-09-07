@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label for="inputState">Album</label>
                             <select id="inputState" name="album_id" class="form-control">
-                                <option selected>Top level</option>
+                                <option selected value="null">Top level</option>
                                 @foreach(\App\Models\Album::all() as $album)
                                     <option value="{{$album->id}}">{{$album->name}}</option>
                                 @endforeach

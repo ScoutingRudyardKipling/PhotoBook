@@ -5,6 +5,24 @@
  */
 
 require('./bootstrap');
+require('bootstrap-material-design');
+require('magnific-popup');
+jQuery('.js-gallery:not(.js-gallery-enabled)').each(function() {
+    let el = jQuery(this);
+
+    // Add .js-gallery-enabled class to tag it as activated
+    el.addClass('js-gallery-enabled');
+
+    // Init
+    el.magnificPopup({
+        delegate: 'a.img-lightbox',
+        type: 'image',
+        gallery: {
+            enabled: true
+        }
+    });
+});
+
 //
 // window.Vue = require('vue');
 //

@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label for="inputState">Parent</label>
                             <select id="inputState" name="parent_id" class="form-control">
-                                <option selected>Top level</option>
+                                <option selected value="">Top level</option>
                                 @foreach(\App\Models\Album::all() as $parent)
                                     <option value="{{$parent->id}}">{{$parent->name}}</option>
                                 @endforeach

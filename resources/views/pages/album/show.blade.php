@@ -14,7 +14,7 @@
     @endif
     @if (count($contents) > 0)
         <h2 class="mt-3">Content</h2>
-        <div class="row">
+        <div class="row js-gallery gutters-tiny">
             @foreach( $contents as $content)
                 @include('components.content', ['content' => $content])
             @endforeach

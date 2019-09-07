@@ -1,12 +1,15 @@
 <?php
 
+use App\Generators\CustomMediaPathGenerator;
+use App\Generators\CustomMediaUrlGenerator;
+
 return [
 
     /*
      * The disk on which to store added files and derived images by default. Choose
      * one or more of the disks you've configured in config/filesystems.php.
      */
-    'disk_name' => env('MEDIA_DISK', 'public'),
+    'disk_name' => env('MEDIA_DISK', 'media'),
 
     /*
      * The maximum file size of an item in bytes.
@@ -74,12 +77,12 @@ return [
      * When urls to files get generated, this class will be called. Leave empty
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => null,
+    'url_generator' => CustomMediaUrlGenerator::class,
 
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => null,
+    'path_generator' => CustomMediaPathGenerator::class,
 
     /*
      * Medialibrary will try to optimize all converted images by removing
@@ -137,7 +140,7 @@ return [
      * The path where to store temporary files while performing image conversions.
      * If set to null, storage_path('medialibrary/temp') will be used.
      */
-    'temporary_directory_path' => null,
+    'temporary_directory_path' => storage_path('tmp'),
 
     /*
      * Here you can override the class names of the jobs used by this package. Make sure

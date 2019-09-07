@@ -23,5 +23,9 @@ Route::group(
                 'content' => 'ContentController',
             ]
         );
+        Route::get('/media/{filePath}', 'MediaController@get')
+            ->where('filePath', '.*')
+            ->name('media.get');
+
     }
 );
