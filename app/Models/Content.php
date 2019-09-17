@@ -42,6 +42,12 @@ class Content extends Model implements HasMedia
         return $this->belongsTo(Album::class, 'parent_id');
     }
 
+    /**
+     * @param \Spatie\MediaLibrary\Models\Media|null $media
+     *
+     * @return void
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')

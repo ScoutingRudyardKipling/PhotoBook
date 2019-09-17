@@ -26,6 +26,8 @@ class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
      */
     public function getTemporaryUrl(DateTimeInterface $expiration, array $options = []): string
     {
+        unset($expiration);
+        unset($options);
         // TODO: Implement getTemporaryUrl() method.
         return '';
     }

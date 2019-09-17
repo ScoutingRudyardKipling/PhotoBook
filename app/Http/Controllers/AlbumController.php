@@ -11,7 +11,7 @@ class AlbumController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -21,7 +21,7 @@ class AlbumController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -33,7 +33,7 @@ class AlbumController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class AlbumController extends Controller
      *
      * @param \App\Models\Album $album
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Album $album)
     {
@@ -74,10 +74,12 @@ class AlbumController extends Controller
      *
      * @param \App\Models\Album $album
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Album $album)
     {
+        // TODO: Implement
+        unset($album);
         return view('pages.album.show');
     }
 
@@ -87,10 +89,13 @@ class AlbumController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Album        $album
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function update(Request $request, Album $album)
     {
+        // TODO: Implement
+        unset($album);
+        unset($request);
         return view('pages.album.show');
     }
 
@@ -99,10 +104,12 @@ class AlbumController extends Controller
      *
      * @param \App\Models\Album $album
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Album $album)
     {
-        return view('pages.album.show');
+        // TODO: Implement
+        unset($album);
+        return redirect()->route('album.show');
     }
 }

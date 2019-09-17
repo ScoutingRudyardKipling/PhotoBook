@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Content;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -21,11 +20,9 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param Request $request
-     *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
         $albums   = Album::where('parent_id', null)->get();
         $contents = Content::all();

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -13,7 +12,7 @@ class ContentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -23,7 +22,7 @@ class ContentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -35,11 +34,12 @@ class ContentController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function store(Request $request)
     {
-        $data    = $request->validate(
+        $request->validate(
             [
                 'content'  => 'required|file|max:20000',
                 'album_id' => 'nullable|integer',
@@ -75,10 +75,12 @@ class ContentController extends Controller
      *
      * @param \App\Models\Content $content
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(Content $content)
     {
+        // TODO: Implement
+        unset($content);
         return view('pages.content.show');
     }
 
@@ -87,10 +89,12 @@ class ContentController extends Controller
      *
      * @param \App\Models\Content $content
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Content $content)
     {
+        // TODO: Implement
+        unset($content);
         return view('pages.content.show');
     }
 
@@ -100,11 +104,14 @@ class ContentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Content      $content
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Content $content)
     {
-        return view('pages.content.show');
+        // TODO: Implement
+        unset($content);
+        unset($request);
+        return redirect()->route('content.show');
     }
 
     /**
@@ -112,10 +119,12 @@ class ContentController extends Controller
      *
      * @param \App\Models\Content $content
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Content $content)
     {
-        return view('pages.content.show');
+        // TODO: Implement
+        unset($content);
+        return redirect()->route('content.show');
     }
 }

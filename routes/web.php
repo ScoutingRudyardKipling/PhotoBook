@@ -13,7 +13,7 @@
 
 Auth::routes(
     [
-        'register' => false,
+        'register' => true,
         'reset'    => false,
         'verify'   => false,
     ]

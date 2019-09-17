@@ -60,7 +60,6 @@ return [
         ],
         'old'  => [
             'driver' => 'local',
-            'root'   => storage_path('old'),
             'root'   => env('OLD_DRIVER', storage_path('old')),
         ],
         'temp'   => [
