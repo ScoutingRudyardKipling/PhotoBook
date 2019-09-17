@@ -56,15 +56,16 @@ return [
         ],
         'media'  => [
             'driver' => 'local',
-            'root'   => storage_path('app/media'),
+            'root'   => env('MEDIA_DRIVER', storage_path('app/media')),
         ],
         'old'  => [
             'driver' => 'local',
             'root'   => storage_path('old'),
+            'root'   => env('OLD_DRIVER', storage_path('old')),
         ],
         'temp'   => [
             'driver' => 'local',
-            'root'   => storage_path('tmp'),
+            'root'   => env('TMP_DRIVER', storage_path('tmp')),
         ],
         's3'     => [
             'driver' => 's3',

@@ -41,6 +41,9 @@ class UpgradeFromOldPhotobook extends Command
      */
     public function handle()
     {
+        $this->info('Starting the upgrade from the photobook');
+        $this->output->progressStart(count(Storage::disk('old')->allDirectories()) + 1);
+
         $parentDirectories = Storage::disk('old')->directories();
         foreach ($parentDirectories as $parentDirectory) {
             $directory = Album::create(
@@ -51,14 +54,19 @@ class UpgradeFromOldPhotobook extends Command
             );
             $this->readDirectory($directory);
         }
+        $this->output->progressFinish();
+        $this->info('The upgrade is done');
     }
 
     private function readDirectory(Album $parentAlbum)
     {
+        $this->output->progressAdvance();
+        $this->info('found directory : ' . $parentAlbum->name);
         $directories = Storage::disk('old')->directories($parentAlbum->getPath());
         $files       = Storage::disk('old')->files($parentAlbum->getPath());
         // move all images to the new driver (and create thumbnails)
         foreach ($files as $file) {
+            $this->comment('migrating file : ' . $file);
             preg_match('/.*\/(.*?$)/', $file, $matches);
             $content = Content::create(
                 [
