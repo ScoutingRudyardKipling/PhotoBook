@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 'name'               => $data['name'],
                 'email'              => $data['email'],
                 'password'           => Hash::make($data['password']),
-                'birth_date'         => Carbon::now()->format('Y-d-m'),
+                'birth_date'         => Carbon::now()->format('Y-m-d'),
                 'gender'             => 'male/female',
                 'preferred_language' => 'nl/nl',
             ]
