@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -61,12 +62,17 @@ class Content extends Model implements HasMedia
      */
     public function getAlbumPath()
     {
-        // TODO:: could be cached...
-        $path = "";
-        if (!is_null($this->parent_id)) {
-            $path = $this->parent->getPath();
-        }
-        return $path;
+        $cache = Cache::rememberForever(
+            'getAlbumPath' . $this->id,
+            function () {
+                $path = "";
+                if (!is_null($this->parent_id)) {
+                    $path = $this->parent->getPath();
+                }
+                return $path;
+            }
+        );
+        return $cache;
     }
 
     /**
@@ -74,6 +80,39 @@ class Content extends Model implements HasMedia
      */
     public function getPath()
     {
-        return $this->getAlbumPath() . DIRECTORY_SEPARATOR . $this->name;
+        $cache = Cache::rememberForever(
+            'getPath' . $this->id,
+            function () {
+                return $this->getAlbumPath() . DIRECTORY_SEPARATOR . $this->name;
+            }
+        );
+        return $cache;
+
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(
+            function ($model) {
+                Cache::delete('getPath' . $model->id);
+                Cache::delete('getAlbumPath' . $model->id);
+            }
+        );
+
+        static::updating(
+            function ($model) {
+                Cache::delete('getPath' . $model->id);
+                Cache::delete('getAlbumPath' . $model->id);
+            }
+        );
+
+        static::deleting(
+            function ($model) {
+                Cache::delete('getPath' . $model->id);
+                Cache::delete('getAlbumPath' . $model->id);
+            }
+        );
     }
 }

@@ -64,12 +64,9 @@ class Album extends Model
      */
     public function getPath()
     {
-        $minutes = 60;
-        $cache   = Cache::remember(
+        $cache = Cache::rememberForever(
             'albumPath' . $this->id,
-            $minutes,
             function () {
-
                 $path = $this->name;
                 if (!is_null($this->parent_id)) {
                     $parentAlbum = self::find($this->parent_id);
@@ -80,5 +77,28 @@ class Album extends Model
             }
         );
         return $cache;
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(
+            function ($model) {
+                Cache::delete('albumPath' . $model->id);
+            }
+        );
+
+        static::updating(
+            function ($model) {
+                Cache::delete('albumPath' . $model->id);
+            }
+        );
+
+        static::deleting(
+            function ($model) {
+                Cache::delete('albumPath' . $model->id);
+            }
+        );
     }
 }
