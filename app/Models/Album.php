@@ -44,6 +44,15 @@ class Album extends Model
         return $this->hasMany(Content::class, 'parent_id');
     }
 
+    public function getFeaturedContent()
+    {
+        $content = $this->contents()->first();
+        if (is_null($content)) {
+            $content = $this->childAlbums()->first()->getFeaturedContent();
+        }
+        return $content;
+    }
+
     public function childAlbums()
     {
         return $this->hasMany(self::class, 'parent_id');
