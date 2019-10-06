@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use File;
-use Log;
 use Storage;
-use Validator;
 
 class MediaController extends Controller
 {
@@ -17,7 +13,6 @@ class MediaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
         $this->disk          = config("medialibrary.disk_name");
         $this->temporaryDisk = 'temp';
     }

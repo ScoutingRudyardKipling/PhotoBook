@@ -75,7 +75,7 @@ class UpgradeFromOldPhotobook extends Command
                 ]
             );
             $content->addMedia(
-                Storage::disk('old')->path($content->getCompletePath())
+                Storage::disk('old')->path($content->getPath())
             )->toMediaCollection();
         }
         // call the readDirectory method to all sub directories

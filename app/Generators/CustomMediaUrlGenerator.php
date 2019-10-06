@@ -13,7 +13,7 @@ class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
      */
     public function getUrl(): string
     {
-        return url('/media/' . $this->getPathRelativeToAlbum());
+        return url('/media/' . $this->getPath());
     }
 
     /**
@@ -60,18 +60,5 @@ class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
     {
         $diskRootPath = $this->config->get("filesystems.disks.{$this->media->disk}.root");
         return realpath($diskRootPath);
-    }
-
-    public function getPathRelativeToAlbum(): string
-    {
-        if (is_null($this->conversion)) {
-            return $this->pathGenerator->getPath($this->media) . ($this->media->file_name);
-        }
-
-        return $this->pathGenerator->getPathForConversions($this->media)
-            . pathinfo($this->media->file_name, PATHINFO_FILENAME)
-            . '-' . $this->conversion->getName()
-            . '.'
-            . $this->conversion->getResultExtension($this->media->extension);
     }
 }

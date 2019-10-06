@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * App\Models\Album
@@ -63,12 +64,21 @@ class Album extends Model
      */
     public function getPath()
     {
-        $path = $this->name;
-        $i    = self::find($this->id);
-        while (!empty($i->parent_id)) {
-            $i    = self::find($i->parent_id);
-            $path = $i->name . DIRECTORY_SEPARATOR . $path;
-        }
-        return $path;
+        $minutes = 60;
+        $cache   = Cache::remember(
+            'albumPath' . $this->id,
+            $minutes,
+            function () {
+
+                $path = $this->name;
+                if (!is_null($this->parent_id)) {
+                    $parentAlbum = self::find($this->parent_id);
+                    $parentPath  = $parentAlbum->getPath();
+                    $path        = $parentPath . DIRECTORY_SEPARATOR . $this->name;
+                }
+                return $path;
+            }
+        );
+        return $cache;
     }
 }

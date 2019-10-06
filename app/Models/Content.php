@@ -52,18 +52,19 @@ class Content extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')
             ->width(300);
+        $this->addMediaConversion('tiny')
+            ->width(20);
     }
 
     /**
      * @return string
      */
-    public function getPath()
+    public function getAlbumPath()
     {
+        // TODO:: could be cached...
         $path = "";
-        $i    = self::find($this->id);
-        while (!empty($i->parent_id)) {
-            $i    = Album::find($i->parent_id);
-            $path = $i->name . DIRECTORY_SEPARATOR . $path;
+        if (!is_null($this->parent_id)) {
+            $path = $this->parent->getPath();
         }
         return $path;
     }
@@ -71,8 +72,8 @@ class Content extends Model implements HasMedia
     /**
      * @return string
      */
-    public function getCompletePath()
+    public function getPath()
     {
-        return $this->getPath() . DIRECTORY_SEPARATOR . $this->name;
+        return $this->getAlbumPath() . DIRECTORY_SEPARATOR . $this->name;
     }
 }
