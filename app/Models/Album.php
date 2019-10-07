@@ -44,7 +44,7 @@ class Album extends Model
     {
         return $this->hasMany(Content::class, 'parent_id');
     }
-    
+
     public function getFeaturedContent()
     {
         $content = $this->contents()->first();
