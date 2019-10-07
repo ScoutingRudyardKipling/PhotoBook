@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Exception\NotReadableException;
 
 class UpgradeFromRudyardKipling extends Command
 {
@@ -78,9 +80,23 @@ class UpgradeFromRudyardKipling extends Command
                     'parent_id' => $parentAlbum->id,
                 ]
             );
-            $content->addMedia(
-                Storage::disk('old')->path($content->getPath())
-            )->toMediaCollection();
+            try {
+                $content->addMedia(
+                    Storage::disk('old')->path($content->getPath())
+                )->toMediaCollection();
+            } catch (NotReadableException $e) {
+                Log::error(
+                    'image with id :'
+                    . $content->id
+                    . ' and name: '
+                    . $content->name
+                    . ' is invalid and will not be migrated to the new photobook.'
+                );
+                Log::error($e->getCode() . ' : ' . $e->getMessage());
+
+                $content->delete();
+            }
+
         }
         // call the readDirectory method to all sub directories
         foreach ($directories as $directory) {
