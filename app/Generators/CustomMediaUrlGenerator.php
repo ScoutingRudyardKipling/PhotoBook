@@ -50,15 +50,6 @@ class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
      */
     public function getPath(): string
     {
-        if ($this->media->disk === 'public') {
-            return $this->getStoragePath() . '/' . $this->getPathRelativeToRoot();
-        }
         return $this->getPathRelativeToRoot();
-    }
-
-    protected function getStoragePath(): string
-    {
-        $diskRootPath = $this->config->get("filesystems.disks.{$this->media->disk}.root");
-        return realpath($diskRootPath);
     }
 }

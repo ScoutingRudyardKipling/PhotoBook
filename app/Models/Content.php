@@ -48,6 +48,8 @@ class Content extends Model implements HasMedia
      *
      * @return void
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function registerMediaConversions(Media $media = null)
     {
@@ -87,7 +89,6 @@ class Content extends Model implements HasMedia
             }
         );
         return $cache;
-
     }
 
     public static function boot()

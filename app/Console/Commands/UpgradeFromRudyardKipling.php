@@ -6,23 +6,22 @@ use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\Models\Media;
 
-class UpgradeFromOldPhotobook extends Command
+class UpgradeFromRudyardKipling extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'upgrade:from-old-photobook';
+    protected $signature = 'upgrade:rudyard-kipling';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Upgrading from the old photobook. Reading file structure and add files to the application.';
+    protected $description = 'Upgrading from the old photobook. Reading and migrating file structure and add files to the application.';
 
     /**
      * Create a new command instance.
@@ -41,12 +40,17 @@ class UpgradeFromOldPhotobook extends Command
      */
     public function handle()
     {
+        $this->info('Clear cache');
+        $this->call('cache:clear');
+        $this->info('Clear config cache');
+        $this->call('config:clear');
+
         $this->info('Starting the upgrade from the photobook');
         $this->output->progressStart(count(Storage::disk('old')->allDirectories()) + 1);
 
         $parentDirectories = Storage::disk('old')->directories();
         foreach ($parentDirectories as $parentDirectory) {
-            $directory = Album::create(
+            $directory = Album::firstOrCreate(
                 [
                     'name'      => $parentDirectory,
                     'parent_id' => null,
@@ -68,7 +72,7 @@ class UpgradeFromOldPhotobook extends Command
         foreach ($files as $file) {
             $this->comment('migrating file : ' . $file);
             preg_match('/.*\/(.*?$)/', $file, $matches);
-            $content = Content::create(
+            $content = Content::firstOrCreate(
                 [
                     'name'      => $matches[1],
                     'parent_id' => $parentAlbum->id,
@@ -81,7 +85,7 @@ class UpgradeFromOldPhotobook extends Command
         // call the readDirectory method to all sub directories
         foreach ($directories as $directory) {
             preg_match('/.*\/(.*?$)/', $directory, $matches);
-            $newDirectoryAlbum = Album::create(
+            $newDirectoryAlbum = Album::firstOrCreate(
                 [
                     'name'      => $matches[1],
                     'parent_id' => $parentAlbum->id,

@@ -44,12 +44,15 @@ class Album extends Model
     {
         return $this->hasMany(Content::class, 'parent_id');
     }
-
+    
     public function getFeaturedContent()
     {
         $content = $this->contents()->first();
         if (is_null($content)) {
-            $content = $this->childAlbums()->first()->getFeaturedContent();
+            $firstChildAlbum = $this->childAlbums()->first();
+            if (!is_null($firstChildAlbum)) {
+                $content = $firstChildAlbum->getFeaturedContent();
+            }
         }
         return $content;
     }
@@ -62,14 +65,14 @@ class Album extends Model
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         $cache = Cache::rememberForever(
             'albumPath' . $this->id,
             function () {
                 $path = $this->name;
                 if (!is_null($this->parent_id)) {
-                    $parentAlbum = self::find($this->parent_id);
+                    $parentAlbum = Album::find($this->parent_id);
                     $parentPath  = $parentAlbum->getPath();
                     $path        = $parentPath . DIRECTORY_SEPARATOR . $this->name;
                 }
