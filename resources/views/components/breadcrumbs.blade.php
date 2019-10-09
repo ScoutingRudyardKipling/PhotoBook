@@ -1,5 +1,4 @@
 <div>
-    <a href="{{route('home')}}">Home</a> >
     @php
         $breadBrumbArray = collect();
         $i = $album->parent;
@@ -10,6 +9,10 @@
             $iterator++;
         }
     @endphp
+    <a href="{{route('home')}}">Home</a>
+    @if ($breadBrumbArray->isNotEmpty())
+        >
+    @endif
     @foreach($breadBrumbArray as $crumb)
         <a href="{{route("album.show", [$crumb['id']])}}"> {{$crumb['name']}}</a>
         @if (! $loop->last)
