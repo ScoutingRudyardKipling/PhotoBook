@@ -38,6 +38,11 @@ class Content extends Model implements HasMedia
         'parent_id',
     ];
 
+    private $conversions = [
+        'thumb' => '300',
+        'tiny'  => '20',
+    ];
+
     public function parent()
     {
         return $this->belongsTo(Album::class, 'parent_id');
@@ -53,10 +58,10 @@ class Content extends Model implements HasMedia
      */
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')
-            ->width(300);
-        $this->addMediaConversion('tiny')
-            ->width(20);
+        foreach ($this->conversions as $conversionName => $conversionSize) {
+            $this->addMediaConversion($conversionName)
+                ->width($conversionSize);
+        }
     }
 
     /**
@@ -82,13 +87,31 @@ class Content extends Model implements HasMedia
      */
     public function getPath()
     {
+        return $this->getAlbumPath() . DIRECTORY_SEPARATOR . $this->name;
+    }
+
+    public function getUrl(string $mediaType = ''): string
+    {
         $cache = Cache::rememberForever(
-            'getPath' . $this->id,
-            function () {
-                return $this->getAlbumPath() . DIRECTORY_SEPARATOR . $this->name;
+            'mediaUrl' . $mediaType . $this->id,
+            function () use ($mediaType) {
+                return $this->getFirstMediaUrl('default', $mediaType);
             }
         );
         return $cache;
+    }
+
+    public function deleteCache()
+    {
+        foreach (array_keys($this->conversions) as $conversion) {
+            Cache::delete('mediaUrl' . $conversion . $this->id);
+        }
+        Cache::delete('getAlbumPath' . $this->id);
+        if (!empty($this->parent)) {
+            if ($this->parent->getFeaturedContent()->id === $this->id) {
+                $this->parent->deleteFeaturedThumbCache();
+            }
+        }
     }
 
     public static function boot()
@@ -97,22 +120,19 @@ class Content extends Model implements HasMedia
 
         static::creating(
             function ($model) {
-                Cache::delete('getPath' . $model->id);
-                Cache::delete('getAlbumPath' . $model->id);
+                $model->deleteCache();
             }
         );
 
         static::updating(
             function ($model) {
-                Cache::delete('getPath' . $model->id);
-                Cache::delete('getAlbumPath' . $model->id);
+                $model->deleteCache();
             }
         );
 
         static::deleting(
             function ($model) {
-                Cache::delete('getPath' . $model->id);
-                Cache::delete('getAlbumPath' . $model->id);
+                $model->deleteCache();
             }
         );
     }

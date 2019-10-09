@@ -45,6 +45,7 @@ class Album extends Model
         return $this->hasMany(Content::class, 'parent_id');
     }
 
+
     public function getFeaturedContent()
     {
         $content = $this->contents()->first();
@@ -55,6 +56,20 @@ class Album extends Model
             }
         }
         return $content;
+    }
+
+    public function getFeaturedContentThumb()
+    {
+        $cache = Cache::rememberForever(
+            'featuredThumbUrl' . $this->id,
+            function () {
+                if (empty($this->getFeaturedContent())) {
+                    return null;
+                }
+                return $this->getFeaturedContent()->getFirstMediaUrl('default', 'thumb');
+            }
+        );
+        return $cache;
     }
 
     public function childAlbums()
@@ -82,25 +97,45 @@ class Album extends Model
         return $cache;
     }
 
+    public function deleteCache()
+    {
+        Cache::delete('albumPath' . $this->id);
+        $this->deleteFeaturedThumbCache();
+        foreach ($this->childAlbums as $childAlbum) {
+            $childAlbum->deleteCache();
+        }
+        foreach ($this->contents as $content) {
+            $content->deleteCache();
+        }
+    }
+
+    public function deleteFeaturedThumbCache()
+    {
+        Cache::delete('featuredThumbUrl' . $this->id);
+        if (!empty($this->parent)) {
+            $this->parent->deleteFeaturedThumbCache();
+        }
+    }
+
     public static function boot()
     {
         parent::boot();
 
         static::creating(
             function ($model) {
-                Cache::delete('albumPath' . $model->id);
+                $model->deleteCache();
             }
         );
 
         static::updating(
             function ($model) {
-                Cache::delete('albumPath' . $model->id);
+                $model->deleteCache();
             }
         );
 
         static::deleting(
             function ($model) {
-                Cache::delete('albumPath' . $model->id);
+                $model->deleteCache();
             }
         );
     }

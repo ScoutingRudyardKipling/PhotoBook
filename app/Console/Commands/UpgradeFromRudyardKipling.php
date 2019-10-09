@@ -96,7 +96,6 @@ class UpgradeFromRudyardKipling extends Command
 
                 $content->delete();
             }
-
         }
         // call the readDirectory method to all sub directories
         foreach ($directories as $directory) {
