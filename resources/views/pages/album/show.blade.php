@@ -4,6 +4,7 @@
     <h1 class="mt3">
         {{$album->name}}
     </h1>
+    @include('components.breadcrumbs', ['album' => $album])
     @if (count($albums) > 0)
         <h2 class="mt-3">Albums</h2>
         <div class="row">
