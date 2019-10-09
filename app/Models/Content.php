@@ -118,6 +118,11 @@ class Content extends Model implements HasMedia
         }
     }
 
+    public function shouldDeletePreservingMedia()
+    {
+        return true;
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -132,14 +137,14 @@ class Content extends Model implements HasMedia
             function ($model) {
                 $media = $model->media()->first()->file_name;
 
-                $originalParent = Album::find(
+                $originalParent     = Album::find(
                     ($model->getOriginal()['parent_id'] ?? null)
                 );
                 $originalParentPath = '';
                 if (!is_null($originalParent)) {
                     $originalParentPath = $originalParent->getPath() . DIRECTORY_SEPARATOR;
                 }
-                $dirtyParent = Album::find(
+                $dirtyParent     = Album::find(
                     ($model->getAttributes()['parent_id'] ?? null)
                 );
                 $dirtyParentPath = '';
@@ -172,7 +177,24 @@ class Content extends Model implements HasMedia
 
         static::deleting(
             function ($model) {
-                // TODO: implement with the deletion of the file and the cooperation of the libary
+                $media      = $model->media()->first()->file_name;
+                $parent     = $model->parent;
+                $parentPath = '';
+                if (!is_null($parent)) {
+                    $parentPath = $parent->getPath() . DIRECTORY_SEPARATOR;
+                }
+                Storage::disk('media')->delete($parentPath . $media);
+
+                $mediaName      = explode('.', $media)[0];
+                $mediaExtention = explode('.', $media)[1];
+                foreach (array_keys($model->conversions) as $conversion) {
+                    Storage::disk('media')->delete(
+                        'conversions' . DIRECTORY_SEPARATOR . $parentPath . $mediaName . '-' . $conversion . '.' . $mediaExtention
+                    );
+                }
+                if (!is_null($parent)) {
+                    $parent->deleteCache();
+                }
                 $model->deleteCache();
             }
         );

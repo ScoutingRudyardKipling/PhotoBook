@@ -77,7 +77,7 @@ class AlbumController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Album        $album
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Album $album)
     {
