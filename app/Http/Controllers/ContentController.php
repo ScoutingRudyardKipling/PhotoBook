@@ -34,14 +34,14 @@ class ContentController extends Controller
     {
         $request->validate(
             [
-                'content'  => 'required|file|max:20000',
-                'album_id' => 'nullable|integer',
+                'content'   => 'required|file|max:20000',
+                'parent_id' => 'required|integer',
             ]
         );
         $content = Content::create(
             [
                 'name'      => $request->file('content')->getClientOriginalName(),
-                'parent_id' => $request->get('album_id'),
+                'parent_id' => $request->get('parent_id'),
             ]
         );
         Storage::disk('temp')
@@ -58,7 +58,7 @@ class ContentController extends Controller
         return redirect()->route(
             'album.show',
             [
-                'album' => $request->get('album_id'),
+                'album' => $request->get('parent_id'),
             ]
         );
     }
@@ -97,10 +97,14 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        // TODO: Implement
-        unset($content);
-        unset($request);
-        return redirect()->route('content.show');
+        $data = $request->validate(
+            [
+                'name'      => 'required|string|max:190',
+                'parent_id' => 'required|integer',
+            ]
+        );
+        $content->update($data);
+        return redirect()->route('content.show', ['content' => $content->id]);
     }
 
     /**
@@ -109,11 +113,12 @@ class ContentController extends Controller
      * @param \App\Models\Content $content
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Content $content)
     {
-        // TODO: Implement
-        unset($content);
-        return redirect()->route('content.show');
+        $content->delete();
+
+        return redirect()->route('home');
     }
 }

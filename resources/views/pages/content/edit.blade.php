@@ -10,6 +10,10 @@
                 <div class="card-body">
                     <form action="{{ route('content.update', $content->id) }}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
+                        <div class="form-group">
+                            <label for="contentName">Content name</label>
+                            <input type="text" value="{{$content->name ?? old('name')}}" class="form-control" id="contentName" name="name" placeholder="Groepsfoto">
+                        </div>
                         @include('pages.content.fields', ['content' => $content])
                     </form>
                 </div>

@@ -81,7 +81,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        $data  = $request->validate(
+        $data = $request->validate(
             [
                 'name'      => 'required|string|max:190',
                 'parent_id' => 'nullable|integer',
@@ -97,11 +97,12 @@ class AlbumController extends Controller
      * @param \App\Models\Album $album
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Album $album)
     {
-        // TODO: Implement
-        unset($album);
-        return redirect()->route('album.show');
+        $album->delete();
+
+        return redirect()->route('home');
     }
 }

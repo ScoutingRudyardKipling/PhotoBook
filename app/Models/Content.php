@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -103,6 +104,7 @@ class Content extends Model implements HasMedia
 
     public function deleteCache()
     {
+        Cache::delete('mediaUrl' . $this->id);
         foreach (array_keys($this->conversions) as $conversion) {
             Cache::delete('mediaUrl' . $conversion . $this->id);
         }
@@ -128,14 +130,49 @@ class Content extends Model implements HasMedia
 
         static::updating(
             function ($model) {
-                // TODO: override update behaviour of the image package
+                $media = $model->media()->first()->file_name;
+
+                $originalParent = Album::find(
+                    ($model->getOriginal()['parent_id'] ?? null)
+                );
+                $originalParentPath = '';
+                if (!is_null($originalParent)) {
+                    $originalParentPath = $originalParent->getPath() . DIRECTORY_SEPARATOR;
+                }
+                $dirtyParent = Album::find(
+                    ($model->getAttributes()['parent_id'] ?? null)
+                );
+                $dirtyParentPath = '';
+                if (!is_null($dirtyParent)) {
+                    $dirtyParentPath = $dirtyParent->getPath() . DIRECTORY_SEPARATOR;
+                }
+                Storage::disk('media')->move(
+                    $originalParentPath . $media,
+                    $dirtyParentPath . $media
+                );
+                $mediaName      = explode('.', $media)[0];
+                $mediaExtention = explode('.', $media)[1];
+                foreach (array_keys($model->conversions) as $conversion) {
+                    Storage::disk('media')->move(
+                        'conversions' . DIRECTORY_SEPARATOR . $originalParentPath
+                        . $mediaName . '-' . $conversion . '.' . $mediaExtention,
+                        'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath
+                        . $mediaName . '-' . $conversion . '.' . $mediaExtention
+                    );
+                }
                 $model->deleteCache();
+                if (!is_null($originalParent)) {
+                    $originalParent->deleteCache();
+                }
+                if (!is_null($dirtyParent)) {
+                    $originalParent->deleteCache();
+                }
             }
         );
 
         static::deleting(
             function ($model) {
-                // TODO: override deletion behaviour of the image package
+                // TODO: implement with the deletion of the file and the cooperation of the libary
                 $model->deleteCache();
             }
         );
