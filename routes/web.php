@@ -9,6 +9,17 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+
+ All routes coming with a default resource route
+Verb          Path                        Action  Route Name
+GET           /users                      index   users.index
+GET           /users/create               create  users.create
+POST          /users                      store   users.store
+GET           /users/{user}               show    users.show
+GET           /users/{user}/edit          edit    users.edit
+PUT|PATCH     /users/{user}               update  users.update
+DELETE        /users/{user}               destroy users.destroy
+
 */
 
 Auth::routes(
@@ -23,10 +34,22 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(
     ['middleware' => ['auth']],
     function () {
-        Route::resources(
+        Route::resource(
+            'album',
+            'AlbumController',
             [
-                'album'   => 'AlbumController',
-                'content' => 'ContentController',
+                'except' => [
+                    'index',
+                ],
+            ]
+        );
+        Route::resource(
+            'content',
+            'ContentController',
+            [
+                'except' => [
+                    'index',
+                ],
             ]
         );
         Route::get('/media/{filePath}', 'MediaController@get')

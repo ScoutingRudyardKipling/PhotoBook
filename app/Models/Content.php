@@ -108,8 +108,10 @@ class Content extends Model implements HasMedia
         }
         Cache::delete('getAlbumPath' . $this->id);
         if (!empty($this->parent)) {
-            if ($this->parent->getFeaturedContent()->id === $this->id) {
-                $this->parent->deleteFeaturedThumbCache();
+            if (!empty($this->parent->getFeaturedContent())) {
+                if ($this->parent->getFeaturedContent()->id === $this->id) {
+                    $this->parent->deleteFeaturedThumbCache();
+                }
             }
         }
     }
@@ -126,12 +128,14 @@ class Content extends Model implements HasMedia
 
         static::updating(
             function ($model) {
+                // TODO: override update behaviour of the image package
                 $model->deleteCache();
             }
         );
 
         static::deleting(
             function ($model) {
+                // TODO: override deletion behaviour of the image package
                 $model->deleteCache();
             }
         );

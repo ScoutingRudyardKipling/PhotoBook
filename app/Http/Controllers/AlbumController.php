@@ -9,16 +9,6 @@ use Illuminate\Http\Request;
 class AlbumController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        return view('pages.album.show');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -78,9 +68,7 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
-        // TODO: Implement
-        unset($album);
-        return view('pages.album.show');
+        return view('pages.album.edit', ['album' => $album]);
     }
 
     /**
@@ -93,10 +81,14 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        // TODO: Implement
-        unset($album);
-        unset($request);
-        return view('pages.album.show');
+        $data  = $request->validate(
+            [
+                'name'      => 'required|string|max:190',
+                'parent_id' => 'nullable|integer',
+            ]
+        );
+        $album->update($data);
+        return redirect()->route('album.show', ['album' => $album->id]);
     }
 
     /**

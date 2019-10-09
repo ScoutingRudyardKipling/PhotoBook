@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Models\Album
@@ -123,18 +124,48 @@ class Album extends Model
 
         static::creating(
             function ($model) {
+                Storage::disk('media')->createDir($model->getPath());
+                Storage::disk('media')->createDir('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
                 $model->deleteCache();
             }
         );
 
         static::updating(
             function ($model) {
+                $originalParentPath = Album::find(
+                    ($model->getOriginal()['parent_id'] ?? null)
+                );
+                if (!is_null($originalParentPath)) {
+                    $originalParentPath = $originalParentPath->getPath() . DIRECTORY_SEPARATOR;
+                }
+                $dirtyParentPath = Album::find(
+                    ($model->getAttributes()['parent_id'] ?? null)
+                );
+                if (!is_null($dirtyParentPath)) {
+                    $dirtyParentPath = $dirtyParentPath->getPath() . DIRECTORY_SEPARATOR;
+                }
+                Storage::disk('media')->move(
+                    $originalParentPath . $model->getOriginal()['name'],
+                    $dirtyParentPath . $model->getAttributes()['name']
+                );
+                Storage::disk('media')->move(
+                    'conversions' . DIRECTORY_SEPARATOR . $originalParentPath . $model->getOriginal()['name'],
+                    'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath . $model->getAttributes()['name']
+                );
                 $model->deleteCache();
             }
         );
 
         static::deleting(
             function ($model) {
+                foreach ($model->contents as $content) {
+                    $content->delete();
+                }
+                foreach ($model->childAlbums as $childAlbum) {
+                    $childAlbum->delete();
+                }
+                Storage::disk('media')->deleteDir($model->getPath());
+                Storage::disk('media')->deleteDir('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
                 $model->deleteCache();
             }
         );

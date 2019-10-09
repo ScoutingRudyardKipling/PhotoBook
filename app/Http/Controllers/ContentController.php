@@ -10,16 +10,6 @@ use Storage;
 class ContentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        return view('pages.content.show');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -36,6 +26,9 @@ class ContentController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
      */
     public function store(Request $request)
     {
@@ -79,9 +72,7 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        // TODO: Implement
-        unset($content);
-        return view('pages.content.show');
+        return view('pages.content.show', ['content' => $content]);
     }
 
     /**
@@ -93,9 +84,7 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
-        // TODO: Implement
-        unset($content);
-        return view('pages.content.show');
+        return view('pages.content.edit', ['content' => $content]);
     }
 
     /**
