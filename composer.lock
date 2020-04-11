@@ -128,16 +128,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "47fe531de31fca4a1b997f87308e7d7804348f7e"
+                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/47fe531de31fca4a1b997f87308e7d7804348f7e",
-                "reference": "47fe531de31fca4a1b997f87308e7d7804348f7e",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/95c63ab2117a72f48f5a55da9740a3273d45b7fd",
+                "reference": "95c63ab2117a72f48f5a55da9740a3273d45b7fd",
                 "shasum": ""
             },
             "require": {
@@ -180,20 +180,30 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2020-01-13T10:02:55+00:00"
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-08T08:27:21+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "1.10.1",
+            "version": "1.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "b912a45da3e2b22f5cb5a23e441b697a295ba011"
+                "reference": "7a4d5b6aa30d2118af27c04f5e897b57156ccfa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/b912a45da3e2b22f5cb5a23e441b697a295ba011",
-                "reference": "b912a45da3e2b22f5cb5a23e441b697a295ba011",
+                "url": "https://api.github.com/repos/composer/composer/zipball/7a4d5b6aa30d2118af27c04f5e897b57156ccfa9",
+                "reference": "7a4d5b6aa30d2118af27c04f5e897b57156ccfa9",
                 "shasum": ""
             },
             "require": {
@@ -260,17 +270,7 @@
                 "dependency",
                 "package"
             ],
-            "funding": [
-                {
-                    "url": "https://packagist.com",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-03-13T19:34:27+00:00"
+            "time": "2020-04-10T09:44:22+00:00"
         },
         {
             "name": "composer/semver",
@@ -1289,6 +1289,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -1335,6 +1336,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
@@ -1952,16 +1954,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.32.1",
+            "version": "2.32.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c"
+                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c",
-                "reference": "ecb525c766deb3bbbb6a0082ea0e41d3d9ae477c",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
+                "reference": "f10e22cf546704fab1db4ad4b9dedbc5c797a0dc",
                 "shasum": ""
             },
             "require": {
@@ -2019,30 +2021,20 @@
                 "datetime",
                 "time"
             ],
-            "funding": [
-                {
-                    "url": "https://opencollective.com/Carbon",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/nesbot/carbon",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-03-26T13:04:10+00:00"
+            "time": "2020-03-31T13:43:19+00:00"
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.3.0",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc"
+                "reference": "bd43ec7152eaaab3bd8c6d0aa95ceeb1df8ee120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9a9981c347c5c49d6dfe5cf826bb882b824080dc",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bd43ec7152eaaab3bd8c6d0aa95ceeb1df8ee120",
+                "reference": "bd43ec7152eaaab3bd8c6d0aa95ceeb1df8ee120",
                 "shasum": ""
             },
             "require": {
@@ -2081,7 +2073,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-11-08T13:50:10+00:00"
+            "time": "2020-04-10T16:34:50+00:00"
         },
         {
             "name": "opis/closure",
@@ -6290,24 +6282,24 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "651c372efc914aea8223e049f85afaf65e09ba23"
+                "reference": "421679846270a5772534828013a93be709fb13df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/651c372efc914aea8223e049f85afaf65e09ba23",
-                "reference": "651c372efc914aea8223e049f85afaf65e09ba23",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/421679846270a5772534828013a93be709fb13df",
+                "reference": "421679846270a5772534828013a93be709fb13df",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1.0",
+                "composer-plugin-api": "^1.1.0 || ^2.0",
                 "php": "^7.4.0"
             },
             "require-dev": {
-                "composer/composer": "^1.9.3",
+                "composer/composer": "^1.9.3 || ^2.0@dev",
                 "doctrine/coding-standard": "^7.0.2",
                 "ext-zip": "^1.15.0",
                 "infection/infection": "^0.15.3",
@@ -6347,7 +6339,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-03-06T11:34:16+00:00"
+            "time": "2020-04-06T17:43:35+00:00"
         },
         {
             "name": "orchestra/testbench",

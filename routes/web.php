@@ -43,6 +43,8 @@ Route::group(
                 ],
             ]
         );
+        Route::get('album/{album}/content/upload', 'ContentController@uploadView')->name('content.upload');
+        Route::post('content/upload/action', 'ContentController@uploadAjax');
         Route::resource(
             'content',
             'ContentController',
