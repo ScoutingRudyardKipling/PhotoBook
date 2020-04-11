@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -17,6 +18,36 @@ class ContentController extends Controller
     public function create()
     {
         return view('pages.content.create');
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
+     */
+    private function storeHandler(Request $request)
+    {
+
+        $content = Content::create(
+            [
+                'name'      => $request->file('content')->getClientOriginalName(),
+                'parent_id' => $request->get('parent_id'),
+            ]
+        );
+        Storage::disk('temp')
+            ->put(
+                $request->file('content')->getClientOriginalName(),
+                File::get($request->file('content'))
+            );
+        $content->addMedia(
+            Storage::disk('temp')->path(
+                $request->file('content')->getClientOriginalName()
+            )
+        )->toMediaCollection();
     }
 
     /**
@@ -38,27 +69,50 @@ class ContentController extends Controller
                 'parent_id' => 'required|integer',
             ]
         );
-        $content = Content::create(
-            [
-                'name'      => $request->file('content')->getClientOriginalName(),
-                'parent_id' => $request->get('parent_id'),
-            ]
-        );
-        Storage::disk('temp')
-            ->put(
-                $request->file('content')->getClientOriginalName(),
-                File::get($request->file('content'))
-            );
-        $content->addMedia(
-            Storage::disk('temp')->path(
-                $request->file('content')->getClientOriginalName()
-            )
-        )->toMediaCollection();
+        $this->storeHandler($request);
 
         return redirect()->route(
             'album.show',
             [
                 'album' => $request->get('parent_id'),
+            ]
+        );
+    }
+
+    /**
+     * @param \App\Models\Album $album
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function uploadView(Album $album)
+    {
+        return view('pages.content.upload', ['album' => $album]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig
+     */
+    public function uploadAjax(Request $request)
+    {
+        $request['parent_id'] = $request->header('parent_id');
+
+        $request->validate(
+            [
+                'content'   => 'required|file|max:20000',
+                'parent_id' => 'required|integer',
+            ]
+        );
+        $this->storeHandler($request);
+
+        return response()->json(
+            [
+                "successful" => true,
             ]
         );
     }

@@ -19,4 +19,7 @@
             >
         @endif
     @endforeach
+    @if(!empty($showCurrent))
+        > <a href="{{route("album.show", [$album['id']])}}"> {{$album['name']}}</a>
+    @endif
 </div>
