@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'openid_return_url' => env('OPENID_RETURN_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

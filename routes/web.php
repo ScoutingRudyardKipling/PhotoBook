@@ -30,6 +30,8 @@ Auth::routes(
     ]
 );
 
+Route::post('snllogin', 'Auth\\LoginController@SNLLogin')->name('snl-login');
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::group(
     ['middleware' => ['auth']],
