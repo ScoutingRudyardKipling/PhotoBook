@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Staf\StafUser;
 use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -71,26 +72,30 @@ class LoginController extends Controller
                 // member of Scouting Nederland. You have to deal with authorisation yourself for instance to make sure
                 // the authenticated user is a member of your scouting club.
 
-                $user = User::updateOrCreate(
-                    [
-                        'email' => $openidUser->email,
-                    ],
-                    [
-                        'name'               => $openidUser->fullName,
-                        'birth_date'         => $openidUser->birthDate,
-                        'gender'             => $openidUser->gender,
-                        'preferred_language' => $openidUser->preferredLanguage,
-                        'password'           => 'invalid',
-                    ]
-                );
-                if ($user->roles()->count() == 0) {
-                    $user->assignRole('Subscriber');
+                if (StafUser::whereEmail($openidUser->email)->count() >= 1) {
+                    $user = User::updateOrCreate(
+                        [
+                            'email' => $openidUser->email,
+                        ],
+                        [
+                            'name'               => $openidUser->fullName,
+                            'birth_date'         => $openidUser->birthDate,
+                            'gender'             => $openidUser->gender,
+                            'preferred_language' => $openidUser->preferredLanguage,
+                            'password'           => 'invalid',
+                        ]
+                    );
+                    if ($user->roles()->count() == 0) {
+                        $user->assignRole('Subscriber');
+                    }
+                    Auth::login($user);
+                    return redirect()->route('home');
                 }
-                Auth::login($user);
-                return redirect()->route('home');
+
+                return redirect()->route('login')->withErrors(['msg', 'You are not in this organisation.']);
             }
 
-            return redirect()->route('login')->withErrors(['msg', 'Login failed']);
+            return redirect()->route('login')->withErrors(['msg', 'Login failed.']);
         }
 
         // show a form where the user can provide his/her SNL username
