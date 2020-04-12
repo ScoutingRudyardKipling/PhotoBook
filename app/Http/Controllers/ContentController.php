@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Clearance;
 use App\Models\Album;
 use App\Models\Content;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ class ContentController extends Controller
      */
     public function create()
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Content']);
+
         return view('pages.content.create');
     }
 
@@ -31,7 +34,6 @@ class ContentController extends Controller
      */
     private function storeHandler(Request $request)
     {
-
         $content = Content::create(
             [
                 'name'      => $request->file('content')->getClientOriginalName(),
@@ -63,6 +65,8 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Content']);
+
         $request->validate(
             [
                 'content'   => 'required|file|max:20000',
@@ -86,6 +90,8 @@ class ContentController extends Controller
      */
     public function uploadView(Album $album)
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Content']);
+
         return view('pages.content.upload', ['album' => $album]);
     }
 
@@ -100,6 +106,8 @@ class ContentController extends Controller
      */
     public function uploadAjax(Request $request)
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Content']);
+
         $request['parent_id'] = $request->header('parent_id');
 
         $request->validate(
@@ -138,6 +146,8 @@ class ContentController extends Controller
      */
     public function edit(Content $content)
     {
+        Clearance::hasAllPermissionsOrAbort(['Edit Content']);
+
         return view('pages.content.edit', ['content' => $content]);
     }
 
@@ -151,6 +161,8 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
+        Clearance::hasAllPermissionsOrAbort(['Edit Content']);
+
         $data = $request->validate(
             [
                 'name'      => 'required|string|max:190',
@@ -171,6 +183,8 @@ class ContentController extends Controller
      */
     public function destroy(Content $content)
     {
+        Clearance::hasAllPermissionsOrAbort(['Delete Content']);
+
         $content->delete();
 
         return redirect()->route('home');
