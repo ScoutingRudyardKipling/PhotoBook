@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecd4c04948adba7d231377e6122cc1df",
+    "content-hash": "708172a75390d6e6ad29bbd5b29518e6",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1131,53 +1131,6 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
-        },
-        {
-            "name": "iignatov/lightopenid",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/WillSkates/LightOpenID.git",
-                "reference": "15264c31aef8bbe7ea18f12b6da4ccdb9927f9fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/WillSkates/LightOpenID/zipball/15264c31aef8bbe7ea18f12b6da4ccdb9927f9fa",
-                "reference": "15264c31aef8bbe7ea18f12b6da4ccdb9927f9fa",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "openid.php",
-                    "provider/provider.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ignat Ignatov",
-                    "homepage": "https://github.com/iignatov/LightOpenID"
-                },
-                {
-                    "name": "Mewp",
-                    "homepage": "https://code.google.com/p/lightopenid/"
-                }
-            ],
-            "description": "Lightweight PHP5 library for easy OpenID authentication.",
-            "homepage": "https://github.com/iignatov/LightOpenID",
-            "keywords": [
-                "Authentication",
-                "OpenId",
-                "security"
-            ],
-            "time": "2014-01-27T06:01:05+00:00"
         },
         {
             "name": "intervention/image",
@@ -2670,22 +2623,74 @@
             "time": "2020-02-21T04:36:14+00:00"
         },
         {
-            "name": "scoutingrudyardkipling/solopenidclient",
-            "version": "1.0.1",
+            "name": "satariall/lightopenid",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ScoutingRudyardKipling/SOLOpenIdClient.git",
-                "reference": "f84ca2a6868fec7731bb750526ee43825055d124"
+                "url": "https://github.com/Satariall/LightOpenID.git",
+                "reference": "20297a6cc135bbf244168df8ae315cc327f4235d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ScoutingRudyardKipling/SOLOpenIdClient/zipball/f84ca2a6868fec7731bb750526ee43825055d124",
-                "reference": "f84ca2a6868fec7731bb750526ee43825055d124",
+                "url": "https://api.github.com/repos/Satariall/LightOpenID/zipball/20297a6cc135bbf244168df8ae315cc327f4235d",
+                "reference": "20297a6cc135bbf244168df8ae315cc327f4235d",
                 "shasum": ""
             },
             "require": {
-                "iignatov/lightopenid": "*",
-                "php": ">=5.4"
+                "ext-curl": "*",
+                "php": ">7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "openid.php",
+                    "provider/provider.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mewp",
+                    "homepage": "https://code.google.com/p/lightopenid/"
+                },
+                {
+                    "name": "Ignat Ignatov",
+                    "homepage": "https://github.com/iignatov/LightOpenID"
+                },
+                {
+                    "name": "Marsel Markhabulin",
+                    "homepage": "https://github.com/Satariall/LightOpenID"
+                }
+            ],
+            "description": "Lightweight PHP library for easy OpenID authentication.",
+            "homepage": "https://github.com/Satariall/LightOpenID",
+            "keywords": [
+                "Authentication",
+                "OpenId",
+                "security"
+            ],
+            "time": "2020-04-09T10:14:16+00:00"
+        },
+        {
+            "name": "scoutingrudyardkipling/solopenidclient",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ScoutingRudyardKipling/SOLOpenIdClient.git",
+                "reference": "8fa425e3ca71daef7975bc975537f3e02769fc4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ScoutingRudyardKipling/SOLOpenIdClient/zipball/8fa425e3ca71daef7975bc975537f3e02769fc4b",
+                "reference": "8fa425e3ca71daef7975bc975537f3e02769fc4b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "satariall/lightopenid": "*"
             },
             "type": "library",
             "autoload": {
@@ -2699,12 +2704,12 @@
             ],
             "authors": [
                 {
-                    "name": "Ignat Ignatov",
-                    "homepage": "https://github.com/iignatov/LightOpenID"
-                },
-                {
                     "name": "Mewp",
                     "homepage": "https://code.google.com/p/lightopenid/"
+                },
+                {
+                    "name": "Marcel Satariall",
+                    "homepage": "https://github.com/Satariall/LightOpenID"
                 },
                 {
                     "name": "Frank Kuipers",
@@ -2721,7 +2726,7 @@
                 "scoutingnederland",
                 "security"
             ],
-            "time": "2018-05-08T21:19:07+00:00"
+            "time": "2020-04-12T08:28:39+00:00"
         },
         {
             "name": "seld/jsonlint",
@@ -3008,28 +3013,28 @@
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.38.0",
+            "version": "3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "674ad54a0ba95d8ad26990aa250b5c9d9b165e15"
+                "reference": "e90ed6242a8fa29735529160b9c21cb77b233e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/674ad54a0ba95d8ad26990aa250b5c9d9b165e15",
-                "reference": "674ad54a0ba95d8ad26990aa250b5c9d9b165e15",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/e90ed6242a8fa29735529160b9c21cb77b233e7f",
+                "reference": "e90ed6242a8fa29735529160b9c21cb77b233e7f",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0",
-                "illuminate/container": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0",
-                "illuminate/contracts": "~5.3.0|~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0",
-                "illuminate/database": "~5.4.0|~5.5.0|~5.6.0|~5.7.0|~5.8.0",
-                "php": ">=7.0"
+                "illuminate/auth": "^5.8|^6.0|^7.0",
+                "illuminate/container": "^5.8|^6.0|^7.0",
+                "illuminate/contracts": "^5.8|^6.0|^7.0",
+                "illuminate/database": "^5.8|^6.0|^7.0",
+                "php": "^7.2.5"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.4.2|~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^5.7|6.2|^7.0",
+                "orchestra/testbench": "^3.8|^4.0|^5.0",
+                "phpunit/phpunit": "^8.0|^9.0",
                 "predis/predis": "^1.1"
             },
             "type": "library",
@@ -3060,7 +3065,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Permission handling for Laravel 5.4 to 5.8",
+            "description": "Permission handling for Laravel 5.8 and up",
             "homepage": "https://github.com/spatie/laravel-permission",
             "keywords": [
                 "acl",
@@ -3072,7 +3077,13 @@
                 "security",
                 "spatie"
             ],
-            "time": "2019-09-02T17:12:21+00:00"
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-03-03T21:31:02+00:00"
         },
         {
             "name": "spatie/pdf-to-image",
