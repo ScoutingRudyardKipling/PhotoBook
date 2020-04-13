@@ -60,6 +60,10 @@ Migrate the database (from scratch) to the latest version
 ```bash
 php artisan migrate
 ```
+Seed the database with the bare essential data (like basic permissions and roles) 
+```bash
+php artisan db:seed
+```
 To see a list of available artisan commands
 ```bash
 php artisan list
@@ -67,10 +71,6 @@ php artisan list
 As you will use artisan a lot (and we as programmers are lazy) make an alias in your .bash_profile
 ```bash
 alias art='php artisan'
-``` 
-Do you want to start out with the project with some pre filled fake data
-```bash
-php artisan db:seed
 ``` 
 We also need to install npm with its packages
 ```bash
