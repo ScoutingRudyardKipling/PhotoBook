@@ -30,11 +30,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property      \Illuminate\Support\Carbon $created_at
  * @property      \Illuminate\Support\Carbon|null $updated_at
  * @property      \Illuminate\Support\Carbon|null $deleted_at
- * @property-read string $alias
  * @property-read mixed $full_name
- * @property-read mixed $stripped_email
- * @property-read mixed $stripped_email_parent_one
- * @property-read mixed $stripped_email_parent_two
  * @method        static bool|null forceDelete()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Staf\StafUser newModelQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Staf\StafUser newQuery()
@@ -66,7 +62,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method        static \Illuminate\Database\Query\Builder|\App\Models\Staf\StafUser withoutTrashed()
  * @mixin         \Eloquent
  */
-class StafUser extends Model implements Authenticatable
+class StafUser extends Model
 {
     use SoftDeletes;
 
@@ -118,114 +114,5 @@ class StafUser extends Model implements Authenticatable
             $tv = ' ';
         }
         return $this->Firstname . $tv . $this->Lastname;
-    }
-
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return mixed
-     */
-    public function getAuthIdentifier()
-    {
-        return $this->UserId;
-    }
-
-    /**
-     * Get the password for the user.
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        return '';
-    }
-
-    /**
-     * Get the token value for the "remember me" session.
-     *
-     * @return string
-     */
-    public function getRememberToken()
-    {
-        return '';
-    }
-
-    /**
-     * Set the token value for the "remember me" session.
-     *
-     * @param mixed $value
-     *
-     * @return string
-     */
-    public function setRememberToken($value)
-    {
-        unset($value);
-        return '';
-    }
-
-    /**
-     * Get the column name for the "remember me" token.
-     *
-     * @return string
-     */
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
-    }
-
-    /**
-     * Get the name of the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        return 'UserId';
-    }
-
-    public function getStrippedEmailAttribute()
-    {
-        return $this->getStrippedEmailAddress();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStrippedEmailAddress()
-    {
-        return self::stripEmailAddress($this->Email);
-    }
-
-    public function getStrippedEmailParentOneAttribute()
-    {
-        return $this->getStrippedEmailAddressParentOne();
-    }
-
-    public function getStrippedEmailAddressParentOne()
-    {
-        return self::stripEmailAddress($this->EmailParentOne);
-    }
-
-    public function getStrippedEmailParentTwoAttribute()
-    {
-        return $this->getStrippedEmailAddressParentTwo();
-    }
-
-    public function getStrippedEmailAddressParentTwo()
-    {
-        return self::stripEmailAddress($this->EmailParentTwo);
-    }
-
-    /**
-     * @return string
-     */
-    public function getAliasAttribute()
-    {
-        $cols = \DB::table('UserAlias')->where('User', $this->UserId)->get();
-        if ($cols->count() > 0) {
-            return $cols->first()->Alias;
-        }
-
-        return '';
     }
 }

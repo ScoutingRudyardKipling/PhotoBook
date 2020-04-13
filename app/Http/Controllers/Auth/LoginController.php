@@ -53,8 +53,8 @@ class LoginController extends Controller
     {
         $openid = $this->getOpenIdClient();
 
-        if (!$openid->mode && $request->has('sol-email')) {
-            $username = $request->input('sol-email');
+        if (!$openid->mode && $request->has('sol-user')) {
+            $username = $request->input('sol-user');
 
             return redirect()->to($openid->setUserIdentity($username)->authUrl());
         } elseif (!!$openid->mode) {
