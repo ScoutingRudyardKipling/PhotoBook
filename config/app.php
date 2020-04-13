@@ -56,6 +56,8 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'openid_return_url' => env('OPENID_RETURN_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -174,6 +176,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\ClearanceServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
@@ -227,7 +230,10 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
-
+        /*
+         * Application Aliases...
+         */
+        'Clearance'    => App\Facades\Clerance::class,
     ],
 
 ];

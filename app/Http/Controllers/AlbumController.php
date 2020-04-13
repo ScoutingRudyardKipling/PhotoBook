@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Clearance;
 use App\Models\Album;
-use App\Models\Content;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -15,6 +15,7 @@ class AlbumController extends Controller
      */
     public function create()
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Album']);
         return view('pages.album.create');
     }
 
@@ -27,6 +28,7 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
+        Clearance::hasAllPermissionsOrAbort(['Add Album']);
         $data  = $request->validate(
             [
                 'name'      => 'required|string|max:190',
@@ -68,6 +70,7 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
+        Clearance::hasAllPermissionsOrAbort(['Edit Album']);
         return view('pages.album.edit', ['album' => $album]);
     }
 
@@ -81,6 +84,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
+        Clearance::hasAllPermissionsOrAbort(['Edit Album']);
         $data = $request->validate(
             [
                 'name'      => 'required|string|max:190',
@@ -101,6 +105,7 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
+        Clearance::hasAllPermissionsOrAbort(['Delete Album']);
         $album->delete();
 
         return redirect()->route('home');

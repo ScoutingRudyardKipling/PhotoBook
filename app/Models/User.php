@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -22,9 +23,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property      \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ * @property-read int|null $roles_count
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
+ * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
+ * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereBirthDate($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
@@ -41,6 +48,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
