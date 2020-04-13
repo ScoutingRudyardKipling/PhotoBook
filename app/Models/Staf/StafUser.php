@@ -95,11 +95,8 @@ class StafUser extends Model
     ];
 
     protected $appends = [
-        'Alias',
         'FullName',
         'StrippedEmail',
-        'StrippedEmailParentOne',
-        'StrippedEmailParentTwo',
     ];
 
     public static function stripEmailAddress($emailAddress)
