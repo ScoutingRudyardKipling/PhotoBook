@@ -61,6 +61,7 @@ class User extends Authenticatable
         'password',
         'birth_date',
         'gender',
+        'external_user',
         'preferred_language',
     ];
 

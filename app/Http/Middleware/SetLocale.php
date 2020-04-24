@@ -18,7 +18,7 @@ class SetLocale
      */
     public function handle($request, Closure $next)
     {
-        if (!empty(Auth::id())) {
+        if (!empty(Auth::user())) {
             if (in_array(Auth::user()->preferred_language, ['en', 'nl'])) {
                 App::setLocale(Auth::user()->preferred_language);
             }

@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.page')
 
-@section('page')
-    <div class="container">
+@section('content')
         <div class="row justify-content-center">
             <div class="col-md-8">
 {{--                @include('auth.components.sol-login')--}}
@@ -10,5 +9,5 @@
                 @include('auth.components.email-login')
             </div>
         </div>
-    </div>
+
 @endsection

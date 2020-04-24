@@ -60,5 +60,9 @@ Route::group(
         Route::get('/media/{filePath}', 'MediaController@get')
             ->where('filePath', '.*')
             ->name('media.get');
+        Route::resource(
+            'user',
+            'UserController'
+        );
     }
 );

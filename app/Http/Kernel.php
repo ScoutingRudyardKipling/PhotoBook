@@ -24,6 +24,9 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Spatie\Permission\Middlewares\PermissionMiddleware;
+use Spatie\Permission\Middlewares\RoleMiddleware;
+use Spatie\Permission\Middlewares\RoleOrPermissionMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -73,15 +76,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'          => Authenticate::class,
-        'auth.basic'    => AuthenticateWithBasicAuth::class,
-        'bindings'      => SubstituteBindings::class,
-        'cache.headers' => SetCacheHeaders::class,
-        'can'           => Authorize::class,
-        'guest'         => RedirectIfAuthenticated::class,
-        'signed'        => ValidateSignature::class,
-        'throttle'      => ThrottleRequests::class,
-        'verified'      => EnsureEmailIsVerified::class,
+        'auth'               => Authenticate::class,
+        'auth.basic'         => AuthenticateWithBasicAuth::class,
+        'bindings'           => SubstituteBindings::class,
+        'cache.headers'      => SetCacheHeaders::class,
+        'can'                => Authorize::class,
+        'guest'              => RedirectIfAuthenticated::class,
+        'signed'             => ValidateSignature::class,
+        'throttle'           => ThrottleRequests::class,
+        'verified'           => EnsureEmailIsVerified::class,
+        'role'               => RoleMiddleware::class,
+        'permission'         => PermissionMiddleware::class,
+        'role_or_permission' => RoleOrPermissionMiddleware::class,
     ];
 
     /**

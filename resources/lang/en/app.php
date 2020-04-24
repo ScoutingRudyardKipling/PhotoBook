@@ -3,11 +3,18 @@
 return [
     'Actions'           => 'Actions',
     'action'            => [
+        'View'   => 'View',
         'Edit'   => 'Edit',
         'Create' => 'Create',
         'Upload' => 'Upload',
         'Delete' => 'Delete',
+        'deleting' => 'delete',
         'Submit' => 'Submit',
+        'Cancel' => 'Cancel',
+    ],
+    'bool'              => [
+        'true'  => 'Yes',
+        'false' => 'No',
     ],
     'Parent'            => 'Parent',
     'sub'               => 'sub',
@@ -15,6 +22,9 @@ return [
     'album'             => 'album',
     'Album'             => 'Album',
     'Albums'            => 'Albums',
+    'user'              => 'user',
+    'users'             => 'users',
+    'User'              => 'User',
     'name'              => 'name',
     'Content'           => 'Content',
     'content'           => 'content',
@@ -25,4 +35,5 @@ return [
     'to the'            => 'to the',
     'enable-javascript' => 'Javascript needs to be enabled.',
     'Dashboard'         => 'Dashboard',
+    'Role'              => 'Role'
 ];

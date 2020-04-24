@@ -129,6 +129,7 @@ return [
     */
     'file-valid-and-size'  => 'Please upload a valid image file. Size of image should not be more than :value.',
     'not-valid-warning'    => 'Some fields do not meet our validation:',
+    'are-you-sure' => 'Are you sure you want to delete the :Attribute :value?',
     'custom'               => [
         'attribute-name' => [
             'rule-name' => 'custom-message',

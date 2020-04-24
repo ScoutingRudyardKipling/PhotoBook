@@ -101,11 +101,11 @@ class LoginController extends Controller
                 'email' => $openIdUser->email,
             ],
             [
+                'external_user'      => true,
                 'name'               => $openIdUser->fullName,
                 'birth_date'         => $openIdUser->birthDate,
                 'gender'             => $openIdUser->gender,
                 'preferred_language' => $openIdUser->preferredLanguage,
-                'password'           => 'invalid',
             ]
         );
         if ($user->roles()->count() == 0) {
