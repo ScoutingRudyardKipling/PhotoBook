@@ -58,6 +58,8 @@ return [
 
     'openid_return_url' => env('OPENID_RETURN_URL'),
 
+    'https' => env('FORCE_HTTPS', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -82,7 +84,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_DEFAULT_LANGUAGE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +97,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -233,7 +235,7 @@ return [
         /*
          * Application Aliases...
          */
-        'Clearance'    => App\Facades\Clerance::class,
+        'Clearance'    => App\Facades\Clearance::class,
     ],
 
 ];

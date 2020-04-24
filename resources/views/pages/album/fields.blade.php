@@ -1,10 +1,10 @@
 @csrf
 <div class="form-group">
-    <label for="albumName">Album name</label>
-    <input type="text" value="{{$album->name ?? old('name')}}" class="form-control" id="albumName" name="name" placeholder="Zomerkamp">
+    <label for="albumName">{{__('app.Album')}} {{__('app.name')}}</label>
+    <input type="text" value="{{$album->name ?? old('name')}}" class="form-control" id="albumName" name="name" placeholder="{{__('app.Summer camp')}}">
 </div>
 <div class="form-group">
-    <label for="inputState">Parent</label>
+    <label for="inputState">{{__('app.Parent')}} {{__('app.album')}}</label>
     <select id="inputState" name="parent_id" class="form-control">
         <option
                 @if(is_null($album->parent->id ?? old('parent_id')))
@@ -12,7 +12,7 @@
                 @endif
                 value=""
         >
-            Top level
+            {{__('app.Top level')}}
         </option>
         @foreach(\App\Models\Album::all() as $parent)
             <option

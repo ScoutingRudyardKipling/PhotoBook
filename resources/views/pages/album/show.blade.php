@@ -8,7 +8,7 @@
     @include('components.actions', ['id' => $album->id])
 
     @if (count($albums) > 0)
-        <h3 class="mt-3">Albums</h3>
+        <h3 class="mt-3">{{__('app.Albums')}}</h3>
         <div class="row">
             @foreach( $albums as $album)
                 @include('components.album', ['album' => $album])
@@ -16,7 +16,7 @@
         </div>
     @endif
     @if (count($contents) > 0)
-        <h3 class="mt-3">Content</h3>
+        <h3 class="mt-3">{{__('app.Content')}}</h3>
         <div class="row js-gallery gutters-tiny">
             @foreach( $contents as $content)
                 @include('components.content', ['content' => $content])
@@ -28,7 +28,7 @@
             <div class="card-body">
                 <div class="row justify-content-center">
                     <h4 class="mt-2">
-                        Leeg album
+                        {{__('app.Empty')}} {{__('app.album')}}
                     </h4>
                 </div>
             </div>

@@ -29,10 +29,10 @@ Auth::routes(
         'verify'   => false,
     ]
 );
-
-Route::post('auth/snl-login', 'Auth\\LoginController@snlLogin')->name('login.snl');
-Route::get('auth/snl-login', 'Auth\\LoginController@snlLogin')->name('login.snl');
-
+if (config('auth.useSol')) {
+    Route::post('auth/snl-login', 'Auth\\LoginController@snlLogin')->name('login.snl');
+    Route::get('auth/snl-login', 'Auth\\LoginController@snlLogin')->name('login.snl');
+}
 Route::get('/', 'HomeController@index')->name('home');
 Route::group(
     ['middleware' => ['auth']],

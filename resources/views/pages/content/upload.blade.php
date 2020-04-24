@@ -6,10 +6,10 @@
             <div class="card">
                 <div class="card-header">
                      @include('components.breadcrumbs', ['album' => $album, 'showCurrent' => true])
-                    <h1 class="card-title">Upload to the album: {{$album->name}}</h1>
+                    <h1 class="card-title">{{__('app.action.Upload')}} {{__('app.to the')}} {{__('app.album')}}: {{$album->name}}</h1>
                 </div>
                 <div class="card-body">
-                    <div id="drag-drop-area">Javascript needs to be enabled to be able to upload</div>
+                    <div id="drag-drop-area">{{__('app.enable-javascript')}}</div>
                 </div>
             </div>
         </div>

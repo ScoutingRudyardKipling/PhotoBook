@@ -8,8 +8,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use ScoutingRudyardKipling\SOLOpenIdClient;
+use ScoutingRudyardKipling\SOLOpenIdUser;
 
 class LoginController extends Controller
 {
@@ -51,6 +53,9 @@ class LoginController extends Controller
      */
     public function snlLogin(Request $request)
     {
+        if (config('auth.useSol') === false) {
+            return redirect()->route('login')->withErrors(['msg', 'The usage of sol login is not enabled.']);
+        }
         $openid = $this->getOpenIdClient();
 
         if (!$openid->mode && $request->has('sol-user')) {
@@ -65,31 +70,17 @@ class LoginController extends Controller
             } elseif ($openid->validate()) {
                 // user login confirmed by Scouting Nederland, let's proceed!
 
-                $openidUser = $openid->getValidatedUser();
+                $openIdUser = $openid->getValidatedUser();
 
                 // Either create a new user or link the returned SNL-user to one of your registered users.
                 // Notice that SNL only confirmed that the user is who it claims to be and that he/she is an active
                 // member of Scouting Nederland. You have to deal with authorisation yourself for instance to make sure
                 // the authenticated user is a member of your scouting club.
 
-                if (StafUser::whereEmail($openidUser->email)->count() >= 1) {
-                    $user = User::updateOrCreate(
-                        [
-                            'email' => $openidUser->email,
-                        ],
-                        [
-                            'name'               => $openidUser->fullName,
-                            'birth_date'         => $openidUser->birthDate,
-                            'gender'             => $openidUser->gender,
-                            'preferred_language' => $openidUser->preferredLanguage,
-                            'password'           => 'invalid',
-                        ]
-                    );
-                    if ($user->roles()->count() == 0) {
-                        $user->assignRole('Subscriber');
-                    }
-                    Auth::login($user);
-                    return redirect()->route('home');
+                if (config('auth.useStaf') === false) {
+                    $this->loginSolUser($openIdUser);
+                } elseif (StafUser::whereEmail($openIdUser->email)->count() >= 1) {
+                    $this->loginSolUser($openIdUser);
                 }
 
                 return redirect()->route('login')->withErrors(['msg', 'You are not in this organisation.']);
@@ -100,6 +91,28 @@ class LoginController extends Controller
 
         // show a form where the user can provide his/her SNL username
         return redirect()->route('login');
+    }
+
+
+    private function loginSolUser(SOLOpenIdUser $openIdUser)
+    {
+        $user = User::updateOrCreate(
+            [
+                'email' => $openIdUser->email,
+            ],
+            [
+                'name'               => $openIdUser->fullName,
+                'birth_date'         => $openIdUser->birthDate,
+                'gender'             => $openIdUser->gender,
+                'preferred_language' => $openIdUser->preferredLanguage,
+                'password'           => 'invalid',
+            ]
+        );
+        if ($user->roles()->count() == 0) {
+            $user->assignRole('Subscriber');
+        }
+        Auth::login($user);
+        return redirect()->route('home');
     }
 
     /**

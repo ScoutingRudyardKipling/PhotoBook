@@ -10,6 +10,8 @@ return [
     */
 
     'register' => env('REGISTER', false),
+    'useSol' => env('USE_SOL', false),
+    'useStaf' => env('USE_STAF', false),
 
     /*
     |--------------------------------------------------------------------------
