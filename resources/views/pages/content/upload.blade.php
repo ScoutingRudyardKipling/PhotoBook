@@ -56,7 +56,7 @@
         headers: {
           //'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // from <meta name="csrf-token" content="{{ csrf_token() }}">
           'X-CSRF-TOKEN': "{{ csrf_token() }}",
-          'parent_id': {{$album->id}},
+          'Parent-Id': {{$album->id}},
         },
         getResponseError(responseText, response) {
           return new Error(JSON.parse(responseText).message)

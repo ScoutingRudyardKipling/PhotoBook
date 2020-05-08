@@ -63,7 +63,7 @@ class UploadController extends Controller
             );
         }
 
-        $request['parent_id'] = $request->header('parent_id');
+        $request['parent_id'] = $request->header('Parent-Id');
 
         $validator = Validator::make(
             $request->all(),
