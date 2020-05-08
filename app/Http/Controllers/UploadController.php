@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist;
@@ -92,6 +93,7 @@ class UploadController extends Controller
                 201
             );
         } catch (FileNotFoundException $e) {
+            Log::error(422 . ': FileNotFoundException in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -100,6 +102,7 @@ class UploadController extends Controller
                 422
             );
         } catch (DiskDoesNotExist $e) {
+            Log::error(500 . ': DiskDoesNotExist in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -108,6 +111,7 @@ class UploadController extends Controller
                 500
             );
         } catch (FileDoesNotExist $e) {
+            Log::error(422 . ': FileDoesNotExist in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -116,6 +120,7 @@ class UploadController extends Controller
                 500
             );
         } catch (FileIsTooBig $e) {
+            Log::error(413 . ': FileIsTooBig in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -124,6 +129,7 @@ class UploadController extends Controller
                 413
             );
         } catch (Exception $e) {
+            Log::error(413 . ': Generic error in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -132,6 +138,7 @@ class UploadController extends Controller
                 500
             );
         }//end try
+        Log::error(500 . ': Something went wrong in file upload.');
         return response()->json(
             [
                 'successful' => false,
