@@ -73,6 +73,7 @@ class UpgradeFromRudyardKipling extends Command
         // move all images to the new driver (and create thumbnails)
         foreach ($files as $file) {
             $this->comment('migrating file : ' . $file);
+            $matches = [];
             preg_match('/.*\/(.*?$)/', $file, $matches);
             $content = Content::firstOrCreate(
                 [

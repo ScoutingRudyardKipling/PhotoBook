@@ -123,6 +123,73 @@ class Content extends Model implements HasMedia
         return true;
     }
 
+
+    public function updateInternal($model)
+    {
+        //TODO: test if this refactor works
+        $media = $model->media()->first()->file_name;
+
+        $originalParent     = Album::find(
+            ($model->getOriginal()['parent_id'] ?? null)
+        );
+        $originalParentPath = '';
+        if (!is_null($originalParent)) {
+            $originalParentPath = $originalParent->getPath() . DIRECTORY_SEPARATOR;
+        }
+        $dirtyParent     = Album::find(
+            ($model->getAttributes()['parent_id'] ?? null)
+        );
+        $dirtyParentPath = '';
+        if (!is_null($dirtyParent)) {
+            $dirtyParentPath = $dirtyParent->getPath() . DIRECTORY_SEPARATOR;
+        }
+        Storage::disk('media')->move(
+            $originalParentPath . $media,
+            $dirtyParentPath . $media
+        );
+        $mediaName      = explode('.', $media)[0];
+        $mediaExtention = explode('.', $media)[1];
+        foreach (array_keys($model->conversions) as $conversion) {
+            Storage::disk('media')->move(
+                'conversions' . DIRECTORY_SEPARATOR . $originalParentPath
+                . $mediaName . '-' . $conversion . '.' . $mediaExtention,
+                'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath
+                . $mediaName . '-' . $conversion . '.' . $mediaExtention
+            );
+        }
+        $model->deleteCache();
+        if (!is_null($originalParent)) {
+            $originalParent->deleteCache();
+        }
+        if (!is_null($dirtyParent)) {
+            $originalParent->deleteCache();
+        }
+    }
+
+    public function deleteInternal($model)
+    {
+        //TODO: test if this refactor works
+        $media      = $model->media()->first()->file_name;
+        $parent     = $model->parent;
+        $parentPath = '';
+        if (!is_null($parent)) {
+            $parentPath = $parent->getPath() . DIRECTORY_SEPARATOR;
+        }
+        Storage::disk('media')->delete($parentPath . $media);
+
+        $mediaName      = explode('.', $media)[0];
+        $mediaExtention = explode('.', $media)[1];
+        foreach (array_keys($model->conversions) as $conversion) {
+            Storage::disk('media')->delete(
+                'conversions' . DIRECTORY_SEPARATOR . $parentPath . $mediaName . '-' . $conversion . '.' . $mediaExtention
+            );
+        }
+        if (!is_null($parent)) {
+            $parent->deleteCache();
+        }
+        $model->deleteCache();
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -135,67 +202,13 @@ class Content extends Model implements HasMedia
 
         static::updating(
             function ($model) {
-                $media = $model->media()->first()->file_name;
-
-                $originalParent     = Album::find(
-                    ($model->getOriginal()['parent_id'] ?? null)
-                );
-                $originalParentPath = '';
-                if (!is_null($originalParent)) {
-                    $originalParentPath = $originalParent->getPath() . DIRECTORY_SEPARATOR;
-                }
-                $dirtyParent     = Album::find(
-                    ($model->getAttributes()['parent_id'] ?? null)
-                );
-                $dirtyParentPath = '';
-                if (!is_null($dirtyParent)) {
-                    $dirtyParentPath = $dirtyParent->getPath() . DIRECTORY_SEPARATOR;
-                }
-                Storage::disk('media')->move(
-                    $originalParentPath . $media,
-                    $dirtyParentPath . $media
-                );
-                $mediaName      = explode('.', $media)[0];
-                $mediaExtention = explode('.', $media)[1];
-                foreach (array_keys($model->conversions) as $conversion) {
-                    Storage::disk('media')->move(
-                        'conversions' . DIRECTORY_SEPARATOR . $originalParentPath
-                        . $mediaName . '-' . $conversion . '.' . $mediaExtention,
-                        'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath
-                        . $mediaName . '-' . $conversion . '.' . $mediaExtention
-                    );
-                }
-                $model->deleteCache();
-                if (!is_null($originalParent)) {
-                    $originalParent->deleteCache();
-                }
-                if (!is_null($dirtyParent)) {
-                    $originalParent->deleteCache();
-                }
+                (new Content())->updateInternal($model);
             }
         );
 
         static::deleting(
             function ($model) {
-                $media      = $model->media()->first()->file_name;
-                $parent     = $model->parent;
-                $parentPath = '';
-                if (!is_null($parent)) {
-                    $parentPath = $parent->getPath() . DIRECTORY_SEPARATOR;
-                }
-                Storage::disk('media')->delete($parentPath . $media);
-
-                $mediaName      = explode('.', $media)[0];
-                $mediaExtention = explode('.', $media)[1];
-                foreach (array_keys($model->conversions) as $conversion) {
-                    Storage::disk('media')->delete(
-                        'conversions' . DIRECTORY_SEPARATOR . $parentPath . $mediaName . '-' . $conversion . '.' . $mediaExtention
-                    );
-                }
-                if (!is_null($parent)) {
-                    $parent->deleteCache();
-                }
-                $model->deleteCache();
+                (new Content())->deleteInternal($model);
             }
         );
     }

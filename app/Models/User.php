@@ -10,23 +10,25 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * App\Models\User
  *
- * @property      int $id
- * @property      string $name
- * @property      string $email
- * @property      \Illuminate\Support\Carbon|null $email_verified_at
- * @property      string $password
- * @property      string $birth_date
- * @property      string $gender
- * @property      string $preferred_language
- * @property      string|null $remember_token
- * @property      \Illuminate\Support\Carbon|null $created_at
- * @property      \Illuminate\Support\Carbon|null $updated_at
+ * @property      int                                                                                                       $id
+ * @property      string                                                                                                    $name
+ * @property      string                                                                                                    $email
+ * @property      \Illuminate\Support\Carbon|null                                                                           $email_verified_at
+ * @property      string                                                                                                    $password
+ * @property      string                                                                                                    $birth_date
+ * @property      string                                                                                                    $gender
+ * @property      string                                                                                                    $preferred_language
+ * @property      string|null                                                                                               $remember_token
+ * @property      int                                                                                                       $external_user
+ * @property      \Illuminate\Support\Carbon|null                                                                           $created_at
+ * @property      \Illuminate\Support\Carbon|null                                                                           $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
- * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
- * @property-read int|null $roles_count
+ * @property-read int|null                                                                                                  $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[]                           $permissions
+ * @property-read int|null                                                                                                  $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[]                                 $roles
+ * @property-read int|null                                                                                                  $roles_count
+ * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereExternalUser($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)

@@ -2,8 +2,8 @@
 // @formatter:off
 
 /**
- * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.37 on 2020-04-12 12:09:59.
+ * A helper file for Laravel, to provide autocomplete information to your IDE
+ * Generated for Laravel 5.8.38 on 2020-05-07 22:48:44.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -12783,7 +12783,8 @@ namespace Illuminate\Support\Facades {
          * @return bool 
          * @static 
          */ 
-        public static function prepend($path, $data, $separator = '')
+        public static function prepend($path, $data, $separator = '
+')
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         return $instance->prepend($path, $data, $separator);
@@ -12798,7 +12799,8 @@ namespace Illuminate\Support\Facades {
          * @return bool 
          * @static 
          */ 
-        public static function append($path, $data, $separator = '')
+        public static function append($path, $data, $separator = '
+')
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
                         return $instance->append($path, $data, $separator);
@@ -14596,6 +14598,106 @@ namespace Illuminate\Support {
      *
      */ 
     class Str {
+         
+    }
+ 
+}
+
+namespace App\Facades { 
+
+    /**
+     * 
+     *
+     */ 
+    class Clearance {
+        
+        /**
+         * Checks if the logged in user has one of the permissions
+         * Returns True if one of the given permissions is met
+         *
+         * @param array $permissions
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasAnyPermission($permissions)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        return $instance->hasAnyPermission($permissions);
+        }
+        
+        /**
+         * Checks if the logged in user has all of the permissions
+         * Aborts if non of the permissions does not meet the array
+         *
+         * @param array $permissions
+         * @return void 
+         * @static 
+         */ 
+        public static function hasAnyPermissionOrAbort($permissions)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        $instance->hasAnyPermissionOrAbort($permissions);
+        }
+        
+        /**
+         * Checks if the logged in user has all of the permissions
+         * Returns True if all of the given permissions is met
+         *
+         * @param array $permissions
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasAllPermissions($permissions)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        return $instance->hasAllPermissions($permissions);
+        }
+        
+        /**
+         * Checks if all permissions of list one is set, or all permissions of list two are set.
+         * 
+         * If one of the two lists passes, the function will pass.
+         *
+         * @param array $permissionsListOne
+         * @param array $permissionsListTwo
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasAllOrAllPermissions($permissionsListOne, $permissionsListTwo)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        return $instance->hasAllOrAllPermissions($permissionsListOne, $permissionsListTwo);
+        }
+        
+        /**
+         * Checks if all permissions of list one is set, or all permissions of list two are set.
+         * 
+         * If neither of the lists pass, the function will Abort.
+         *
+         * @param array $permissionsListOne
+         * @param array $permissionsListTwo
+         * @return void 
+         * @static 
+         */ 
+        public static function hasAllOrAllPermissionsOrAbort($permissionsListOne, $permissionsListTwo)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        $instance->hasAllOrAllPermissionsOrAbort($permissionsListOne, $permissionsListTwo);
+        }
+        
+        /**
+         * Checks if the logged in user has all of the permissions
+         * Aborts if one or more permissions does not meet the array
+         *
+         * @param array $permissions
+         * @return void 
+         * @static 
+         */ 
+        public static function hasAllPermissionsOrAbort($permissions)
+        {
+                        /** @var \App\Helpers\Clearance $instance */
+                        $instance->hasAllPermissionsOrAbort($permissions);
+        }
          
     }
  
@@ -18069,6 +18171,8 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
+
+    class Clearance extends \App\Facades\Clearance {}
 
     class Debugbar extends \Barryvdh\Debugbar\Facade {}
 

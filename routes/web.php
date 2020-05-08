@@ -43,11 +43,14 @@ Route::group(
             [
                 'except' => [
                     'index',
+                    'create',
                 ],
             ]
         );
+        Route::get('album/{parent}/subalbum/create', 'AlbumController@create')->name('album.create');
+
         Route::get('album/{album}/content/upload', 'ContentController@uploadView')->name('content.upload');
-        Route::post('content/upload/action', 'ContentController@uploadAjax');
+        Route::post('content/upload/action', 'UploadController@uploadAjax');
         Route::resource(
             'content',
             'ContentController',

@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
+
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int|null $parent
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create($parent)
     {
         Clearance::hasAllPermissionsOrAbort(['Add Album']);
-        return view('pages.album.create');
+        return view('pages.album.create', ['parent_id' => $parent]);
     }
 
     /**
@@ -29,12 +32,15 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         Clearance::hasAllPermissionsOrAbort(['Add Album']);
-        $data  = $request->validate(
+        $data = $request->validate(
             [
                 'name'      => 'required|string|max:190',
                 'parent_id' => 'nullable|integer',
             ]
         );
+        if ($data['parent_id'] === 0 or $data['parent_id'] === '0') {
+            $data['parent_id'] = null;
+        }
         $album = Album::create($data);
         return redirect()->route('album.show', ['album' => $album->id]);
     }

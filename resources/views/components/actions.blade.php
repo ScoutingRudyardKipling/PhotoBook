@@ -19,7 +19,7 @@
                         @endcan
                     @endif
                     @can('Add Album')
-                        <a class="btn btn-outline-primary" href="{{route('album.create')}}">
+                        <a class="btn btn-outline-primary" href="{{route('album.create', ['parent' => $id ?? 0])}}">
                             {{__('app.action.Create')}} {{__('app.sub')}} {{__('app.album')}}
                         </a>
                     @endcan
