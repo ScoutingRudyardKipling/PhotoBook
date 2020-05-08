@@ -54,8 +54,9 @@
         bundle: false,
         fieldName: 'content',
         headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // from <meta name="csrf-token" content="{{ csrf_token() }}">
-          'parent_id':{{$album->id}},
+          //'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // from <meta name="csrf-token" content="{{ csrf_token() }}">
+          'X-CSRF-TOKEN': "{{ csrf_token() }}",
+          'parent_id': {{$album->id}},
         },
         getResponseError(responseText, response) {
           return new Error(JSON.parse(responseText).message)

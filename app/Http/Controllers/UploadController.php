@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Facades\Clearance;
 use App\Models\Content;
+use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\DiskDoesNotExist;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileDoesNotExist;
 use Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\FileIsTooBig;
@@ -50,23 +52,44 @@ class UploadController extends Controller
      */
     public function uploadAjax(Request $request)
     {
-        Clearance::hasAllPermissionsOrAbort(['Add Content']);
+        if (Clearance::hasAllPermissions(['Add Content']) === false) {
+            return response()->json(
+                [
+                    'successful' => false,
+                    'message'    => 'you do not have the permissions to upload.',
+                ],
+                403
+            );
+        }
 
         $request['parent_id'] = $request->header('parent_id');
 
-        $request->validate(
+        $validator = Validator::make(
+            $request->all(),
             [
-                'content'   => 'required|file|max:20000',
+                'content'   => 'required|file|max:' . (config('medialibrary.max_file_size') / 1024),
                 'parent_id' => 'required|integer',
             ]
         );
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'successful' => false,
+                    'message'    => $validator->errors()->first(),
+                ],
+                422
+            );
+        }
+
         try {
             $this->storeHandler($request);
             return response()->json(
                 [
                     'successful' => true,
                     'message'    => 'file uploaded',
-                ]
+                ],
+                201
             );
         } catch (FileNotFoundException $e) {
             return response()->json(
@@ -100,6 +123,21 @@ class UploadController extends Controller
                 ],
                 413
             );
-        }
+        } catch (Exception $e) {
+            return response()->json(
+                [
+                    'successful' => false,
+                    'message'    => 'PHP threw an internal error.',
+                ],
+                500
+            );
+        }//end try
+        return response()->json(
+            [
+                'successful' => false,
+                'message'    => 'Something went wrong.',
+            ],
+            500
+        );
     }
 }
