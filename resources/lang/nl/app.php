@@ -11,6 +11,7 @@ return [
         'deleting' => 'verwijderen',
         'Submit'   => 'Verstuur',
         'Cancel'   => 'Annuleer',
+        'Back'     => 'Terug',
     ],
     'bool'              => [
         'true'  => 'Ja',

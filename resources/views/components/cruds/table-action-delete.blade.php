@@ -11,7 +11,7 @@
                 {!! $modalBody !!}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-square btn-outline-light mr-auto" data-dismiss="modal">{{__('app.action.Cancel')}}</button>
+                <button type="button" class="btn btn-square btn-danger mr-auto" data-dismiss="modal">{{__('app.action.Cancel')}}</button>
                 <form method="POST" action="{{ $route }}">
                     @method('delete')
                     @csrf

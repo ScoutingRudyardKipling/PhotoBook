@@ -16,7 +16,17 @@
                     <p><strong>{{__('auth.preferred language')}}:</strong> {{$user->preferred_language}} </p>
                     <p><strong>{{__('app.Role')}}:</strong> {{$user->roles()->first()->name}} </p>
                 </div>
+                <div class="form-group px-3 pb-1">
+                    <a href="javascript:history.back()" class="btn btn-warning float-left">
+                        {{__('app.action.Back')}}
+                    </a>
+                     <a href="{{route('user.edit', ['user' => $user])}}" class="btn btn-outline-primary float-right">
+                        {{__('app.action.Edit')}}
+                    </a>
+
+                </div>
             </div>
+
         </div>
     </div>
 @endsection

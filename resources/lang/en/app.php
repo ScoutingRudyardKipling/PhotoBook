@@ -3,14 +3,15 @@
 return [
     'Actions'           => 'Actions',
     'action'            => [
-        'View'   => 'View',
-        'Edit'   => 'Edit',
-        'Create' => 'Create',
-        'Upload' => 'Upload',
-        'Delete' => 'Delete',
+        'View'     => 'View',
+        'Edit'     => 'Edit',
+        'Create'   => 'Create',
+        'Upload'   => 'Upload',
+        'Delete'   => 'Delete',
         'deleting' => 'delete',
-        'Submit' => 'Submit',
-        'Cancel' => 'Cancel',
+        'Submit'   => 'Submit',
+        'Cancel'   => 'Cancel',
+        'Back'     => 'Back',
     ],
     'bool'              => [
         'true'  => 'Yes',
@@ -35,5 +36,5 @@ return [
     'to the'            => 'to the',
     'enable-javascript' => 'Javascript needs to be enabled.',
     'Dashboard'         => 'Dashboard',
-    'Role'              => 'Role'
+    'Role'              => 'Role',
 ];

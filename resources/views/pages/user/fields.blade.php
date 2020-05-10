@@ -101,4 +101,5 @@
         @endforeach
     </select>
 </div>
-<input class="btn btn-primary" type="submit" value="Submit">
+@include('components.backbutton')
+<input class="btn btn-outline-primary float-right" type="submit" value="Submit">

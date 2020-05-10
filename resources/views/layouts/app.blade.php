@@ -89,6 +89,12 @@
     <main class="py-4">
         @yield('page')
     </main>
+    <!-- Footer -->
+    <footer>
+        <div class="version-identifier text-center py-3">
+            <p class="text-muted">&copy; {{config('app.name')}} {{date('Y')}} <small>{{ $versionIdentifier }}</small></p>
+        </div>
+    </footer>
 </div>
 <!-- Scripts -->
 {{--<script src="{{ asset('js/packages/jquery.magnific-popup.min.js') }}"></script>--}}

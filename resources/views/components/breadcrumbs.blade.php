@@ -9,7 +9,7 @@
             $iterator++;
         }
     @endphp
-    <a href="{{route('home')}}">Home</a>
+    <a href="{{route('home')}}">{{__('app.Dashboard')}}</a>
     @if ($breadCrumbs->isNotEmpty())
         >
     @endif

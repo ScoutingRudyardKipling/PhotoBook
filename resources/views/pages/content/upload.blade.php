@@ -10,8 +10,11 @@
                 </div>
                 <div class="card-body">
                     <div id="drag-drop-area">{{__('app.enable-javascript')}}</div>
-                    <div class="form-group float-right pt-3">
-                        <a id="submit" class="btn btn-primary disabled" href="{{route('album.show', ['album' => $album->id])}}" role="button">{{__('app.action.Submit')}}</a>
+                    <div class="form-group pt-3">
+                        <a id="cancel" href="{{route('album.show', ['album' => $album->id])}}" class="btn btn-warning float-left">
+                            {{__('app.action.Back')}}
+                        </a>
+                        <a id="submit" class="btn btn-primary float-right disabled" href="{{route('album.show', ['album' => $album->id])}}" role="button">{{__('app.action.Submit')}}</a>
                     </div>
                 </div>
             </div>
@@ -64,6 +67,7 @@
       });
     uppy.on('complete', (result) => {
       if (result.failed[0] === undefined) {
+        document.getElementById("cancel").classList.add('disabled');
         document.getElementById("submit").classList.remove('disabled');
       }
     })
