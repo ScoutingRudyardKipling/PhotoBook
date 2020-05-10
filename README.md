@@ -1,13 +1,14 @@
 
 # Scouting Rudyard Kipling PhotoBook
 
-This is the online photobook built for the scoutsgroup Scouting Rudyard Kipling.
+This is the online photobook, initially built for scoutsgroup Scouting Rudyard Kipling, but now also open for other scoutsgroups or organisations.
 It features:
 
-* Sol protected logins (Because we need to be AVG proof :see_no_evil: )
-* Uploading images
-* Administrator accounts
-* Favorites
+* Watching your own pictures online and on your own server
+* Organize your pictures in albums
+* Uploading images via the web portal
+* User management, with different roles and permissions (admin, content creator & subscribers)
+* Scouts online (sol) protected logins (Because we need to be AVG proof :see_no_evil: )
 
 ## Getting Started
 
@@ -19,7 +20,7 @@ system.
 
 What things you need to install the software and how to install them
  * [Composer](https://getcomposer.org/)
- * php 7.2 or higher (preferred latest)
+ * php 7.3 or higher (preferred latest)
  * A (local) SQL database (MariaDB 10.2 or higher)
  * [Node.js](https://nodejs.org/en/download/)
  * NPM (installed with Node.js)
