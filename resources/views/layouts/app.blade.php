@@ -97,7 +97,6 @@
     </footer>
 </div>
 <!-- Scripts -->
-{{--<script src="{{ asset('js/packages/jquery.magnific-popup.min.js') }}"></script>--}}
 <script src="{{ asset('js/app.js') }}" defer></script>
 @yield('scripts')
 
