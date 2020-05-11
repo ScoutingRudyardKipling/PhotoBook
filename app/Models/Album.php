@@ -68,12 +68,15 @@ class Album extends Model
     public function getFeaturedContent()
     {
         $content = $this->featured;
+        if ($content instanceof Album) {
+            return $content->getFeaturedContent();
+        }
         if (empty($content)) {
             $content = $this->contents()->first();
-            if (is_null($content)) {
+            if (empty($content)) {
                 $firstChildAlbum = $this->childAlbums()->first();
-                if (!is_null($firstChildAlbum)) {
-                    $content = $firstChildAlbum->getFeaturedContent();
+                if (!empty($firstChildAlbum)) {
+                    return $firstChildAlbum->getFeaturedContent();
                 }
             }
         }
@@ -168,14 +171,16 @@ class Album extends Model
                 if (!is_null($dirtyParentPath)) {
                     $dirtyParentPath = $dirtyParentPath->getPath() . DIRECTORY_SEPARATOR;
                 }
-                if ($originalParentPath !== $dirtyParentPath) {
+                $originalPath = $originalParentPath . $model->getOriginal()['name'];
+                $dirtyPath    = $dirtyParentPath . $model->getAttributes()['name'];
+                if ($originalPath != $dirtyPath) {
                     Storage::disk('media')->move(
-                        $originalParentPath . $model->getOriginal()['name'],
-                        $dirtyParentPath . $model->getAttributes()['name']
+                        $originalPath,
+                        $dirtyPath
                     );
                     Storage::disk('media')->move(
-                        'conversions' . DIRECTORY_SEPARATOR . $originalParentPath . $model->getOriginal()['name'],
-                        'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath . $model->getAttributes()['name']
+                        'conversions' . DIRECTORY_SEPARATOR . $originalPath,
+                        'conversions' . DIRECTORY_SEPARATOR . $dirtyPath
                     );
                 }
                 $model->deleteCache();

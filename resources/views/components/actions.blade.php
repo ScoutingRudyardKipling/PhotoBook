@@ -8,9 +8,10 @@
                 <div class="col-12 align-content-end">
                     @if(!\Request::is('/'))
                         @can('Edit Album')
-                            <a class="btn btn-outline-secondary" href="{{route('album.edit', ['id'=>$id])}}">
-                                {{__('app.action.Edit')}} {{__('app.album')}}
-                            </a>
+                                                        @include('pages.album.modals.edit-modal')
+{{--                            <a class="btn btn-outline-secondary" href="{{route('album.edit', ['id'=>$id])}}">--}}
+{{--                                {{__('app.action.Edit')}} {{__('app.album')}}--}}
+{{--                            </a>--}}
                         @endcan
                         @can('Delete Album')
                             @include('components.cruds.delete-modal', [
@@ -36,9 +37,7 @@
                         @endcan
                     @endif
                     @can('Add Album')
-                        <a class="btn btn-outline-primary" href="{{route('album.create', ['parent' => $id ?? 0])}}">
-                            {{__('app.action.Create')}} {{__('app.sub')}} {{__('app.album')}}
-                        </a>
+                        @include('pages.album.modals.create-modal', ['parent_id' => $id ?? 0])
                     @endcan
 
                 </div>
