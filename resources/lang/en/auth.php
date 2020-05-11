@@ -27,6 +27,7 @@ return [
     'external_user'              => 'Sol user',
     'name'                       => 'Name',
     'password'                   => 'Password',
+    'leave-blank'                => 'leave blank if you don\'t want to edit it.',
     'confirm'                    => 'Confirm Password',
     'sol'                        => [
         'name'     => 'Sol',

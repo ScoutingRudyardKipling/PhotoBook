@@ -27,6 +27,7 @@ return [
     'external_user'              => 'Sol gebruiker',
     'name'                       => 'Naam',
     'password'                   => 'Wachtwoord',
+    'leave-blank'                => 'laat leeg als u het niet wilt bewerken.',
     'confirm'                    => 'Bevestig wachtwoord',
     'sol'                        => [
         'name'     => 'Sol',

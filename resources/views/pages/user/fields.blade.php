@@ -8,6 +8,10 @@
     <input type="text" value="{{$user->email ?? old('email')}}" class="form-control" id="email" name="email" placeholder="{{__('auth.email')}}">
 </div>
 <div class="form-group">
+    <label for="email">{{__('auth.password')}} @if(Route::currentRouteName() === 'user.edit') <small>{{__('auth.leave-blank')}}</small> @endif</label>
+    <input type="password" value="{{old('password')}}" class="form-control" id="password" name="password" placeholder="{{__('auth.password')}}">
+</div>
+<div class="form-group">
     <label for="gender">{{__('auth.gender')}}</label>
     <select id="gender" name="gender" class="form-control">
         <option

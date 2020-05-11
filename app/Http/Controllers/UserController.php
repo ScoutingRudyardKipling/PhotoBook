@@ -50,7 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate(
+        $data             = $request->validate(
             [
                 'name'               => 'string|max:191',
                 'role_id'            => 'int',
@@ -59,9 +59,11 @@ class UserController extends Controller
                 'birth_date'         => 'date_format:Y-m-d',
                 'gender'             => 'string|max:1',
                 'preferred_language' => 'string|max:2',
+                'password'           => 'required|string|max:190|min:8',
             ]
         );
-        $user = User::create($data);
+        $data['password'] = bcrypt($data['password']);
+        $user             = User::create($data);
         $user->syncRoles(Role::findById($data['role_id']));
         return redirect()->route('user.show', ['user' => $user->id]);
     }
@@ -93,6 +95,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * * @SuppressWarnings("else")
+     *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User         $user
      *
@@ -109,10 +113,14 @@ class UserController extends Controller
                 'birth_date'         => 'date_format:Y-m-d',
                 'gender'             => 'string|max:1',
                 'preferred_language' => 'string|max:2',
+                'password'           => 'nullable|string|max:190|min:8',
             ]
         );
-
-
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
+        }
         $user->syncRoles(Role::findById($data['role_id']));
         $user->update($data);
 

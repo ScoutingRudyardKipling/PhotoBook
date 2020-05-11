@@ -28,6 +28,7 @@ return [
     'User'              => 'User',
     'name'              => 'name',
     'Content'           => 'Content',
+    'Featured'          => 'Featured',
     'content'           => 'content',
     'Empty'             => 'Empty',
     'Top level'         => 'Top level',

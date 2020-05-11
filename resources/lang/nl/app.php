@@ -29,6 +29,7 @@ return [
     'name'              => 'naam',
     'Content'           => 'Inhoud',
     'content'           => 'inhoud',
+    'Featured'          => 'Uitgelicht',
     'Empty'             => 'Leeg',
     'Top level'         => 'Top level',
     'Summer camp'       => 'Zomerkamp',
