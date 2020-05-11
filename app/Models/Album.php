@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Storage;
  * @property      int|null                                                       $parent_id
  * @property      \Illuminate\Support\Carbon|null                                $created_at
  * @property      \Illuminate\Support\Carbon|null                                $updated_at
+ * @property      int|null                                                       $featured_id
+ * @property      string|null                                                    $featured_type
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent                  $featured
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Album[]   $childAlbums
  * @property-read int|null                                                       $child_albums_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $contents
  * @property-read int|null                                                       $contents_count
  * @property-read \App\Models\Album|null                                         $parent
+ * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereFeaturedId($value)
+ * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereFeaturedType($value)
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album newModelQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album newQuery()
  * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album query()
@@ -34,6 +39,9 @@ class Album extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'featured',
+        'featured_id',
+        'featured_type',
     ];
 
     public function parent()
@@ -46,19 +54,35 @@ class Album extends Model
         return $this->hasMany(Content::class, 'parent_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function featured()
+    {
+        return $this->morphTo();
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     */
     public function getFeaturedContent()
     {
-        $content = $this->contents()->first();
-        if (is_null($content)) {
-            $firstChildAlbum = $this->childAlbums()->first();
-            if (!is_null($firstChildAlbum)) {
-                $content = $firstChildAlbum->getFeaturedContent();
+        $content = $this->featured;
+        if (empty($content)) {
+            $content = $this->contents()->first();
+            if (is_null($content)) {
+                $firstChildAlbum = $this->childAlbums()->first();
+                if (!is_null($firstChildAlbum)) {
+                    $content = $firstChildAlbum->getFeaturedContent();
+                }
             }
         }
         return $content;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFeaturedContentThumb()
     {
         $cache = Cache::rememberForever(
@@ -144,14 +168,16 @@ class Album extends Model
                 if (!is_null($dirtyParentPath)) {
                     $dirtyParentPath = $dirtyParentPath->getPath() . DIRECTORY_SEPARATOR;
                 }
-                Storage::disk('media')->move(
-                    $originalParentPath . $model->getOriginal()['name'],
-                    $dirtyParentPath . $model->getAttributes()['name']
-                );
-                Storage::disk('media')->move(
-                    'conversions' . DIRECTORY_SEPARATOR . $originalParentPath . $model->getOriginal()['name'],
-                    'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath . $model->getAttributes()['name']
-                );
+                if ($originalParentPath !== $dirtyParentPath) {
+                    Storage::disk('media')->move(
+                        $originalParentPath . $model->getOriginal()['name'],
+                        $dirtyParentPath . $model->getAttributes()['name']
+                    );
+                    Storage::disk('media')->move(
+                        'conversions' . DIRECTORY_SEPARATOR . $originalParentPath . $model->getOriginal()['name'],
+                        'conversions' . DIRECTORY_SEPARATOR . $dirtyParentPath . $model->getAttributes()['name']
+                    );
+                }
                 $model->deleteCache();
             }
         );

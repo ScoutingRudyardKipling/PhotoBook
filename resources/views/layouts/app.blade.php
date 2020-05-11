@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/packages/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('css/packages/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/packages/bootstrap-material-design.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/packages/select2.min.css') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('css')
 
@@ -97,7 +98,9 @@
     </footer>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" defer></script>
+
+<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/packages/select2.full.min.js') }}"></script>
 @yield('scripts')
 
 </body>

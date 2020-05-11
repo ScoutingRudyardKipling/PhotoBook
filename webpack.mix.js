@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -18,4 +17,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
   .copy('node_modules/magnific-popup/dist/magnific-popup.css', 'public/css/packages')
   .copy('node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.css', 'public/css/packages')
   .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'public/css/packages')
-;
+  // Select2
+  .copy('node_modules/select2/dist/js/select2.full.min.js', 'public/js/packages')
+  .copy('node_modules/select2/dist/css/select2.min.css', 'public/css/packages');
