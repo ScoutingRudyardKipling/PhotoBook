@@ -35,9 +35,8 @@ class AlbumController extends Controller
         Clearance::hasAllPermissionsOrAbort(['Add Album']);
         $data = $request->validate(
             [
-                'name'            => 'required|string|max:190',
-                'parent_id'       => 'nullable|integer',
-                'featured-select' => 'nullable|string|regex:/[a-zA-Z]{5,}\-\d{1,}/i',
+                'name'      => 'required|string|max:190',
+                'parent_id' => 'nullable|integer',
             ]
         );
         if ($data['parent_id'] === 0 or $data['parent_id'] === '0') {
@@ -93,16 +92,18 @@ class AlbumController extends Controller
     public function update(Request $request, Album $album)
     {
         Clearance::hasAllPermissionsOrAbort(['Edit Album']);
-        $data                  = $request->validate(
+        $data = $request->validate(
             [
                 'name'            => 'required|string|max:190',
                 'parent_id'       => 'nullable|integer',
                 'featured-select' => 'nullable|string|regex:/[a-zA-Z]{5,}\-\d{1,}/i',
             ]
         );
-        $featured              = explode('-', $data['featured-select']);
-        $data['featured_type'] = 'App\\Models\\' . $featured[0];
-        $data['featured_id']   = $featured[1];
+        if (!empty($data['featured-select'])) {
+            $featured              = explode('-', $data['featured-select']);
+            $data['featured_type'] = 'App\\Models\\' . $featured[0];
+            $data['featured_id']   = $featured[1];
+        }
         $album->update($data);
         return redirect()->route('album.show', ['album' => $album->id]);
     }
