@@ -111,7 +111,7 @@ class UploadController extends Controller
                 500
             );
         } catch (FileDoesNotExist $e) {
-            Log::error(422 . ': FileDoesNotExist in uppy fileupload : ' . $e);
+            Log::error(500 . ': FileDoesNotExist in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,
@@ -129,7 +129,7 @@ class UploadController extends Controller
                 413
             );
         } catch (Exception $e) {
-            Log::error(413 . ': Generic error in uppy fileupload : ' . $e);
+            Log::error(500 . ': Generic error in uppy fileupload : ' . $e);
             return response()->json(
                 [
                     'successful' => false,

@@ -62,6 +62,10 @@
           'Parent-Id': {{$album->id}},
         },
         getResponseError(responseText, response) {
+          console.log(responseText);
+          if (IsJsonString(responseText) === false) {
+            return new Error('Something went wrong. Please contact your system administrator.');
+          }
           return new Error(JSON.parse(responseText).message)
         }
       });
@@ -71,5 +75,14 @@
         document.getElementById("submit").classList.remove('disabled');
       }
     })
+
+    function IsJsonString(str) {
+      try {
+        var json = JSON.parse(str);
+        return (typeof json === 'object');
+      } catch (e) {
+        return false;
+      }
+    }
     </script>
 @endsection
