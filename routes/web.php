@@ -48,7 +48,6 @@ Route::group(
             ]
         );
         Route::get('album/{parent}/subalbum/create', 'AlbumController@create')->name('album.create');
-
         Route::get('album/{album}/content/upload', 'ContentController@uploadView')->name('content.upload');
         Route::post('content/upload/action', 'UploadController@uploadAjax');
         Route::resource(
@@ -61,6 +60,7 @@ Route::group(
             ]
         );
         Route::get('/media/{filePath}', 'MediaController@get')
+            ->middleware('cache.headers:private;max_age=63072001;immutable')
             ->where('filePath', '.*')
             ->name('media.get');
         Route::resource(
