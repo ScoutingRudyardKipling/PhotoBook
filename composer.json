@@ -9,10 +9,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "barryvdh/laravel-ide-helper": "^2.6",
+        "barryvdh/laravel-ide-helper": "^2.8",
         "doctrine/dbal": "^2.3",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "6.*",
         "laravel/tinker": "^1.0",
         "scoutingrudyardkipling/solopenidclient": "^1.0",
         "spatie/laravel-medialibrary": "^7.0.0",
@@ -25,7 +25,7 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
-        "nunomaduro/larastan": "^0.3.18",
+        "nunomaduro/larastan": "^1.0.0",
         "phpmd/phpmd": "^2.8",
         "phpunit/phpunit": "^7.5",
         "squizlabs/php_codesniffer": "^3.4"
