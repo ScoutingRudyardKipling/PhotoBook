@@ -55,8 +55,8 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
-        $albums   = $album->childAlbums()->get();
-        $contents = $album->contents()->get();
+        $albums   = $album->childAlbums()->orderBy('name', 'asc')->get();
+        $contents = $album->contents()->orderBy('name', 'asc')->get();
 
         return view(
             'pages.album.show',

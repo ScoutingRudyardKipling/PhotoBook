@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $albums   = Album::where('parent_id', null)->get();
+        $albums   = Album::where('parent_id', null)->orderBy('name', 'asc')->get();
         $contents = Content::all();
 
         return view('pages.home', ['albums' => $albums, 'contents' => $contents]);
