@@ -26,14 +26,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model'   => Spatie\MediaLibrary\Models\Media::class,
-
-    's3' => [
-        /*
-         * The domain that should be prepended when generating urls.
-         */
-        'domain' => 'https://' . env('AWS_BUCKET') . '.s3.amazonaws.com',
-    ],
+    'media_model'   => App\Models\Media::class,
 
     'remote' => [
         /*
@@ -45,7 +38,7 @@ return [
          * ServerSideEncryption, Metadata, ACL, ContentEncoding
          */
         'extra_headers' => [
-            'CacheControl' => 'max-age=604800',
+            'CacheControl' => 'private;max_age=63072001;immutable',
         ],
     ],
 

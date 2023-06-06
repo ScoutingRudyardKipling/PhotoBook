@@ -33,7 +33,7 @@
       debug: false,
       autoProceed: false,
       restrictions: {
-        maxFileSize: {{config('medialibrary.max_file_size')}},
+        maxFileSize: {{config('media-library.max_file_size')}},
         // minNumberOfFiles: 1,
         // maxNumberOfFiles: 1,
         //'image/*', 'video/*', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf'

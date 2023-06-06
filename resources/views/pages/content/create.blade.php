@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label for="fileWrapper">File</label>
                             <input type="file" class="form-control-file" name="content" id="fileWrapper" aria-describedby="fileHelp">
-                            <small id="fileHelp" class="form-text text-muted">{{__('validation.file-valid-and-size' ,['value' => config('medialibrary.max_file_size')])}}</small>
+                            <small id="fileHelp" class="form-text text-muted">{{__('validation.file-valid-and-size' ,['value' => config('media-library.max_file_size')])}}</small>
                         </div>
                         @include('pages.content.fields')
                     </form>

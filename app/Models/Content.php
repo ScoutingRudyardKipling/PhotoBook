@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * App\Models\Content
@@ -32,7 +32,7 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Content extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -50,14 +50,14 @@ class Content extends Model implements HasMedia
     }
 
     /**
-     * @param \Spatie\MediaLibrary\Models\Media|null $media
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
      *
      * @return void
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function registerMediaConversions(Media $media = null)
+    public function registerMediaConversions(Media $media = null): void
     {
         foreach ($this->conversions as $conversionName => $conversionSize) {
             $this->addMediaConversion($conversionName)
@@ -104,11 +104,11 @@ class Content extends Model implements HasMedia
 
     public function deleteCache()
     {
-        Cache::delete('mediaUrl' . $this->id);
+        Cache::forget('mediaUrl' . $this->id);
         foreach (array_keys($this->conversions) as $conversion) {
-            Cache::delete('mediaUrl' . $conversion . $this->id);
+            Cache::forget('mediaUrl' . $conversion . $this->id);
         }
-        Cache::delete('getAlbumPath' . $this->id);
+        Cache::forget('getAlbumPath' . $this->id);
         if (!empty($this->parent)) {
             if (!empty($this->parent->getFeaturedContent())) {
                 if ($this->parent->getFeaturedContent()->id === $this->id) {
@@ -118,7 +118,7 @@ class Content extends Model implements HasMedia
         }
     }
 
-    public function shouldDeletePreservingMedia()
+    public function shouldDeletePreservingMedia(): bool
     {
         return true;
     }

@@ -3,8 +3,8 @@
 namespace App\Generators;
 
 use DateTimeInterface;
-use Spatie\MediaLibrary\UrlGenerator\BaseUrlGenerator;
-use Spatie\MediaLibrary\UrlGenerator\UrlGenerator;
+use Spatie\MediaLibrary\Support\UrlGenerator\BaseUrlGenerator;
+use Spatie\MediaLibrary\Support\UrlGenerator\UrlGenerator;
 
 class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
 {

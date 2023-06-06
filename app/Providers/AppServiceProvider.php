@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -37,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         view()->share('versionIdentifier', $versionIdentifier);
+
+        Paginator::useBootstrap();
     }
 }
