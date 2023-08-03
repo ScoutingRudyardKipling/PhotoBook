@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-
     /**
      * Show the form for creating a new resource.
      *

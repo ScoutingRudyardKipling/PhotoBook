@@ -71,15 +71,15 @@ class Album extends Model
         if ($content instanceof Album) {
             return $content->getFeaturedContent();
         }
+
+        $content = $this->contents()->first();
         if (empty($content)) {
-            $content = $this->contents()->first();
-            if (empty($content)) {
-                $firstChildAlbum = $this->childAlbums()->first();
-                if (!empty($firstChildAlbum)) {
-                    return $firstChildAlbum->getFeaturedContent();
-                }
+            $firstChildAlbum = $this->childAlbums()->first();
+            if (!empty($firstChildAlbum)) {
+                return $firstChildAlbum->getFeaturedContent();
             }
         }
+
         return $content;
     }
 
@@ -88,7 +88,7 @@ class Album extends Model
      */
     public function getFeaturedContentThumb()
     {
-        $cache = Cache::rememberForever(
+        return Cache::rememberForever(
             'featuredThumbUrl' . $this->id,
             function () {
                 if (empty($this->getFeaturedContent())) {
@@ -97,7 +97,6 @@ class Album extends Model
                 return $this->getFeaturedContent()->getFirstMediaUrl('default', 'thumb');
             }
         );
-        return $cache;
     }
 
     public function childAlbums()
@@ -110,7 +109,7 @@ class Album extends Model
      */
     public function getPath(): string
     {
-        $cache = Cache::rememberForever(
+        return Cache::rememberForever(
             'albumPath' . $this->id,
             function () {
                 $path = $this->name;
@@ -122,12 +121,11 @@ class Album extends Model
                 return $path;
             }
         );
-        return $cache;
     }
 
     public function deleteCache()
     {
-        Cache::delete('albumPath' . $this->id);
+        Cache::forget('albumPath' . $this->id);
         $this->deleteFeaturedThumbCache();
         foreach ($this->childAlbums as $childAlbum) {
             $childAlbum->deleteCache();
@@ -139,7 +137,7 @@ class Album extends Model
 
     public function deleteFeaturedThumbCache()
     {
-        Cache::delete('featuredThumbUrl' . $this->id);
+        Cache::forget('featuredThumbUrl' . $this->id);
         if (!empty($this->parent)) {
             $this->parent->deleteFeaturedThumbCache();
         }

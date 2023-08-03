@@ -22,6 +22,7 @@ class Clearance
         } catch (\Exception $e) {
             $this->throwError(403, 'Permission does not exist');
         }
+        return false;
     }
 
     /**
@@ -54,6 +55,7 @@ class Clearance
         } catch (Exception $e) {
             $this->throwError(403, 'Permission does not exist');
         }
+        return false;
     }
 
     /**

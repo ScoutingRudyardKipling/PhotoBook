@@ -13,7 +13,7 @@ class MediaController extends Controller
 
     public function __construct()
     {
-        $this->disk          = config("medialibrary.disk_name");
+        $this->disk          = config("media-library.disk_name");
         $this->temporaryDisk = 'temp';
     }
 
