@@ -18,6 +18,18 @@
     <link rel="stylesheet" href="{{ asset('css/packages/bootstrap-material-design.css') }}">
     <link rel="stylesheet" href="{{ asset('css/packages/select2.min.css') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/icons/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/img/icons/favicons/safari-pinned-tab.svg" color="#F3E20D">
+    <link rel="shortcut icon" href="/img/icons/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="/img/icons/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
     @yield('css')
 
 </head>

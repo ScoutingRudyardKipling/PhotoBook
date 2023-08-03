@@ -3,13 +3,13 @@
 namespace App\Generators;
 
 use App\Models\Content;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\MediaLibrary\PathGenerator\PathGenerator;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
 class CustomMediaPathGenerator implements PathGenerator
 {
     /**
-     * @param \Spatie\MediaLibrary\Models\Media $media
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media $media
      *
      * @return string
      */

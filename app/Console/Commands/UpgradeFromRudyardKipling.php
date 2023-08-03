@@ -62,6 +62,7 @@ class UpgradeFromRudyardKipling extends Command
         }
         $this->output->progressFinish();
         $this->info('The upgrade is done');
+        return 0;
     }
 
     private function readDirectory(Album $parentAlbum)

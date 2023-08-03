@@ -66,7 +66,7 @@ class LoginController extends Controller
             if ($openid->mode == 'cancel') {
                 // user cancelled logging in
 
-                return redirect()->route('login')->withErrors(['msg', 'Login canceled']);
+                return redirect()->route('home')->withErrors(['msg', 'Login canceled']);
             } elseif ($openid->validate()) {
                 // user login confirmed by Scouting Nederland, let's proceed!
 
@@ -78,19 +78,19 @@ class LoginController extends Controller
                 // the authenticated user is a member of your scouting club.
 
                 if (config('auth.useStaf') === false) {
-                    $this->loginSolUser($openIdUser);
+                    return $this->loginSolUser($openIdUser);
                 } elseif (StafUser::whereEmail($openIdUser->email)->count() >= 1) {
-                    $this->loginSolUser($openIdUser);
+                    return $this->loginSolUser($openIdUser);
                 }
 
-                return redirect()->route('login')->withErrors(['msg', 'You are not in this organisation.']);
+                return redirect()->route('home')->withErrors(['msg', 'You are not in this organisation.']);
             }
 
-            return redirect()->route('login')->withErrors(['msg', 'Login failed.']);
+            return redirect()->route('home')->withErrors(['msg', 'Login failed.']);
         }
 
         // show a form where the user can provide his/her SNL username
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 
 
