@@ -69,9 +69,8 @@ php artisan view:clear
 echo "Cache cleared..."
 echo ""
 # NPM production --> Asset compiling
-# TODO re-enalbe this when Laravel upgrade is complete
-# npm ci
-# npm run production
+npm ci
+npm run production
 echo "Assets successfully built in production mode."
 echo ""
 sleep 1
