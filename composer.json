@@ -26,7 +26,6 @@
         "ext-zlib": "*",
         "barryvdh/laravel-ide-helper": "^2.14",
         "doctrine/dbal": "^3.10",
-        "fideloper/proxy": "^4.4",
         "laravel/framework": "9.*",
         "laravel/tinker": "^2.11",
         "laravel/ui": "^3.4",
