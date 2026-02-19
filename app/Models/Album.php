@@ -149,8 +149,8 @@ class Album extends Model
 
         static::creating(
             function ($model) {
-                Storage::disk('media')->createDir($model->getPath());
-                Storage::disk('media')->createDir('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
+                Storage::disk('media')->makeDirectory($model->getPath());
+                Storage::disk('media')->makeDirectory('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
                 $model->deleteCache();
             }
         );
@@ -193,8 +193,8 @@ class Album extends Model
                 foreach ($model->childAlbums as $childAlbum) {
                     $childAlbum->delete();
                 }
-                Storage::disk('media')->deleteDir($model->getPath());
-                Storage::disk('media')->deleteDir('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
+                Storage::disk('media')->deleteDirectory($model->getPath());
+                Storage::disk('media')->deleteDirectory('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
                 $model->deleteCache();
             }
         );
