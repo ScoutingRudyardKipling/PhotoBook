@@ -26,9 +26,9 @@
         "ext-zlib": "*",
         "barryvdh/laravel-ide-helper": "^2.14",
         "doctrine/dbal": "^3.10",
-        "laravel/framework": "9.*",
+        "laravel/framework": "^10.0",
         "laravel/tinker": "^2.11",
-        "laravel/ui": "^3.4",
+        "laravel/ui": "^4.0",
         "maennchen/zipstream-php": "^2.4",
         "scoutingrudyardkipling/solopenidclient": "^1.0",
         "spatie/laravel-medialibrary": "^10.0",
@@ -38,9 +38,8 @@
         "barryvdh/laravel-debugbar": "^3.7",
         "beyondcode/laravel-dump-server": "^1.9",
         "filp/whoops": "^2.18",
-        "fzaninotto/faker": "^1.9",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^6.1",
+        "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0",
         "phpmd/phpmd": "^2.15",
         "phpunit/phpunit": "^10.5",
@@ -68,8 +67,6 @@
             "Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
