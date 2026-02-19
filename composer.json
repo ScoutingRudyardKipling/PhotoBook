@@ -27,12 +27,12 @@
         "barryvdh/laravel-ide-helper": "^2.14",
         "doctrine/dbal": "^3.10",
         "fideloper/proxy": "^4.4",
-        "laravel/framework": "8.*",
+        "laravel/framework": "9.*",
         "laravel/tinker": "^2.11",
         "laravel/ui": "^3.4",
         "scoutingrudyardkipling/solopenidclient": "^1.0",
-        "spatie/laravel-medialibrary": "^9.12",
-        "spatie/laravel-permission": "^6.24"
+        "spatie/laravel-medialibrary": "^10.0",
+        "spatie/laravel-permission": "^6.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
@@ -40,8 +40,8 @@
         "filp/whoops": "^2.18",
         "fzaninotto/faker": "^1.9",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^5.11",
-        "nunomaduro/larastan": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0",
         "phpmd/phpmd": "^2.15",
         "phpunit/phpunit": "^10.5",
         "squizlabs/php_codesniffer": "^4.0"
