@@ -61,7 +61,7 @@ class Content extends Model implements HasMedia
     {
         foreach ($this->conversions as $conversionName => $conversionSize) {
             $this->addMediaConversion($conversionName)
-                ->width($conversionSize);
+                ->fit('contain', $conversionSize, $conversionSize);
         }
     }
 
