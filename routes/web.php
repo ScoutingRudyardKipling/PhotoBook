@@ -68,8 +68,6 @@ Route::group(
             ]
         );
         Route::get('/media/{filePath}', [MediaController::class, 'get'])
-            // @mark I updated the configuration of the cache control into config/media-libary:41 . this should also work. please test
-    //            ->middleware('cache.headers:private;max_age=63072001;immutable')
             ->where('filePath', '.*')
             ->name('media.get');
         Route::resource(

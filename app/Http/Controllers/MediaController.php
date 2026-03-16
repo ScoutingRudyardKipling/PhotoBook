@@ -2,39 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 use Storage;
 
 class MediaController extends Controller
 {
-    private $disk;
-    private $temporaryDisk;
+    private string $disk;
 
     public function __construct()
     {
-        $this->disk          = config("media-library.disk_name");
-        $this->temporaryDisk = 'temp';
+        $this->disk = config('media-library.disk_name');
     }
 
-    public function get(string $filePath)
+    public function get(Request $request, string $filePath)
     {
-        if (Storage::disk($this->disk)->exists($filePath)) {
-            $file = $this->getFile($filePath);
-            $type = Storage::disk($this->disk)->mimeType($filePath);
-
-            return new Response($file, 200, ['Content-Type' => $type]);
-        }
-        return abort(404);
-    }
-
-    private function getFile(string $filePath)
-    {
-        try {
-            $file = Storage::disk($this->disk)->get($filePath);
-        } catch (FileNotFoundException $e) {
+        if (!Storage::disk($this->disk)->exists($filePath)) {
             return abort(404);
         }
-        return $file;
+
+        $lastModified = Storage::disk($this->disk)->lastModified($filePath);
+        $etag         = '"' . md5($filePath . $lastModified) . '"';
+        $mimeType     = Storage::disk($this->disk)->mimeType($filePath);
+
+        // Conversions (thumbnails) are content-addressed and never change — cache for 1 year.
+        // Original files are cached for 1 day.
+        $isConversion   = str_starts_with($filePath, 'conversions/');
+        $maxAge         = $isConversion ? 31_536_000 : 86_400;
+        $cacheControl   = $isConversion ? "public, max-age={$maxAge}, immutable" : "public, max-age={$maxAge}";
+
+        // Return 304 if the browser already has a fresh copy
+        if ($request->header('If-None-Match') === $etag) {
+            return response('', 304, [
+                'ETag'          => $etag,
+                'Cache-Control' => $cacheControl,
+            ]);
+        }
+
+        $stream = Storage::disk($this->disk)->readStream($filePath);
+
+        return response()->stream(
+            static fn () => fpassthru($stream),
+            200,
+            [
+                'Content-Type'  => $mimeType,
+                'Cache-Control' => $cacheControl,
+                'ETag'          => $etag,
+                'Last-Modified' => gmdate('D, d M Y H:i:s', $lastModified) . ' GMT',
+            ]
+        );
     }
 }
