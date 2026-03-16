@@ -2,22 +2,23 @@
 
 @section('content')
     @auth
-        <h1 class="mt-2">
-            {{__('app.Dashboard')}}
-        </h1>
+        <div class="dashboard-hero">
+            <h1>{{ __('app.Dashboard') }}</h1>
+            <p>{{ config('app.name') }}</p>
+        </div>
         @include('components.actions')
-        <h3 class="mt-3">{{__('app.Albums')}}</h3>
+        <p class="section-label">{{ __('app.Albums') }}</p>
         <div class="row">
-            @foreach( $albums as $album)
+            @foreach ($albums as $album)
                 @include('components.album', ['album' => $album])
             @endforeach
         </div>
     @else
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4">
             <div class="col-xs col-lg-8">
-                <div class="card">
+                <div class="card login-card">
                     <div class="card-header">
-                        <h1 class="card-title">{{__('app.Dashboard')}}</h1>
+                        <h1 class="card-title">{{ __('app.Dashboard') }}</h1>
                     </div>
                     <div class="card-body">
                         @if (session('status'))
@@ -25,12 +26,12 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <p>
-                            {{__('auth.You are not logged in!')}}
+                        <p class="text-muted mb-3">
+                            {{ __('auth.You are not logged in!') }}
                         </p>
                         @if (config('auth.useSol'))
-                            <p>
-                                {{__('auth.sol-login-or-email-login')}}
+                            <p class="text-muted">
+                                {{ __('auth.sol-login-or-email-login') }}
                             </p>
                         @endif
                     </div>

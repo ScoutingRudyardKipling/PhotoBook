@@ -10,11 +10,11 @@
                 </div>
                 <div class="card-body">
                     <div id="drag-drop-area">{{__('app.enable-javascript')}}</div>
-                    <div class="form-group pt-3">
-                        <a id="cancel" href="{{route('album.show', ['album' => $album->id])}}" class="btn btn-warning float-left">
+                    <div class="mb-3 pt-3">
+                        <a id="cancel" href="{{route('album.show', ['album' => $album->id])}}" class="btn btn-warning float-start">
                             {{__('app.action.Back')}}
                         </a>
-                        <a id="submit" class="btn btn-primary float-right disabled" href="{{route('album.show', ['album' => $album->id])}}" role="button">{{__('app.action.Submit')}}</a>
+                        <a id="submit" class="btn btn-primary float-end disabled" href="{{route('album.show', ['album' => $album->id])}}" role="button">{{__('app.action.Submit')}}</a>
                     </div>
                 </div>
             </div>
@@ -24,10 +24,10 @@
 
 @endsection
 @section('css')
-    <link href="https://transloadit.edgly.net/releases/uppy/v1.13.0/uppy.min.css" rel="stylesheet">
+    <link href="{{ asset('css/packages/uppy.min.css') }}" rel="stylesheet">
 @endsection
 @section('scripts')
-    <script src="https://transloadit.edgly.net/releases/uppy/v1.13.0/uppy.min.js"></script>
+    <script src="{{ asset('js/packages/uppy.min.js') }}"></script>
     <script>
     var uppy = Uppy.Core({
       debug: false,

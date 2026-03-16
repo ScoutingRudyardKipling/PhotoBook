@@ -1,5 +1,5 @@
 <div class="block-options">
-    <a href="{{ $href }}" class="btn btn-square btn-sm btn-outline-success btn-sm" data-toggle="tooltip" title="{{__('app.action.Create')}}"
+    <a href="{{ $href }}" class="btn btn-square btn-sm btn-outline-success btn-sm" data-bs-toggle="tooltip" title="{{__('app.action.Create')}}"
        data-original-title="{{__('app.action.Create')}}"
     >
         <svg class="bi bi-plus" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

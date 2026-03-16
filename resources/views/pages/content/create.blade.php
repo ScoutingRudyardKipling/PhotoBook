@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <form action="{{ route('content.store') }}" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="fileWrapper">File</label>
                             <input type="file" class="form-control-file" name="content" id="fileWrapper" aria-describedby="fileHelp">
                             <small id="fileHelp" class="form-text text-muted">{{__('validation.file-valid-and-size' ,['value' => config('media-library.max_file_size')])}}</small>

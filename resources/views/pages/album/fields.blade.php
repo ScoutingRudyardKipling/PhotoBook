@@ -1,10 +1,10 @@
 @csrf
-<div class="form-group">
+<div class="mb-3">
     <label for="albumName">{{__('app.Album')}} {{__('app.name')}}</label>
     <input type="text" value="{{$album->name ?? old('name')}}" class="form-control" id="albumName" name="name" placeholder="{{__('app.Summer camp')}}">
 </div>
 @if(!empty($album))
-    <div class="form-group">
+    <div class="mb-3">
         <label for="featured">{{__('app.Featured')}}</label>
         <select id="featured" name="featured-select" class="form-control">
             @php($oldFeaturedString = $album->featured_type . '-' . $album->featured_id)
@@ -33,7 +33,7 @@
 @endif
 <input type="hidden" value="{{$parent_id}}" id="parent_id" name="parent_id">
 @include('components.backbutton')
-<input class="btn btn-outline-primary float-right" type="submit" value="{{__('app.action.Submit')}}">
+<input class="btn btn-outline-primary float-end" type="submit" value="{{__('app.action.Submit')}}">
 @section('scripts')
     <script>
     $(function () {

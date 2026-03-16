@@ -1,6 +1,6 @@
 @csrf
 
-<div class="form-group">
+<div class="mb-3">
     <label for="inputState">{{__('app.Album')}}</label>
     <select id="inputState" name="parent_id" class="form-control">
         @foreach(\App\Models\Album::all() as $parent)

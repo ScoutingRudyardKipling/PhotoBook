@@ -1,3 +1,224 @@
+// ─── Page background — soft pastel blobs on near-white ───────────────────────
+body {
+    background:
+        radial-gradient(ellipse 80% 60% at 20% -10%, rgba(199, 179, 252, 0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 70% at 80% 110%, rgba(134, 239, 172, 0.40) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 50%,  rgba(147, 197, 253, 0.30) 0%, transparent 70%),
+        linear-gradient(160deg, #f0f4ff 0%, #faf5ff 50%, #f0fdf4 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #1e293b;
+}
 
-// Variables
-@import 'variables';
+// ─── Glass surface ────────────────────────────────────────────────────────────
+$glass-bg:     rgba(255, 255, 255, 0.55);
+$glass-border: rgba(255, 255, 255, 0.45);
+$glass-blur:   blur(24px) saturate(1.8);
+$glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+%glass {
+    background: $glass-bg !important;
+    backdrop-filter: $glass-blur;
+    -webkit-backdrop-filter: $glass-blur;
+    border: 1px solid $glass-border !important;
+    border-top-color: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: $glass-shadow !important;
+}
+
+// ─── Bootstrap component overrides ───────────────────────────────────────────
+
+.navbar {
+    background: rgba(255, 255, 255, 0.50) !important;
+    backdrop-filter: blur(40px) saturate(2);
+    -webkit-backdrop-filter: blur(40px) saturate(2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.60);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+
+    .navbar-brand { color: #1D3557 !important; font-weight: 800; }
+    .nav-link     { color: #1e293b !important; &:hover, &:focus { background: rgba(0, 0, 0, 0.05); border-radius: 6px; } }
+    .dropdown-toggle { color: #1e293b !important; }
+}
+
+.card {
+    @extend %glass;
+    border-radius: 14px;
+    color: #1e293b;
+    .card-header { background: rgba(255, 255, 255, 0.35) !important; border-color: $glass-border !important; font-weight: 700; }
+}
+
+.modal-content {
+    @extend %glass;
+    background: rgba(255, 255, 255, 0.70) !important;
+    border-radius: 20px;
+    color: #1e293b;
+}
+.modal-header, .modal-footer { border-color: $glass-border !important; }
+
+.dropdown-menu {
+    @extend %glass;
+    background: rgba(255, 255, 255, 0.75) !important;
+    border-radius: 14px;
+    color: #1e293b;
+    .dropdown-item { color: #1e293b; &:hover, &:focus { background: rgba(0, 0, 0, 0.05) !important; } }
+}
+
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.60) !important;
+    border-color: rgba(0, 0, 0, 0.10) !important;
+    color: #1e293b !important;
+    backdrop-filter: blur(8px);
+    &:focus {
+        background: rgba(255, 255, 255, 0.80) !important;
+        border-color: #1D3557 !important;
+        box-shadow: 0 0 0 3px rgba(29, 53, 87, 0.10) !important;
+    }
+    &::placeholder { color: rgba(30, 41, 59, 0.40) !important; }
+}
+
+label { color: #475569; font-weight: 600; font-size: 0.875rem; }
+
+.alert {
+    @extend %glass;
+    border-radius: 10px;
+    color: #1e293b;
+}
+
+// ─── Album cards ─────────────────────────────────────────────────────────────
+.album-card-link {
+    display: block;
+    text-decoration: none;
+    &:hover .album-card { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14) !important; }
+}
+
+.album-card {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid $glass-border;
+    background: $glass-bg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    .album-thumb-wrapper {
+        position: relative; overflow: hidden; padding-top: 75%;
+        background: rgba(255, 255, 255, 0.30);
+        img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; transition: transform 0.35s ease;
+        }
+        &::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, transparent 55%);
+            opacity: 0; transition: opacity 0.25s;
+        }
+    }
+
+    &:hover .album-thumb-wrapper {
+        img { transform: scale(1.06); }
+        &::after { opacity: 1; }
+    }
+
+    .album-card-name {
+        padding: 0.65rem 0.85rem;
+        font-weight: 700; font-size: 0.88rem; color: #1e293b;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        background: rgba(255, 255, 255, 0.60);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid $glass-border;
+    }
+}
+
+// ─── Photo cards ─────────────────────────────────────────────────────────────
+.photo-card {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid $glass-border;
+    background: $glass-bg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); }
+
+    .photo-thumb-wrapper {
+        position: relative; overflow: hidden; padding-top: 100%;
+        background: rgba(255, 255, 255, 0.30);
+        a.img-link {
+            position: absolute; inset: 0; display: block;
+            img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        }
+        .photo-delete-btn { position: absolute; top: 0.4rem; right: 0.4rem; z-index: 10; opacity: 0; transition: opacity 0.2s; }
+        &:hover {
+            a.img-link img { transform: scale(1.04); }
+            .photo-delete-btn { opacity: 1; }
+        }
+    }
+
+    .photo-name { padding: 0.4rem 0.65rem; font-size: 0.75rem; font-weight: 600; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+// ─── Actions bar ─────────────────────────────────────────────────────────────
+.actions-bar {
+    @extend %glass;
+    border-radius: 12px;
+    display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+    padding: 0.75rem 1rem; margin: 1rem 0;
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+footer {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(20px);
+    border-top: 1px solid $glass-border;
+    margin-top: 4rem; padding: 1.25rem 0;
+    p { color: #94a3b8; font-size: 0.8rem; margin: 0; }
+}
+
+// ─── Select2 ─────────────────────────────────────────────────────────────────
+.select2-container--default {
+    .select2-selection--single {
+        background: rgba(255, 255, 255, 0.60) !important;
+        border-color: rgba(0, 0, 0, 0.10) !important;
+        height: 38px;
+        .select2-selection__rendered { line-height: 36px; padding-left: 0.75rem; color: #1e293b !important; }
+        .select2-selection__arrow { height: 36px; }
+    }
+}
+.select2-dropdown {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(20px);
+    border-color: $glass-border !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10) !important;
+}
+.select2-container--default .select2-results__option { color: #1e293b; }
+.select2-container--default .select2-results__option--highlighted[aria-selected] { background: #1D3557 !important; color: white !important; }
+
+// ─── Typography helpers ───────────────────────────────────────────────────────
+.page-title    { font-weight: 800; font-size: 1.85rem; color: #1e293b; margin: 1.5rem 0 0.25rem; }
+.section-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin: 1.75rem 0 0.6rem; }
+.breadcrumb    { background: transparent; }
+.breadcrumb-item {
+    + .breadcrumb-item::before { color: #94a3b8 !important; }
+    a { color: #1D3557; text-decoration: none; &:hover { text-decoration: underline; } }
+    &.active { color: #64748b; }
+}
+
+// ─── Dashboard ───────────────────────────────────────────────────────────────
+.dashboard-hero {
+    margin: 1.5rem 0 0.5rem;
+    h1 { font-weight: 800; font-size: 2rem; color: #1e293b; }
+    p  { color: #64748b; }
+}
+
+// ─── Login card header ───────────────────────────────────────────────────────
+.login-card .card-header .card-title { color: #1e293b; font-weight: 800; font-size: 1.5rem; margin: 0; }
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
+.empty-state {
+    text-align: center; padding: 4rem 2rem; color: #94a3b8;
+    .empty-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+    p { font-weight: 600; }
+}
+
+// ─── Grid gutters ────────────────────────────────────────────────────────────
+.gutters-tiny {
+    margin-left: -6px; margin-right: -6px;
+    > [class*="col-"] { padding-left: 6px; padding-right: 6px; }
+}

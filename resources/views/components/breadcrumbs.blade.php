@@ -1,25 +1,23 @@
-<div>
-    @php
-        $breadCrumbs = collect();
-        $i = $album->parent;
-        $iterator = 1;
-        while (!empty($i)) {
-            $breadCrumbs->prepend(['id' => $i->id, 'name' => $i->name]);
-            $i = $i->parent;
-            $iterator++;
-        }
-    @endphp
-    <a href="{{route('home')}}">{{__('app.Dashboard')}}</a>
-    @if ($breadCrumbs->isNotEmpty())
-        >
-    @endif
-    @foreach($breadCrumbs as $crumb)
-        <a href="{{route("album.show", [$crumb['id']])}}"> {{$crumb['name']}}</a>
-        @if (! $loop->last)
-            >
+@php
+    $breadCrumbs = collect();
+    $i = $album->parent;
+    while (!empty($i)) {
+        $breadCrumbs->prepend(['id' => $i->id, 'name' => $i->name]);
+        $i = $i->parent;
+    }
+@endphp
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('home') }}">{{ __('app.Dashboard') }}</a>
+        </li>
+        @foreach ($breadCrumbs as $crumb)
+            <li class="breadcrumb-item">
+                <a href="{{ route('album.show', [$crumb['id']]) }}">{{ $crumb['name'] }}</a>
+            </li>
+        @endforeach
+        @if (!empty($showCurrent))
+            <li class="breadcrumb-item active" aria-current="page">{{ $album['name'] }}</li>
         @endif
-    @endforeach
-    @if(!empty($showCurrent))
-        > <a href="{{route("album.show", [$album['id']])}}"> {{$album['name']}}</a>
-    @endif
-</div>
+    </ol>
+</nav>

@@ -1,4 +1,4 @@
-<a href="{{ $href }}" class="btn btn-square btn-sm btn-outline-secondary" data-toggle="tooltip" title="{{__('app.action.Edit')}}"
+<a href="{{ $href }}" class="btn btn-square btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="{{__('app.action.Edit')}}"
    data-original-title="{{__('app.action.Edit')}}" style="margin-bottom: 0;"
 >
     <svg class="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

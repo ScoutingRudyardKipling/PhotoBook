@@ -2,37 +2,31 @@
 
 @section('content')
     @include('components.breadcrumbs', ['album' => $album])
-    <h1 class="mt-2">
-        {{$album->name}}
-    </h1>
+    <h1 class="page-title">{{ $album->name }}</h1>
     @include('components.actions', ['id' => $album->id])
 
     @if (count($albums) > 0)
-        <h3 class="mt-3">{{__('app.Albums')}}</h3>
+        <p class="section-label">{{ __('app.Albums') }}</p>
         <div class="row">
-            @foreach( $albums as $album)
+            @foreach ($albums as $album)
                 @include('components.album', ['album' => $album])
             @endforeach
         </div>
     @endif
+
     @if (count($contents) > 0)
-        <h3 class="mt-3">{{__('app.Content')}}</h3>
+        <p class="section-label">{{ __('app.Content') }}</p>
         <div class="row js-gallery gutters-tiny">
-            @foreach( $contents as $content)
+            @foreach ($contents as $content)
                 @include('components.content', ['content' => $content])
             @endforeach
         </div>
     @endif
-    @if(count($albums) === 0 && count($contents) === 0 )
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="row justify-content-center">
-                    <h4 class="mt-2">
-                        {{__('app.Empty')}} {{__('app.album')}}
-                    </h4>
-                </div>
-            </div>
-        </div>
 
+    @if (count($albums) === 0 && count($contents) === 0)
+        <div class="empty-state">
+            <span class="empty-icon">📷</span>
+            <p>{{ __('app.Empty') }} {{ __('app.album') }}</p>
+        </div>
     @endif
 @endsection
