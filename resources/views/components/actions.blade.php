@@ -11,7 +11,7 @@
                     'modalTitle' => __('app.Album') . ' ' . __('app.action.deleting'),
                     'modalBody'  => __('validation.are-you-sure', ['Attribute' => __('app.album'), 'value' => \App\Models\Album::find($id)->name]),
                 ])
-                <a class="btn btn-outline-warning btn-sm"
+                <a class="btn btn-outline-danger btn-sm"
                    data-bs-toggle="modal"
                    data-bs-target="#remove-{{ $id }}"
                    href="#"
