@@ -36,14 +36,13 @@ class RenameResponsiveImagesCollectionNameInMedia extends Migration
         /** @var Factory $filesystem */
         $filesystem = app(Factory::class);
 
-        $pathGenerator = PathGeneratorFactory::create();
-
         // Find media with the old collection name is present
         Media::query()
             ->withoutGlobalScopes()
             ->whereNotNull('responsive_images->' . $from)
             ->cursor()
-            ->each(function ($media) use ($from, $to, $filesystem, $pathGenerator) {
+            ->each(function ($media) use ($from, $to, $filesystem) {
+                $pathGenerator = PathGeneratorFactory::create($media);
                 // Change the old collection key
                 $responsive_images = array_merge(
                     $media->responsive_images,
