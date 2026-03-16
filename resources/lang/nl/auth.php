@@ -24,15 +24,15 @@ return [
     'birth date'                 => 'Verjaardag',
     'gender'                     => 'Geslacht',
     'preferred language'         => 'Voorkeurstaal',
-    'external_user'              => 'Sol gebruiker',
+    'external_user'              => 'SOL gebruiker',
     'name'                       => 'Naam',
     'password'                   => 'Wachtwoord',
     'leave-blank'                => 'laat leeg als u het niet wilt bewerken.',
     'confirm'                    => 'Bevestig wachtwoord',
     'sol'                        => [
-        'name'     => 'Sol',
-        'trough'   => 'via Sol',
-        'username' => 'Sol gebruikersnaam',
+        'name'     => 'SOL',
+        'trough'   => 'via SOL',
+        'username' => 'SOL gebruikersnaam',
     ],
     'genders'                    => [
         'M' => 'Man',
@@ -40,8 +40,8 @@ return [
         'U' => 'Ongedefinieerd',
     ],
     'with username and password' => 'met gebruikersnaam en wachtwoord',
-    'You are not logged in!'     => 'Je bent niet ingelogd! NOG NIET....',
-    'sol-login-or-email-login'   => 'U kunt inloggen met Scouts online in het onderstaande veld,
-    of u kunt inloggen via e-mail en wachtwoord achter de knop rechts bovenin het scherm.
+    'You are not logged in!'     => 'Je bent niet ingelogd!',
+    'sol-login-or-email-login'   => 'Je kan inloggen met Scouts OnLine (SOL) in het onderstaande veld,
+    of je kan inloggen via e-mail en wachtwoord achter de knop rechts bovenin het scherm.
     De laatste optie is alleen beschikbaar als een specifiek account aan u is verstrekt door de webmasters.',
 ];
