@@ -16,10 +16,3 @@
         </div>
     </div>
 </div>
-<a class="btn btn-outline-secondary btn-sm"
-   data-bs-toggle="modal"
-   data-bs-target="#album-edit"
-   href="#"
->
-    {{ __('app.action.Edit') }} {{ __('app.album') }}
-</a>

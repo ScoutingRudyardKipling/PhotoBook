@@ -15,10 +15,3 @@
         </div>
     </div>
 </div>
-<a class="btn btn-outline-primary btn-sm"
-   data-bs-toggle="modal"
-   data-bs-target="#album-create"
-   href="#"
->
-    {{ __('app.action.Create') }} {{ __('app.sub') }} {{ __('app.album') }}
-</a>
