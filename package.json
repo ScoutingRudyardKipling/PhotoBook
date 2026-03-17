@@ -26,8 +26,6 @@
         "sass": "^1.98.0",
         "sass-loader": "^10.0.5",
         "select2": "^4.0.13",
-        "uppy": "^1.13.3",
-        "vue": "^2.6.12",
-        "vue-template-compiler": "^2.6.12"
+        "uppy": "^1.13.3"
     }
 }
