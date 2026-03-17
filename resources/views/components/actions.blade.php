@@ -20,22 +20,20 @@
     <div class="actions-bar">
         @if (!\Request::is('/'))
             @can('Edit Album')
-                <a class="btn btn-outline-secondary btn-sm"
-                   data-bs-toggle="modal"
-                   data-bs-target="#album-edit"
-                   href="#"
+                <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#album-edit"
                 >
                     {{ __('app.action.Edit') }} {{ __('app.album') }}
-                </a>
+                </button>
             @endcan
             @can('Delete Album')
-                <a class="btn btn-outline-danger btn-sm"
-                   data-bs-toggle="modal"
-                   data-bs-target="#remove-{{ $id }}"
-                   href="#"
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#remove-{{ $id }}"
                 >
                     {{ __('app.action.Delete') }} {{ __('app.album') }}
-                </a>
+                </button>
             @endcan
             @can('Add Content')
                 <a class="btn btn-outline-primary btn-sm" href="{{ route('content.upload', ['album' => $id]) }}">
@@ -44,13 +42,12 @@
             @endcan
         @endif
         @can('Add Album')
-            <a class="btn btn-outline-primary btn-sm"
-               data-bs-toggle="modal"
-               data-bs-target="#album-create"
-               href="#"
+            <button type="button" class="btn btn-outline-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#album-create"
             >
                 {{ __('app.action.Create') }} {{ __('app.sub') }} {{ __('app.album') }}
-            </a>
+            </button>
         @endcan
     </div>
 @endcanany

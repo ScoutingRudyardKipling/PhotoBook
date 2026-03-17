@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body text-center">
                 <form method="POST" action="{{ route('album.store') }}">
-                    @include('pages.album.fields', ['parent_id' => $parent_id, 'album' => null])
+                    @include('pages.album.fields', ['parent_id' => $parent_id, 'album' => null, 'modal' => true])
                 </form>
             </div>
         </div>

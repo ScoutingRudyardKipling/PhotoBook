@@ -10,7 +10,7 @@
             <div class="modal-body text-center">
                 <form method="POST" action="{{ route('album.update', $album->id) }}">
                     @method('PUT')
-                    @include('pages.album.fields', ['album' => $album, 'parent_id' => $album->parent_id])
+                    @include('pages.album.fields', ['album' => $album, 'parent_id' => $album->parent_id, 'modal' => true])
                 </form>
             </div>
         </div>

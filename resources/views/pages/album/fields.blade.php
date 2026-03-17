@@ -32,7 +32,11 @@
     </div>
 @endif
 <input type="hidden" value="{{$parent_id}}" id="parent_id" name="parent_id">
-@include('components.backbutton')
+@if(!empty($modal))
+    <button type="button" class="btn btn-warning float-start" data-bs-dismiss="modal">{{ __('app.action.Cancel') }}</button>
+@else
+    @include('components.backbutton')
+@endif
 <input class="btn btn-outline-primary float-end" type="submit" value="{{__('app.action.Submit')}}">
 @section('scripts')
     <script>
