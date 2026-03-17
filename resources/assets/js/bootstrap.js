@@ -12,7 +12,8 @@ try {
 /**
  * Axios HTTP library with CSRF token attached automatically.
  */
-window.axios = require('axios');
+const _axios = require('axios');
+window.axios = _axios.default ?? _axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
