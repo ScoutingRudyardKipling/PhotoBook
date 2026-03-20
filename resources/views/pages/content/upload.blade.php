@@ -29,7 +29,7 @@
 @section('scripts')
     <script src="{{ asset('js/packages/uppy.min.js') }}"></script>
     <script>
-    var uppy = Uppy.Core({
+    var uppy = new Uppy.Uppy({
       debug: false,
       autoProceed: false,
       restrictions: {
