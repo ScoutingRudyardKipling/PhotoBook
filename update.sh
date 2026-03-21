@@ -68,12 +68,6 @@ php artisan cache:clear
 php artisan view:clear
 echo "Cache cleared..."
 echo ""
-# NPM production --> Asset compiling
-npm ci
-npm run build
-echo "Assets successfully built in production mode."
-echo ""
-sleep 1
 #up the application
 echo "Set laravel in production mode"
 echo ""

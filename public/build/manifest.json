@@ -1,0 +1,30 @@
+{
+  "__commonjsHelpers-Cpj98o6Y.js": {
+    "file": "assets/_commonjsHelpers-Cpj98o6Y.js",
+    "name": "_commonjsHelpers"
+  },
+  "resources/assets/js/app.js": {
+    "file": "assets/app-C4WssY2e.js",
+    "name": "app",
+    "src": "resources/assets/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "__commonjsHelpers-Cpj98o6Y.js"
+    ],
+    "css": [
+      "assets/app-BAnEDuU5.css"
+    ]
+  },
+  "resources/assets/js/uppy.js": {
+    "file": "assets/uppy-B-p2dBih.js",
+    "name": "uppy",
+    "src": "resources/assets/js/uppy.js",
+    "isEntry": true,
+    "imports": [
+      "__commonjsHelpers-Cpj98o6Y.js"
+    ],
+    "css": [
+      "assets/uppy-Dfe9AQrl.css"
+    ]
+  }
+}

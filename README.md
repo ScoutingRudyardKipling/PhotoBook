@@ -12,18 +12,15 @@ It features:
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment chapter for notes on how to deploy the project on a 
-live 
-system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment chapter for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
 What things you need to install the software and how to install them
  * [Composer](https://getcomposer.org/)
- * php 7.3 or higher (preferred latest)
+ * PHP 8.3 or higher
  * A (local) SQL database (MariaDB 10.2 or higher)
- * [Node.js](https://nodejs.org/en/download/)
- * NPM (installed with Node.js)
+ * [Node.js 18+](https://nodejs.org/en/download/) and NPM — required for local development only (not needed on the server)
  * Common sense :wink:
 
 ### Installing (development environment)
@@ -34,7 +31,7 @@ create a local .env
 ```
 cp .env.example .env
 ```
-Now setup the .env  file for your environment
+Now setup the .env file for your environment
 
 Minimal setup is setting up your database connection
 ```dotenv
@@ -53,7 +50,7 @@ Generate a local key for laravel (stored in .env)
 ```bash
 php artisan key:generate
 ```
-link the storage folder
+Link the storage folder
 ```bash
 php artisan storage:link
 ```
@@ -61,7 +58,7 @@ Migrate the database (from scratch) to the latest version
 ```bash
 php artisan migrate
 ```
-Seed the database with the bare essential data (like basic permissions and roles) 
+Seed the database with the bare essential data (like basic permissions and roles)
 ```bash
 php artisan db:seed
 ```
@@ -72,14 +69,15 @@ php artisan list
 As you will use artisan a lot (and we as programmers are lazy) make an alias in your .bash_profile
 ```bash
 alias art='php artisan'
-``` 
-We also need to install npm with its packages
+```
+Install npm packages and start the Vite dev server (with HMR)
 ```bash
 npm install
-```
-And run npm to let it generate a nice and clean looking website for you
-```bash
 npm run dev
+```
+To build production assets locally (committed to the repo, not required on the server)
+```bash
+npm run build
 ```
 
 ## Running the tests
@@ -90,9 +88,10 @@ Run all tests
 composer test
 ```
 The above example runs phpunit, phpcs, phpmd, and larastan. Info found in the rest of this paragraph.
+
 ### phpunit - all defined tests
 
-This command will run all php unit tests found in the test folder. this includes Unit as well as Feature tests.
+This command will run all php unit tests found in the test folder. This includes Unit as well as Feature tests.
 ```bash
 ./vendor/bin/phpunit
 ```
@@ -102,8 +101,8 @@ For running all analysers at once run:
 ```bash
 composer lint
 ```
-#### phpcs -  PHP Code Sniffer
-PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.
+#### phpcs - PHP Code Sniffer
+PHP_CodeSniffer tokenizes PHP files and detects violations of a defined set of coding standards.
 
 Configuration of CodeSniffer is found in phpcs.xml
 
@@ -122,20 +121,16 @@ Configuration of MessDetector is found in phpmd.xml
 
 [PHPMD repo and guide](https://github.com/phpmd/phpmd)
 ```bash
-#executable path   
-#                  tested folder or file
-#                      output format
-#                           configuration
 ./vendor/bin/phpmd app text phpmd.xml
 ```
 #### Larastan
-Discover bugs in your code without running it - phpstan wrapper for Laravel.
+Discover bugs in your code without running it — phpstan wrapper for Laravel.
 
 Configuration of Larastan is found in phpstan.neon
 
-[Larastan repo and guide](https://github.com/nunomaduro/larastan)
+[Larastan repo and guide](https://github.com/larastan/larastan)
 ```bash
-php artisan code:analyse --level=max
+./vendor/bin/phpstan analyse --memory-limit=1G
 ```
 
 ## Deployment
@@ -144,11 +139,11 @@ If the application is already installed for the first time, skip the First time 
 
 ### First time deployment
 
-We will go a little bit faster here, if you would like some more explanation, go to the above paragraph Installing, or visit the laravel documentation page
+We will go a little bit faster here, if you would like some more explanation, go to the above paragraph Installing, or visit the laravel documentation page.
 
-download the repo on the server (via git or filetransfer) and make sure you are in the folder of this repo.
+Download the repo on the server (via git or filetransfer) and make sure you are in the folder of this repo.
 
-create a local .env
+Create a local .env
 ```bash
 cp .env.example .env
 ```
@@ -163,22 +158,21 @@ DB_PORT=3306
 DB_DATABASE=your-database
 DB_USERNAME=your-user
 DB_PASSWORD=your-password
-
 ```
-now run the next commands to setup the server
+Now run the next commands to setup the server
 ```bash
-composer install
+composer install --no-dev
 php artisan package:discover
 php artisan key:generate
 php artisan storage:link
 php artisan migrate
 php artisan cache:clear
 php artisan config:cache
-npm ci
-npm run production
 php artisan up
-
 ```
+
+> **Note:** Node.js is not required on the server. Frontend assets are pre-built locally and committed to the repository under `public/build/`.
+
 Install a cronjob to call the laravel kernel which dispatches all jobs internally, yes it has to run every minute.
 Laravel will determine for itself when to run the jobs.
 ```
@@ -195,7 +189,7 @@ Make sure you have the base setup the apache or nginx config correctly and route
 
 ##### apache
 
-Laravel includes a ```public/.htaccess``` file that is used to provide URLs without the ```index.php``` front controller in the path. 
+Laravel includes a ```public/.htaccess``` file that is used to provide URLs without the ```index.php``` front controller in the path.
 Before serving Laravel with Apache, be sure to enable the ```mod_rewrite``` module so the ```.htaccess``` file will be honored by the server.
 
 If the ```.htaccess``` file that ships with Laravel does not work with your Apache installation, try this alternative:
@@ -222,60 +216,42 @@ location / {
 
 ### Updating
 
-run command
+The easiest way to update is via the included `update.sh` script:
 ```bash
-php artisan down
+bash update.sh <branch> <directory>
 ```
 
-Upload your new repository to the server.
-
-Make sure you do not edit or overwrite:
-* ```.env``` unless edits are specified for that particular update
-* ```vendor/```
-* ```storage/```
-* ```node_modules/```
-
-run commands
+Or manually:
 ```bash
+php artisan down
 
-composer install
-php artisan migrate
+git pull
 
+composer install --no-dev
+php artisan package:discover
+php artisan migrate --force
+php artisan config:clear
+php artisan permission:cache-reset
 php artisan cache:clear
-php artisan config:cache
-npm ci
-npm run production
+php artisan view:clear
 
 php artisan up
 ```
 
+> **Note:** No `npm` steps are needed on the server. Run `npm run build` locally and commit `public/build/` before deploying.
+
 ## Built With
-* [Laravel](https://laravel.com/docs/5.7) - The web framework used (with its default included packages), read more in the About Laravel section.
-* [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper) - Generates an ide helper file for better hinting. Also generates model blocks on demand.
-* [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) - Code Sniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.
-* [Larastan](https://github.com/nunomaduro/larastan) - Discover bugs in your code without running it - phpstan wrapper for Laravel.
-* [PHPMD](https://github.com/phpmd/phpmd) - Takes a given PHP code base and looks for several potential problems within that source.
-* [Spatie Laravel Medialibary](https://docs.spatie.be/laravel-medialibrary/v7/introduction/) - The laravel media libary used
-* [Spatie Laravel Permission](https://docs.spatie.be/laravel-permission/v2/introduction/) - The laravel permission libary
-### About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-### Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1400 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* [Laravel 12](https://laravel.com/docs/12.x) - The web framework used
+* [Vite](https://vitejs.dev/) - Frontend asset bundler
+* [Bootstrap 5](https://getbootstrap.com/) - CSS framework
+* [GLightbox](https://biati-digital.github.io/glightbox/) - Image lightbox
+* [Uppy](https://uppy.io/) - File upload widget
+* [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper) - Generates an ide helper file for better hinting
+* [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer) - Code Sniffer tokenizes PHP files and detects violations of a defined set of coding standards
+* [Larastan](https://github.com/larastan/larastan) - Discover bugs in your code without running it — phpstan wrapper for Laravel
+* [PHPMD](https://github.com/phpmd/phpmd) - Takes a given PHP code base and looks for several potential problems within that source
+* [Spatie Laravel Medialibrary](https://spatie.be/docs/laravel-medialibrary) - Media library for Laravel
+* [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission) - Role and permission handling for Laravel
 
 ## Security Vulnerabilities
 * [CVE details Laravel](https://www.cvedetails.com/product/38139/?q=Laravel)
