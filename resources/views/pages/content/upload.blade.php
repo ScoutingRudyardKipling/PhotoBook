@@ -24,10 +24,9 @@
 
 @endsection
 @section('css')
-    <link href="{{ asset('css/packages/uppy.min.css') }}" rel="stylesheet">
+    @vite('resources/assets/js/uppy.js')
 @endsection
 @section('scripts')
-    <script src="{{ asset('js/packages/uppy.min.js') }}"></script>
     <script>
     var uppy = new Uppy.Uppy({
       debug: false,

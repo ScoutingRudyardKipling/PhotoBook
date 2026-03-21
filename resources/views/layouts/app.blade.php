@@ -9,11 +9,8 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/packages/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/packages/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/packages/select2.min.css') }}">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Styles & Scripts -->
+    @vite('resources/assets/js/app.js')
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/img/icons/favicons/apple-touch-icon.png">
@@ -101,9 +98,6 @@
         </div>
     </footer>
 </div>
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/packages/select2.full.min.js') }}"></script>
 @yield('scripts')
 
 </body>

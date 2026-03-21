@@ -70,7 +70,7 @@ echo "Cache cleared..."
 echo ""
 # NPM production --> Asset compiling
 npm ci
-npm run production
+npm run build
 echo "Assets successfully built in production mode."
 echo ""
 sleep 1

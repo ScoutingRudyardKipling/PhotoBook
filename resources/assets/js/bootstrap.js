@@ -1,19 +1,21 @@
-window._ = require('lodash');
+import _ from 'lodash';
+window._ = _;
 
 /**
- * Bootstrap 5 — jQuery is still loaded for Select2 and Magnific Popup.
+ * jQuery is loaded globally for Select2 and Magnific Popup.
  * Bootstrap 5 does not require jQuery but works alongside it.
  */
-try {
-    window.$ = window.jQuery = require('jquery');
-    require('bootstrap');
-} catch (e) {}
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+import 'bootstrap';
+import 'select2';
 
 /**
  * Axios HTTP library with CSRF token attached automatically.
  */
-const _axios = require('axios');
-window.axios = _axios.default ?? _axios;
+import axios from 'axios';
+window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
