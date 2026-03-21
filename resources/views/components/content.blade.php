@@ -14,14 +14,16 @@
                             title="{{ __('app.action.Delete') }}"
                     >&times;</button>
                 </div>
-                @include('components.cruds.delete-modal', [
-                    'item'       => $content,
-                    'route'      => route('content.destroy', $content->id),
-                    'modalTitle' => __('app.Content') . ' ' . __('app.action.deleting'),
-                    'modalBody'  => __('validation.are-you-sure', ['Attribute' => __('app.content'), 'value' => $content->name]),
-                ])
             @endcan
         </div>
         <div class="photo-name">{{ $content->name }}</div>
     </div>
+    @can('Delete Content')
+        @include('components.cruds.delete-modal', [
+            'item'       => $content,
+            'route'      => route('content.destroy', $content->id),
+            'modalTitle' => __('app.Content') . ' ' . __('app.action.deleting'),
+            'modalBody'  => __('validation.are-you-sure', ['Attribute' => __('app.content'), 'value' => $content->name]),
+        ])
+    @endcan
 </div>
