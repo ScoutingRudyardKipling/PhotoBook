@@ -27,7 +27,7 @@
     @vite('resources/assets/js/uppy.js')
 @endsection
 @section('scripts')
-    <script>
+    <script type="module">
     var uppy = new Uppy.Uppy({
       debug: false,
       autoProceed: false,
