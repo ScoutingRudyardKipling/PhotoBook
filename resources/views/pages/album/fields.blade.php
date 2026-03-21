@@ -7,6 +7,7 @@
     <div class="mb-3">
         <label for="featured">{{__('app.Featured')}}</label>
         <select id="featured" name="featured-select" class="form-control">
+            <option value="" disabled selected>Kies een placeholder...</option>
             @php($oldFeaturedString = $album->featured_type . '-' . $album->featured_id)
             @foreach($album->childAlbums as $featuredAlbum)
                 <option
@@ -38,12 +39,3 @@
     @include('components.backbutton')
 @endif
 <input class="btn btn-outline-primary float-end" type="submit" value="{{__('app.action.Submit')}}">
-@section('scripts')
-    <script>
-    $(function () {
-      $('#featured').select2({
-        placeholder: 'Kies een placeholder...'
-      });
-    });
-    </script>
-@endsection

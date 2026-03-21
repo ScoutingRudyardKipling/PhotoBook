@@ -1,7 +1,6 @@
 // CSS dependencies — bundled by Vite
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'glightbox/dist/css/glightbox.min.css';
-import 'select2/dist/css/select2.min.css';
 import '../sass/app.scss';
 
 import './bootstrap.js';

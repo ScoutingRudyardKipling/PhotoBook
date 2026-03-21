@@ -170,25 +170,6 @@ footer {
     p { color: #94a3b8; font-size: 0.8rem; margin: 0; }
 }
 
-// ─── Select2 ─────────────────────────────────────────────────────────────────
-.select2-container--default {
-    .select2-selection--single {
-        background: rgba(255, 255, 255, 0.60) !important;
-        border-color: rgba(0, 0, 0, 0.10) !important;
-        height: 38px;
-        .select2-selection__rendered { line-height: 36px; padding-left: 0.75rem; color: #1e293b !important; }
-        .select2-selection__arrow { height: 36px; }
-    }
-}
-.select2-dropdown {
-    background: rgba(255, 255, 255, 0.85) !important;
-    backdrop-filter: blur(20px);
-    border-color: $glass-border !important;
-    border-radius: 12px !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10) !important;
-}
-.select2-container--default .select2-results__option { color: #1e293b; }
-.select2-container--default .select2-results__option--highlighted[aria-selected] { background: #1D3557 !important; color: white !important; }
 
 // ─── Typography helpers ───────────────────────────────────────────────────────
 .page-title    { font-weight: 800; font-size: 1.85rem; color: #1e293b; margin: 1.5rem 0 0.25rem; }
