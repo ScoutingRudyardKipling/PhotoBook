@@ -1,7 +1,7 @@
 <div class="col-6 col-md-4 col-lg-3 mt-4">
     <div class="photo-card">
         <div class="photo-thumb-wrapper">
-            <a class="img-link img-lightbox" href="{{ $content->getUrl() }}">
+            <a class="img-link glightbox" href="{{ $content->getUrl() }}" data-type="image" data-gallery="album-gallery" data-title="{{ $content->name }}">
                 <img src="{{ $content->getUrl('thumb') }}" alt="{{ $content->name }}"/>
             </a>
             @can('Delete Content')

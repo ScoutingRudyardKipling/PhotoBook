@@ -16,7 +16,7 @@
 
     @if (count($contents) > 0)
         <p class="section-label">{{ __('app.Content') }}</p>
-        <div class="row js-gallery gutters-tiny">
+        <div class="row gutters-tiny">
             @foreach ($contents as $content)
                 @include('components.content', ['content' => $content])
             @endforeach

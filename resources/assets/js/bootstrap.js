@@ -2,7 +2,7 @@ import _ from 'lodash';
 window._ = _;
 
 /**
- * jQuery is loaded globally for Select2 and Magnific Popup.
+ * jQuery is loaded globally for Select2.
  * Bootstrap 5 does not require jQuery but works alongside it.
  */
 import $ from 'jquery';
