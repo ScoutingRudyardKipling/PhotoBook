@@ -49,5 +49,10 @@
                 {{ __('app.action.Create') }} {{ __('app.sub') }} {{ __('app.album') }}
             </button>
         @endcan
+        @if (isset($contents) && count($contents) > 0)
+            <button type="button" id="start-slideshow" class="btn btn-outline-success btn-sm">
+                {{ __('app.action.Slideshow') }}
+            </button>
+        @endif
     </div>
 @endcanany
