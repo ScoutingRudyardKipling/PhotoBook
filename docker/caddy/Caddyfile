@@ -1,0 +1,39 @@
+{$DOMAIN} {
+	log
+    header -Server
+    header Cross-Origin-Opener-Policy "same-origin"
+    header Cross-Origin-Resource-Policy "same-site"
+
+    handle {
+        root * /var/www/html/public
+        request_body {
+            max_size 10MB
+        }
+        php_fastcgi unix//var/run/php8-fpm.sock
+        encode zstd gzip
+        file_server
+    }
+
+    tls internal
+}
+
+:80 {
+	log
+    header -Server
+    header Cross-Origin-Opener-Policy "same-origin"
+    header Cross-Origin-Resource-Policy "same-site"
+
+    handle {
+        root * /var/www/html/public
+        request_body {
+            max_size 10MB
+        }
+        php_fastcgi unix//var/run/php8-fpm.sock
+        encode zstd gzip
+        file_server
+    }
+}
+
+:2019 {
+	metrics /metrics
+}
