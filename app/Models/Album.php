@@ -105,6 +105,40 @@ class Album extends Model
     }
 
     /**
+     * Get all contents from this album and all its descendants.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllContents()
+    {
+        return Content::whereIn('parent_id', $this->getDescendantAlbumIds())->get();
+    }
+
+    /**
+     * Check if this album or any of its descendants have contents.
+     *
+     * @return boolean
+     */
+    public function hasContentRecursive()
+    {
+        return Content::whereIn('parent_id', $this->getDescendantAlbumIds())->exists();
+    }
+
+    /**
+     * Get IDs of this album and all its descendants.
+     *
+     * @return array
+     */
+    public function getDescendantAlbumIds()
+    {
+        $ids = [$this->id];
+        foreach ($this->childAlbums as $child) {
+            $ids = array_merge($ids, $child->getDescendantAlbumIds());
+        }
+        return $ids;
+    }
+
+    /**
      * @return string
      */
     public function getPath(): string

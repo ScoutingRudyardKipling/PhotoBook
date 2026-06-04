@@ -1,3 +1,6 @@
+@php
+    $id = $id ?? (isset($album) ? $album->id : 0);
+@endphp
 @canany(['Add Content', 'Edit Album', 'Add Album'])
     {{-- Modals must live outside .actions-bar to escape its backdrop-filter stacking context --}}
     @if (!\Request::is('/'))
@@ -49,8 +52,16 @@
                 {{ __('app.action.Create') }} {{ __('app.sub') }} {{ __('app.album') }}
             </button>
         @endcan
-        @if (isset($contents) && count($contents) > 0)
-            <button type="button" id="start-slideshow" class="btn btn-outline-success btn-sm">
+        @php
+            $showSlideshow = false;
+            $slideshowUrl = route('photos.all');
+            if (isset($album)) {
+                $showSlideshow = $album->hasContentRecursive();
+                $slideshowUrl = route('album.photos', ['album' => $album->id]);
+            }
+        @endphp
+        @if ($showSlideshow)
+            <button type="button" id="start-slideshow" class="btn btn-outline-success btn-sm" data-url="{{ $slideshowUrl }}">
                 {{ __('app.action.Slideshow') }}
             </button>
         @endif

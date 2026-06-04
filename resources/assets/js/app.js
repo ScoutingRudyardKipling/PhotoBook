@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let slideshowInterval;
     let currentSpeed = 10000; // 10 seconds default
+    let slideshowItems = [];
 
     // Collect images from the gallery
     const getGalleryItems = () => {
@@ -39,17 +40,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fisher-Yates shuffle
     const shuffle = (array) => {
-        let currentIndex = array.length, randomIndex;
+        const newArray = [...array];
+        let currentIndex = newArray.length, randomIndex;
         while (currentIndex != 0) {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
-            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            [newArray[currentIndex], newArray[randomIndex]] = [newArray[randomIndex], newArray[currentIndex]];
         }
-        return array;
+        return newArray;
     };
 
-    startBtn.addEventListener('click', () => {
-        const items = shuffle(getGalleryItems());
+    startBtn.addEventListener('click', async () => {
+        const url = startBtn.getAttribute('data-url');
+        if (url) {
+            startBtn.disabled = true;
+            const originalText = startBtn.innerText;
+            startBtn.innerText = 'Laden...';
+            try {
+                const response = await fetch(url);
+                slideshowItems = await response.json();
+            } catch (error) {
+                console.error('Failed to fetch slideshow items:', error);
+                slideshowItems = getGalleryItems();
+            } finally {
+                startBtn.disabled = false;
+                startBtn.innerText = originalText;
+            }
+        } else {
+            slideshowItems = getGalleryItems();
+        }
+
+        const items = shuffle(slideshowItems);
         if (items.length === 0) return;
 
         const lightbox = GLightbox({
@@ -77,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 lightbox.nextSlide();
             } else {
                 // Restart with a new shuffle for the next iteration
-                const newItems = shuffle(getGalleryItems());
+                const newItems = shuffle(slideshowItems);
                 lightbox.setElements(newItems);
                 lightbox.goToSlide(0);
             }

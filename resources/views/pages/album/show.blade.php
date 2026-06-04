@@ -3,7 +3,7 @@
 @section('content')
     @include('components.breadcrumbs', ['album' => $album])
     <h1 class="page-title">{{ $album->name }}</h1>
-    @include('components.actions', ['id' => $album->id])
+    @include('components.actions', ['album' => $album])
 
     @if (count($albums) > 0)
         <p class="section-label">{{ __('app.Albums') }}</p>
