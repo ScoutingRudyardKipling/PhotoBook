@@ -203,3 +203,17 @@ footer {
     margin-left: -6px; margin-right: -6px;
     > [class*="col-"] { padding-left: 6px; padding-right: 6px; }
 }
+
+#slideshow-speed-control > div {
+    @extend %glass;
+    background: rgba(255, 255, 255, 0.8) !important;
+
+    input[type=range] {
+        accent-color: #1D3557;
+        cursor: pointer;
+    }
+
+    label {
+        color: #1D3557;
+    }
+}

@@ -68,6 +68,28 @@ class AlbumController extends Controller
     }
 
     /**
+     * Get all photos for the slideshow (including sub-albums).
+     *
+     * @param Album $album
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allPhotos(Album $album)
+    {
+        $data = $album->getAllContents()->map(
+            function ($content) {
+                return [
+                    'href'  => $content->getUrl(),
+                    'type'  => 'image',
+                    'title' => $content->name,
+                ];
+            }
+        );
+
+        return response()->json($data);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Album $album

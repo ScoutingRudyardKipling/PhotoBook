@@ -57,6 +57,8 @@ Route::group(
         );
         Route::get('album/{parent}/subalbum/create', [AlbumController::class, 'create'])->name('album.create');
         Route::get('album/{album}/content/upload', [ContentController::class, 'uploadView'])->name('content.upload');
+        Route::get('album/{album}/photos', [AlbumController::class, 'allPhotos'])->name('album.photos');
+        Route::get('photos/all', [AlbumController::class, 'allPhotos'])->name('photos.all');
         Route::post('content/upload/action', [UploadController::class, 'uploadAjax']);
         Route::resource(
             'content',

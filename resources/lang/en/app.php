@@ -12,7 +12,10 @@ return [
         'Submit'   => 'Submit',
         'Cancel'   => 'Cancel',
         'Back'     => 'Back',
+        'Slideshow' => 'Slideshow',
     ],
+    'Speed'             => 'Speed',
+    'seconds'           => 's',
     'bool'              => [
         'true'  => 'Yes',
         'false' => 'No',
