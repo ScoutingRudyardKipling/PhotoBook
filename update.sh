@@ -49,7 +49,7 @@ git rev-parse HEAD > .version
 echo ""
 # Install composer dep.
 php composer.phar install --no-dev
-echo "Composer has been updated"
+echo "Composer.lock has been installed"
 echo ""
 # discover packages
 php artisan package:discover
