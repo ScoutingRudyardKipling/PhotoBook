@@ -77,11 +77,7 @@ class Content extends Model implements HasMedia
         $cache = Cache::rememberForever(
             'getAlbumPath' . $this->id,
             function () {
-                $path = "";
-                if (!is_null($this->parent_id)) {
-                    $path = $this->parent->getPath();
-                }
-                return $path;
+                return $this->parent->getPath();
             }
         );
         return $cache;

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\UsesUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -61,5 +60,4 @@ use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
  */
 class Media extends \Spatie\MediaLibrary\MediaCollections\Models\Media
 {
-//    use UsesUuid;
 }

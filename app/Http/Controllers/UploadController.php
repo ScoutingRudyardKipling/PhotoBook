@@ -136,14 +136,6 @@ class UploadController extends Controller
                 ],
                 500
             );
-        }//end try
-        Log::error(500 . ': Something went wrong in file upload.');
-        return response()->json(
-            [
-                'successful' => false,
-                'message'    => 'Something went wrong.',
-            ],
-            500
-        );
+        }
     }
 }
