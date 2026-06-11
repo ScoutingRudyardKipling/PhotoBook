@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,8 +15,8 @@ use Illuminate\Support\Facades\Storage;
  * @property int $id
  * @property string $name
  * @property int|null $parent_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property int|null $featured_id
  * @property string|null $featured_type
  * @property-read Collection<int, Album> $childAlbums
@@ -23,16 +25,16 @@ use Illuminate\Support\Facades\Storage;
  * @property-read int|null $contents_count
  * @property-read Model|\Eloquent|null $featured
  * @property-read Album|null $parent
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereFeaturedId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereFeaturedType($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereUpdatedAt($value)
+ * @method static Builder<static>|Album newModelQuery()
+ * @method static Builder<static>|Album newQuery()
+ * @method static Builder<static>|Album query()
+ * @method static Builder<static>|Album whereCreatedAt($value)
+ * @method static Builder<static>|Album whereFeaturedId($value)
+ * @method static Builder<static>|Album whereFeaturedType($value)
+ * @method static Builder<static>|Album whereId($value)
+ * @method static Builder<static>|Album whereName($value)
+ * @method static Builder<static>|Album whereParentId($value)
+ * @method static Builder<static>|Album whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Album extends Model

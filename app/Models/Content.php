@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Album;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -22,14 +24,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property-read MediaCollection<int, \App\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read Album $parent
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereParentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereUpdatedAt($value)
+ * @method static Builder<static>|Content newModelQuery()
+ * @method static Builder<static>|Content newQuery()
+ * @method static Builder<static>|Content query()
+ * @method static Builder<static>|Content whereCreatedAt($value)
+ * @method static Builder<static>|Content whereId($value)
+ * @method static Builder<static>|Content whereName($value)
+ * @method static Builder<static>|Content whereParentId($value)
+ * @method static Builder<static>|Content whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Content extends Model implements HasMedia
