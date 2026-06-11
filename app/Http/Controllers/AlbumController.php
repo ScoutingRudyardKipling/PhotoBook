@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Facades\Clearance;
 use App\Models\Album;
 use App\Models\Content;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AlbumController extends Controller
 {
@@ -14,7 +19,7 @@ class AlbumController extends Controller
      *
      * @param int|null $parent
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function create($parent)
     {
@@ -25,9 +30,9 @@ class AlbumController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -48,9 +53,9 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Album $album
+     * @param Album $album
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function show(Album $album)
     {
@@ -72,7 +77,7 @@ class AlbumController extends Controller
      *
      * @param Album $album
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function allPhotos(Album $album)
     {
@@ -92,9 +97,9 @@ class AlbumController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Album $album
+     * @param Album $album
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit(Album $album)
     {
@@ -105,10 +110,10 @@ class AlbumController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Album        $album
+     * @param Request $request
+     * @param Album        $album
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request, Album $album)
     {
@@ -132,9 +137,9 @@ class AlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Album $album
+     * @param Album $album
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function destroy(Album $album)

@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 class CustomMediaPathGenerator implements PathGenerator
 {
     /**
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media $media
+     * @param Media $media
      *
      * @return string
      */

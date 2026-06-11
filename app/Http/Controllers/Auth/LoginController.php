@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Staf\StafUser;
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use ScoutingRudyardKipling\SOLOpenIdClient;
 use ScoutingRudyardKipling\SOLOpenIdUser;
 
@@ -48,7 +50,7 @@ class LoginController extends Controller
     /**
      * @param Request $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return Factory|RedirectResponse|View
      * @throws \ErrorException
      */
     public function snlLogin(Request $request)
@@ -122,7 +124,7 @@ class LoginController extends Controller
     {
         try {
             return new SOLOpenIdClient(config('app.openid_return_url'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $code    = 500;
             $message = 'Quit due to misconfiguration.';
             report(new Exception($code . ': ' . $message));
