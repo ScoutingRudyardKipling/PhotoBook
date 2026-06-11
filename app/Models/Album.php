@@ -2,37 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * App\Models\Album
- *
- * @property      int                                                            $id
- * @property      string                                                         $name
- * @property      int|null                                                       $parent_id
- * @property      \Illuminate\Support\Carbon|null                                $created_at
- * @property      \Illuminate\Support\Carbon|null                                $updated_at
- * @property      int|null                                                       $featured_id
- * @property      string|null                                                    $featured_type
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent                  $featured
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Album[]   $childAlbums
- * @property-read int|null                                                       $child_albums_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $contents
- * @property-read int|null                                                       $contents_count
- * @property-read \App\Models\Album|null                                         $parent
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereFeaturedId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereFeaturedType($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album newQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album query()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereParentId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Album whereUpdatedAt($value)
- * @mixin         \Eloquent
+ * @property int $id
+ * @property string $name
+ * @property int|null $parent_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $featured_id
+ * @property string|null $featured_type
+ * @property-read Collection<int, Album> $childAlbums
+ * @property-read int|null $child_albums_count
+ * @property-read Collection<int, \App\Models\Content> $contents
+ * @property-read int|null $contents_count
+ * @property-read Model|\Eloquent|null $featured
+ * @property-read Album|null $parent
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereFeaturedId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereFeaturedType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Album whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Album extends Model
 {
@@ -55,7 +56,7 @@ class Album extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
     public function featured()
     {
@@ -63,7 +64,7 @@ class Album extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany|object|null
+     * @return Model|HasMany|object|null
      */
     public function getFeaturedContent()
     {
@@ -107,7 +108,7 @@ class Album extends Model
     /**
      * Get all contents from this album and all its descendants.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection<int, Content>
      */
     public function getAllContents()
     {

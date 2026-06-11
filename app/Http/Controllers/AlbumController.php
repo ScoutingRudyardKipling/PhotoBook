@@ -77,7 +77,7 @@ class AlbumController extends Controller
     public function allPhotos(Album $album)
     {
         $data = $album->getAllContents()->map(
-            function ($content) {
+            function (Content $content) {
                 return [
                     'href'  => $content->getUrl(),
                     'type'  => 'image',

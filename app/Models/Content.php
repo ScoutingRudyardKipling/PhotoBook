@@ -3,33 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Enums\Fit;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
- * App\Models\Content
- *
- * @property      int                                                                          $id
- * @property      string                                                                       $name
- * @property      int                                                                          $parent_id
- * @property      \Illuminate\Support\Carbon|null                                              $created_at
- * @property      \Illuminate\Support\Carbon|null                                              $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Models\Media[] $media
- * @property-read int|null                                                                     $media_count
- * @property-read \App\Models\Album                                                            $parent
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content newModelQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content newQuery()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content query()
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content whereCreatedAt($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content whereId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content whereName($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content whereParentId($value)
- * @method        static \Illuminate\Database\Eloquent\Builder|\App\Models\Content whereUpdatedAt($value)
- * @mixin         \Eloquent
+ * @property int $id
+ * @property string $name
+ * @property int $parent_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read Album $parent
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Content whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Content extends Model implements HasMedia
 {
@@ -51,12 +52,12 @@ class Content extends Model implements HasMedia
     }
 
     /**
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     * @param Media|null $media
      *
      * @return void
-     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     * @throws InvalidManipulation
      *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      */
     public function registerMediaConversions(Media $media = null): void
     {
