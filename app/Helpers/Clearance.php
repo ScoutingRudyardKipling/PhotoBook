@@ -18,11 +18,10 @@ class Clearance
     public function hasAnyPermission(array $permissions): bool
     {
         try {
-            return Auth::user()->hasAnyPermission($permissions);
+            return Auth::user()?->hasAnyPermission($permissions) ?? false;
         } catch (Exception) {
             $this->throwError(403, 'Permission does not exist');
         }
-        return false;
     }
 
     /**
@@ -36,7 +35,8 @@ class Clearance
     public function hasAnyPermissionOrAbort(array $permissions): void
     {
         if ($this->hasAnyPermission($permissions) === false) {
-            $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
+            $user = Auth::user();
+            $this->throwError(403, 'action not allowed for user ' . ($user !== null ? $user->name : 'unknown'));
         }
     }
 
@@ -51,11 +51,10 @@ class Clearance
     public function hasAllPermissions(array $permissions): bool
     {
         try {
-            return Auth::user()->hasAllPermissions($permissions);
+            return Auth::user()?->hasAllPermissions($permissions) ?? false;
         } catch (Exception) {
             $this->throwError(403, 'Permission does not exist');
         }
-        return false;
     }
 
     /**
@@ -87,7 +86,8 @@ class Clearance
     public function hasAllOrAllPermissionsOrAbort(array $permissionsListOne, array $permissionsListTwo): void
     {
         if ($this->hasAllOrAllPermissions($permissionsListOne, $permissionsListTwo) === false) {
-            $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
+            $user = Auth::user();
+            $this->throwError(403, 'action not allowed for user ' . ($user !== null ? $user->name : 'unknown'));
         }
     }
 
@@ -102,7 +102,8 @@ class Clearance
     public function hasAllPermissionsOrAbort(array $permissions): void
     {
         if ($this->hasAllPermissions($permissions) === false) {
-            $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
+            $user = Auth::user();
+            $this->throwError(403, 'action not allowed for user ' . ($user !== null ? $user->name : 'unknown'));
         }
     }
 
@@ -110,11 +111,11 @@ class Clearance
      * @param int    $code
      * @param string $message
      *
-     * @return void
+     * @return never
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    private function throwError(int $code, string $message): void
+    private function throwError(int $code, string $message): never
     {
         report(new Exception($code . ': ' . $message));
         abort($code);

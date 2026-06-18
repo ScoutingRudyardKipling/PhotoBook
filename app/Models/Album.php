@@ -159,8 +159,9 @@ class Album extends Model
                 $path = $this->name;
                 if (!is_null($this->parent_id)) {
                     $parentAlbum = Album::find($this->parent_id);
-                    $parentPath  = $parentAlbum->getPath();
-                    $path        = $parentPath . DIRECTORY_SEPARATOR . $this->name;
+                    if ($parentAlbum instanceof Album) {
+                        $path = $parentAlbum->getPath() . DIRECTORY_SEPARATOR . $this->name;
+                    }
                 }
                 return $path;
             }

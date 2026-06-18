@@ -41,6 +41,9 @@ class MediaController extends Controller
         }
 
         $stream = Storage::disk($this->disk)->readStream($filePath);
+        if ($stream === null) {
+            return abort(500);
+        }
 
         return response()->stream(
             static fn () => fpassthru($stream),

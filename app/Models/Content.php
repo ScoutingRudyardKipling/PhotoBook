@@ -82,7 +82,7 @@ class Content extends Model implements HasMedia
         $cache = Cache::rememberForever(
             'getAlbumPath' . $this->id,
             function () {
-                return $this->parent->getPath();
+                return $this->parent?->getPath() ?? '';
             }
         );
         return $cache;
@@ -132,7 +132,11 @@ class Content extends Model implements HasMedia
     public function updateInternal(Content $model): void
     {
         //TODO: test if this refactor works
-        $media = $model->media()->first()->file_name;
+        $mediaItem = $model->media()->first();
+        if ($mediaItem === null) {
+            return;
+        }
+        $media = $mediaItem->file_name;
 
         $originalParentId   = $model->getOriginal()['parent_id'] ?? null;
         $originalParent     = is_int($originalParentId) ? Album::find($originalParentId) : null;
@@ -172,7 +176,11 @@ class Content extends Model implements HasMedia
     public function deleteInternal(Content $model): void
     {
         //TODO: test if this refactor works
-        $media      = $model->media()->first()->file_name;
+        $mediaItem = $model->media()->first();
+        if ($mediaItem === null) {
+            return;
+        }
+        $media      = $mediaItem->file_name;
         $parent     = $model->parent;
         $parentPath = '';
         if (!is_null($parent)) {
