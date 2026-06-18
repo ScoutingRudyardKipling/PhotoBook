@@ -96,7 +96,7 @@ class LoginController extends Controller
     }
 
 
-    private function loginSolUser(SOLOpenIdUser $openIdUser)
+    private function loginSolUser(SOLOpenIdUser $openIdUser): RedirectResponse
     {
         $user = User::updateOrCreate(
             [
@@ -124,7 +124,7 @@ class LoginController extends Controller
     {
         try {
             return new SOLOpenIdClient(config('app.openid_return_url'));
-        } catch (Exception $e) {
+        } catch (Exception) {
             $code    = 500;
             $message = 'Quit due to misconfiguration.';
             report(new Exception($code . ': ' . $message));

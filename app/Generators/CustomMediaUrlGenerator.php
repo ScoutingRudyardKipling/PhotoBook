@@ -19,8 +19,8 @@ class CustomMediaUrlGenerator extends BaseUrlGenerator implements UrlGenerator
     /**
      * Get the temporary url for a media item.
      *
-     * @param DateTimeInterface $expiration
-     * @param array             $options
+     * @param DateTimeInterface    $expiration
+     * @param array<string, mixed> $options
      *
      * @return string
      */

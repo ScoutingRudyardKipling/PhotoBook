@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Storage;
 
 class MediaController extends Controller
@@ -14,7 +16,7 @@ class MediaController extends Controller
         $this->disk = config('media-library.disk_name');
     }
 
-    public function get(Request $request, string $filePath)
+    public function get(Request $request, string $filePath): Response|StreamedResponse
     {
         if (!Storage::disk($this->disk)->exists($filePath)) {
             return abort(404);

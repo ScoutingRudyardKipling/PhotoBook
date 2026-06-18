@@ -11,7 +11,7 @@ class Clearance
      * Checks if the logged in user has one of the permissions
      * Returns True if one of the given permissions is met
      *
-     * @param array $permissions
+     * @param array<int, string> $permissions
      *
      * @return boolean
      */
@@ -19,7 +19,7 @@ class Clearance
     {
         try {
             return Auth::user()->hasAnyPermission($permissions);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             $this->throwError(403, 'Permission does not exist');
         }
         return false;
@@ -29,11 +29,11 @@ class Clearance
      * Checks if the logged in user has all of the permissions
      * Aborts if non of the permissions does not meet the array
      *
-     * @param array $permissions
+     * @param array<int, string> $permissions
      *
      * @return void
      */
-    public function hasAnyPermissionOrAbort(array $permissions)
+    public function hasAnyPermissionOrAbort(array $permissions): void
     {
         if ($this->hasAnyPermission($permissions) === false) {
             $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
@@ -44,7 +44,7 @@ class Clearance
      * Checks if the logged in user has all of the permissions
      * Returns True if all of the given permissions is met
      *
-     * @param array $permissions
+     * @param array<int, string> $permissions
      *
      * @return boolean
      */
@@ -52,7 +52,7 @@ class Clearance
     {
         try {
             return Auth::user()->hasAllPermissions($permissions);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->throwError(403, 'Permission does not exist');
         }
         return false;
@@ -62,8 +62,8 @@ class Clearance
      * Checks if all permissions of list one is set, or all permissions of list two are set.
      * If one of the two lists passes, the function will pass.
      *
-     * @param array $permissionsListOne
-     * @param array $permissionsListTwo
+     * @param array<int, string> $permissionsListOne
+     * @param array<int, string> $permissionsListTwo
      *
      * @return boolean
      */
@@ -79,12 +79,12 @@ class Clearance
      * Checks if all permissions of list one is set, or all permissions of list two are set.
      * If neither of the lists pass, the function will Abort.
      *
-     * @param array $permissionsListOne
-     * @param array $permissionsListTwo
+     * @param array<int, string> $permissionsListOne
+     * @param array<int, string> $permissionsListTwo
      *
      * @return void
      */
-    public function hasAllOrAllPermissionsOrAbort(array $permissionsListOne, array $permissionsListTwo)
+    public function hasAllOrAllPermissionsOrAbort(array $permissionsListOne, array $permissionsListTwo): void
     {
         if ($this->hasAllOrAllPermissions($permissionsListOne, $permissionsListTwo) === false) {
             $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
@@ -95,11 +95,11 @@ class Clearance
      * Checks if the logged in user has all of the permissions
      * Aborts if one or more permissions does not meet the array
      *
-     * @param array $permissions
+     * @param array<int, string> $permissions
      *
      * @return void
      */
-    public function hasAllPermissionsOrAbort(array $permissions)
+    public function hasAllPermissionsOrAbort(array $permissions): void
     {
         if ($this->hasAllPermissions($permissions) === false) {
             $this->throwError(403, 'action not allowed for user ' . Auth::user()->name);
@@ -114,7 +114,7 @@ class Clearance
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    private function throwError(int $code, string $message)
+    private function throwError(int $code, string $message): void
     {
         report(new Exception($code . ': ' . $message));
         abort($code);

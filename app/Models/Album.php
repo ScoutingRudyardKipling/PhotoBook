@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
@@ -47,20 +48,26 @@ class Album extends Model
         'featured_type',
     ];
 
-    public function parent()
+    /**
+     * @return BelongsTo<Album, $this>
+     */
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    public function contents()
+    /**
+     * @return HasMany<Content, $this>
+     */
+    public function contents(): HasMany
     {
         return $this->hasMany(Content::class, 'parent_id');
     }
 
     /**
-     * @return MorphTo
+     * @return MorphTo<\Illuminate\Database\Eloquent\Model, $this>
      */
-    public function featured()
+    public function featured(): MorphTo
     {
         return $this->morphTo();
     }
@@ -89,11 +96,11 @@ class Album extends Model
     /**
      * @return string|null
      */
-    public function getFeaturedContentThumb()
+    public function getFeaturedContentThumb(): ?string
     {
         return Cache::rememberForever(
             'featuredThumbUrl' . $this->id,
-            function () {
+            function (): ?string {
                 if (empty($this->getFeaturedContent())) {
                     return null;
                 }
@@ -102,7 +109,10 @@ class Album extends Model
         );
     }
 
-    public function childAlbums()
+    /**
+     * @return HasMany<Album, $this>
+     */
+    public function childAlbums(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
@@ -130,9 +140,9 @@ class Album extends Model
     /**
      * Get IDs of this album and all its descendants.
      *
-     * @return array
+     * @return array<int, int>
      */
-    public function getDescendantAlbumIds()
+    public function getDescendantAlbumIds(): array
     {
         $ids = [$this->id];
         foreach ($this->childAlbums as $child) {
@@ -160,7 +170,7 @@ class Album extends Model
         );
     }
 
-    public function deleteCache()
+    public function deleteCache(): void
     {
         Cache::forget('albumPath' . $this->id);
         $this->deleteFeaturedThumbCache();
@@ -172,7 +182,7 @@ class Album extends Model
         }
     }
 
-    public function deleteFeaturedThumbCache()
+    public function deleteFeaturedThumbCache(): void
     {
         Cache::forget('featuredThumbUrl' . $this->id);
         if (!empty($this->parent)) {

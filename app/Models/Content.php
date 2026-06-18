@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Album;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property Carbon|null $updated_at
  * @property-read MediaCollection<int, \App\Models\Media> $media
  * @property-read int|null $media_count
- * @property-read Album $parent
+ * @property-read Album|null $parent
  * @method static Builder<static>|Content newModelQuery()
  * @method static Builder<static>|Content newQuery()
  * @method static Builder<static>|Content query()
@@ -43,12 +44,16 @@ class Content extends Model implements HasMedia
         'parent_id',
     ];
 
-    private $conversions = [
-        'thumb' => '300',
-        'tiny'  => '20',
+    /** @var array<string, int> */
+    private array $conversions = [
+        'thumb' => 300,
+        'tiny'  => 20,
     ];
 
-    public function parent()
+    /**
+     * @return BelongsTo<Album, $this>
+     */
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Album::class, 'parent_id');
     }
@@ -102,7 +107,7 @@ class Content extends Model implements HasMedia
         return $cache;
     }
 
-    public function deleteCache()
+    public function deleteCache(): void
     {
         Cache::forget('mediaUrl' . $this->id);
         foreach (array_keys($this->conversions) as $conversion) {
@@ -124,7 +129,7 @@ class Content extends Model implements HasMedia
     }
 
 
-    public function updateInternal($model)
+    public function updateInternal(Content $model): void
     {
         //TODO: test if this refactor works
         $media = $model->media()->first()->file_name;
@@ -166,7 +171,7 @@ class Content extends Model implements HasMedia
         }
     }
 
-    public function deleteInternal($model)
+    public function deleteInternal(Content $model): void
     {
         //TODO: test if this refactor works
         $media      = $model->media()->first()->file_name;
