@@ -134,18 +134,16 @@ class Content extends Model implements HasMedia
         //TODO: test if this refactor works
         $media = $model->media()->first()->file_name;
 
-        $originalParent     = Album::find(
-            ($model->getOriginal()['parent_id'] ?? null)
-        );
+        $originalParentId   = $model->getOriginal()['parent_id'] ?? null;
+        $originalParent     = is_int($originalParentId) ? Album::find($originalParentId) : null;
         $originalParentPath = '';
-        if (!is_null($originalParent)) {
+        if ($originalParent instanceof Album) {
             $originalParentPath = $originalParent->getPath() . DIRECTORY_SEPARATOR;
         }
-        $dirtyParent     = Album::find(
-            ($model->getAttributes()['parent_id'] ?? null)
-        );
+        $dirtyParentId   = $model->getAttributes()['parent_id'] ?? null;
+        $dirtyParent     = is_int($dirtyParentId) ? Album::find($dirtyParentId) : null;
         $dirtyParentPath = '';
-        if (!is_null($dirtyParent)) {
+        if ($dirtyParent instanceof Album) {
             $dirtyParentPath = $dirtyParent->getPath() . DIRECTORY_SEPARATOR;
         }
         Storage::disk('media')->move(
@@ -163,11 +161,11 @@ class Content extends Model implements HasMedia
             );
         }
         $model->deleteCache();
-        if (!is_null($originalParent)) {
+        if ($originalParent instanceof Album) {
             $originalParent->deleteCache();
         }
-        if (!is_null($dirtyParent)) {
-            $originalParent->deleteCache();
+        if ($dirtyParent instanceof Album) {
+            $dirtyParent->deleteCache();
         }
     }
 

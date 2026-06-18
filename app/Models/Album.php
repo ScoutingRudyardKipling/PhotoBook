@@ -65,17 +65,14 @@ class Album extends Model
     }
 
     /**
-     * @return MorphTo<\Illuminate\Database\Eloquent\Model, $this>
+     * @return MorphTo<Model, $this>
      */
     public function featured(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * @return Model|HasMany|object|null
-     */
-    public function getFeaturedContent()
+    public function getFeaturedContent(): ?Content
     {
         $content = $this->featured;
         if ($content instanceof Album) {
@@ -204,18 +201,18 @@ class Album extends Model
 
         static::updating(
             function ($model) {
-                $originalParentPath = Album::find(
-                    ($model->getOriginal()['parent_id'] ?? null)
-                );
-                if (!is_null($originalParentPath)) {
-                    $originalParentPath = $originalParentPath->getPath() . DIRECTORY_SEPARATOR;
-                }
-                $dirtyParentPath = Album::find(
-                    ($model->getAttributes()['parent_id'] ?? null)
-                );
-                if (!is_null($dirtyParentPath)) {
-                    $dirtyParentPath = $dirtyParentPath->getPath() . DIRECTORY_SEPARATOR;
-                }
+                $originalParentId    = $model->getOriginal()['parent_id'] ?? null;
+                $originalParentAlbum = is_int($originalParentId) ? Album::find($originalParentId) : null;
+                $originalParentPath  = $originalParentAlbum instanceof Album
+                    ? $originalParentAlbum->getPath() . DIRECTORY_SEPARATOR
+                    : null;
+
+                $dirtyParentId    = $model->getAttributes()['parent_id'] ?? null;
+                $dirtyParentAlbum = is_int($dirtyParentId) ? Album::find($dirtyParentId) : null;
+                $dirtyParentPath  = $dirtyParentAlbum instanceof Album
+                    ? $dirtyParentAlbum->getPath() . DIRECTORY_SEPARATOR
+                    : null;
+
                 $originalPath = $originalParentPath . $model->getOriginal()['name'];
                 $dirtyPath    = $dirtyParentPath . $model->getAttributes()['name'];
                 if ($originalPath != $dirtyPath) {
