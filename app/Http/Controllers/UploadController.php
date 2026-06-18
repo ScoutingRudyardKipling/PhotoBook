@@ -7,6 +7,7 @@ use App\Models\Content;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -18,12 +19,12 @@ use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 class UploadController extends Controller
 {
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
      * @return void
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
-     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     * @throws FileNotFoundException
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
     public function storeHandler(Request $request)
     {
@@ -46,9 +47,9 @@ class UploadController extends Controller
     }
 
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function uploadAjax(Request $request)
     {
@@ -64,10 +65,11 @@ class UploadController extends Controller
 
         $request['parent_id'] = $request->header('Parent-Id');
 
+        $maxFileSize = config('media-library.max_file_size');
         $validator = Validator::make(
             $request->all(),
             [
-                'content'   => 'required|file|max:' . (config('media-library.max_file_size') / 1024),
+                'content'   => 'required|file|max:' . (is_int($maxFileSize) ? $maxFileSize / 1024 : 0),
                 'parent_id' => 'required|integer',
             ]
         );

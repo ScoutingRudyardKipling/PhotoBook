@@ -13,7 +13,8 @@ class MediaController extends Controller
 
     public function __construct()
     {
-        $this->disk = config('media-library.disk_name');
+        $diskName   = config('media-library.disk_name');
+        $this->disk = is_string($diskName) ? $diskName : '';
     }
 
     public function get(Request $request, string $filePath): Response|StreamedResponse
