@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Storage;
  * @property-read int|null $child_albums_count
  * @property-read Collection<int, \App\Models\Content> $contents
  * @property-read int|null $contents_count
- * @property-read Model|\Eloquent|null $featured
+ * @property-read Model|null $featured
  * @property-read Album|null $parent
  * @method static Builder<static>|Album newModelQuery()
  * @method static Builder<static>|Album newQuery()
@@ -193,7 +193,7 @@ class Album extends Model
         parent::boot();
 
         static::creating(
-            function ($model) {
+            function (Album $model) {
                 Storage::disk('media')->makeDirectory($model->getPath());
                 Storage::disk('media')->makeDirectory('conversions' . DIRECTORY_SEPARATOR . $model->getPath());
                 $model->deleteCache();
@@ -201,21 +201,23 @@ class Album extends Model
         );
 
         static::updating(
-            function ($model) {
+            function (Album $model) {
                 $originalParentId    = $model->getOriginal()['parent_id'] ?? null;
                 $originalParentAlbum = is_int($originalParentId) ? Album::find($originalParentId) : null;
                 $originalParentPath  = $originalParentAlbum instanceof Album
                     ? $originalParentAlbum->getPath() . DIRECTORY_SEPARATOR
-                    : null;
+                    : '';
 
                 $dirtyParentId    = $model->getAttributes()['parent_id'] ?? null;
                 $dirtyParentAlbum = is_int($dirtyParentId) ? Album::find($dirtyParentId) : null;
                 $dirtyParentPath  = $dirtyParentAlbum instanceof Album
                     ? $dirtyParentAlbum->getPath() . DIRECTORY_SEPARATOR
-                    : null;
+                    : '';
 
-                $originalPath = $originalParentPath . $model->getOriginal()['name'];
-                $dirtyPath    = $dirtyParentPath . $model->getAttributes()['name'];
+                $originalNameRaw = $model->getOriginal()['name'];
+                $originalName    = is_string($originalNameRaw) ? $originalNameRaw : '';
+                $originalPath    = $originalParentPath . $originalName;
+                $dirtyPath       = $dirtyParentPath . $model->name;
                 if ($originalPath != $dirtyPath) {
                     Storage::disk('media')->move(
                         $originalPath,
@@ -231,7 +233,7 @@ class Album extends Model
         );
 
         static::deleting(
-            function ($model) {
+            function (Album $model) {
                 foreach ($model->contents as $content) {
                     $content->delete();
                 }

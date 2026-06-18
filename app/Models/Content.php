@@ -24,7 +24,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property Carbon|null $updated_at
  * @property-read MediaCollection<int, \App\Models\Media> $media
  * @property-read int|null $media_count
- * @property-read Album|null $parent
+ * @property-read Album $parent
  * @method static Builder<static>|Content newModelQuery()
  * @method static Builder<static>|Content newQuery()
  * @method static Builder<static>|Content query()
@@ -82,7 +82,7 @@ class Content extends Model implements HasMedia
         $cache = Cache::rememberForever(
             'getAlbumPath' . $this->id,
             function () {
-                return $this->parent?->getPath() ?? '';
+                return $this->parent->getPath();
             }
         );
         return $cache;
@@ -182,10 +182,7 @@ class Content extends Model implements HasMedia
         }
         $media      = $mediaItem->file_name;
         $parent     = $model->parent;
-        $parentPath = '';
-        if (!is_null($parent)) {
-            $parentPath = $parent->getPath() . DIRECTORY_SEPARATOR;
-        }
+        $parentPath = $parent->getPath() . DIRECTORY_SEPARATOR;
         Storage::disk('media')->delete($parentPath . $media);
 
         $mediaName      = explode('.', $media)[0];
@@ -195,9 +192,7 @@ class Content extends Model implements HasMedia
                 'conversions' . DIRECTORY_SEPARATOR . $parentPath . $mediaName . '-' . $conversion . '.' . $mediaExtention
             );
         }
-        if (!is_null($parent)) {
-            $parent->deleteCache();
-        }
+        $parent->deleteCache();
         $model->deleteCache();
     }
 
@@ -206,19 +201,19 @@ class Content extends Model implements HasMedia
         parent::boot();
 
         static::creating(
-            function ($model) {
+            function (Content $model) {
                 $model->deleteCache();
             }
         );
 
         static::updating(
-            function ($model) {
+            function (Content $model) {
                 (new Content())->updateInternal($model);
             }
         );
 
         static::deleting(
-            function ($model) {
+            function (Content $model) {
                 (new Content())->deleteInternal($model);
             }
         );

@@ -105,13 +105,16 @@ class ContentController extends Controller
     {
         Clearance::hasAllPermissionsOrAbort(['Edit Content']);
 
-        $data = $request->validate(
+        $request->validate(
             [
                 'name'      => 'required|string|max:190',
                 'parent_id' => 'required|integer',
             ]
         );
-        $content->update($data);
+        $content->update([
+            'name'      => $request->input('name'),
+            'parent_id' => $request->input('parent_id'),
+        ]);
         return redirect()->route('content.show', ['content' => $content->id]);
     }
 

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Http\Response;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -22,7 +23,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -34,7 +35,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -44,13 +45,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        $data             = $request->validate(
+        $request->validate(
             [
                 'name'               => 'string|max:191',
                 'role_id'            => 'int',
@@ -62,9 +63,19 @@ class UserController extends Controller
                 'password'           => 'required|string|max:190|min:8',
             ]
         );
-        $data['password'] = bcrypt($data['password']);
-        $user             = User::create($data);
-        $user->syncRoles(Role::findById($data['role_id']));
+        $password = $request->input('password');
+        $roleId   = $request->input('role_id');
+        $user     = User::create([
+            'name'               => $request->input('name'),
+            'role_id'            => $roleId,
+            'email'              => $request->input('email'),
+            'external_user'      => $request->input('external_user'),
+            'birth_date'         => $request->input('birth_date'),
+            'gender'             => $request->input('gender'),
+            'preferred_language' => $request->input('preferred_language'),
+            'password'           => is_string($password) ? bcrypt($password) : '',
+        ]);
+        $user->syncRoles(Role::findById(is_int($roleId) || is_string($roleId) ? $roleId : 0));
         return redirect()->route('user.show', ['user' => $user->id]);
     }
 
@@ -73,7 +84,7 @@ class UserController extends Controller
      *
      * @param User $user
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(User $user)
     {
@@ -85,7 +96,7 @@ class UserController extends Controller
      *
      * @param User $user
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -97,14 +108,14 @@ class UserController extends Controller
      *
      * * @SuppressWarnings("else")
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\User         $user
+     * @param Request $request
+     * @param User         $user
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request, User $user)
     {
-        $data = $request->validate(
+        $request->validate(
             [
                 'name'               => 'string|max:191',
                 'role_id'            => 'int',
@@ -116,13 +127,22 @@ class UserController extends Controller
                 'password'           => 'nullable|string|max:190|min:8',
             ]
         );
-        if (empty($data['password'])) {
-            unset($data['password']);
-        } else {
-            $data['password'] = bcrypt($data['password']);
+        $password   = $request->input('password');
+        $roleId     = $request->input('role_id');
+        $updateData = [
+            'name'               => $request->input('name'),
+            'role_id'            => $roleId,
+            'email'              => $request->input('email'),
+            'external_user'      => $request->input('external_user'),
+            'birth_date'         => $request->input('birth_date'),
+            'gender'             => $request->input('gender'),
+            'preferred_language' => $request->input('preferred_language'),
+        ];
+        if (is_string($password) && $password !== '') {
+            $updateData['password'] = bcrypt($password);
         }
-        $user->syncRoles(Role::findById($data['role_id']));
-        $user->update($data);
+        $user->syncRoles(Role::findById(is_int($roleId) || is_string($roleId) ? $roleId : 0));
+        $user->update($updateData);
 
         return redirect()->route('user.show', ['user' => $user->id]);
     }
@@ -130,9 +150,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\User $user
+     * @param User $user
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws \Exception
      */
     public function destroy(User $user)
