@@ -1,0 +1,13 @@
+services:
+  app_setup:
+    build:
+      context: docker/php-fpm
+    depends_on:
+      - fpm
+      - webserver
+    volumes:
+      - "app-php-socket:/var/run"
+      - '.:/var/www/html'
+    entrypoint: /bin/sh -c "composer install; php artisan migrate; php artisan storage:link"
+    networks:
+      - common
